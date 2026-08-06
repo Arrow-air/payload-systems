@@ -2,6 +2,8 @@
 
 Open-source payload systems for Arrow UAV platforms.
 
+![The Quiver quick-release pair: aircraft-side plate (left, with spring press-pins and release button) and the payload-side clip plate (right) that every payload bolts to](assets/quick-release-pair.png)
+
 This repository is the home for community-designed payload attachments that interface with Arrow drones — starting with Quiver, and expanding to cover any Arrow platform that uses the standard attachment interface.
 
 ---
