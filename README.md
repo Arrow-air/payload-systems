@@ -25,8 +25,6 @@ The authoritative specification is the **[Interface Control Document (ICD)](inte
 | Platform | Attachment Interface | Power | Data |
 |---|---|---|---|
 | **Quiver (PT3+)** | Quick-release, 3× hot-swap points (bottom + 2× side) | 12V_PL all ports (SSR-gated, ~25W guidance); 12VSW bottom only (2A) | Ethernet (all ports), CAN2/DroneCAN (all ports), 1× PWM aux per port |
-| **Quiver Mini** | Bottom-only, Quiver-compatible interface V1 | 6S-derived (TBD) | TBD |
-| Future platforms | To be defined | — | — |
 
 Key facts (details and caveats in the ICD):
 
@@ -60,53 +58,19 @@ These payloads have detailed requirements written and are ready for someone to p
 | **General Stabilized Sensor Carrier** | 3-axis gimbal; 1/4-20 mount; 5–8kg capacity; follow-focus optional | [project-quiver](https://github.com/Arrow-air/project-quiver/blob/main/task-grant-bounty/equipment/attachment/0002-detailed_attachment_requirement_for_bounty/005-General_Stabilized_Sensor_Device_Carrier_comprehensive_requirement.md) |
 | **High Capacity Flood Light** | ~train-light brightness; 45–60° beam; 4000–4500K; flash/breathe modes | [project-quiver](https://github.com/Arrow-air/project-quiver/blob/main/task-grant-bounty/equipment/attachment/0002-detailed_attachment_requirement_for_bounty/006-High_Capacity_Flood_Light_comprehensive_requirement.md) |
 
-### ⚪ Proposed — Needs Champions
+### 💡 Your idea here
 
-These are on the community radar but have no active development yet. The full source list (with detailed descriptions and requirements for each) is the [possible attachments document](https://github.com/Arrow-air/project-quiver/blob/main/task-grant-bounty/equipment/attachment/0001-possible_attachment_list/information-note.md) in project-quiver.
+The best payload is the one *you* actually need. Quiver is a multipurpose
+platform — if there is an attachment you would use, build it. Sensors,
+cargo, lighting, sampling, spraying, comms, safety systems: if it fits the
+interface, it can fly. A longer inventory of community-discussed concepts
+lives in the [possible attachments document](https://github.com/Arrow-air/project-quiver/blob/main/task-grant-bounty/equipment/attachment/0001-possible_attachment_list/information-note.md)
+in project-quiver if you want inspiration.
 
-#### UAV Logistics
-| Payload | Key Requirements |
-|---|---|
-| **Universal Cargo Container** | Fixed or releasable; aerodynamically optimised; stackable; may include aux storage/control interface |
-| **Surface Water Sourcing System** | 10–12L pump + container; shore/water-surface landing capability; instant water tester optional; extended intake arm |
-
-#### Remote Sensing & Imaging
-| Payload | Key Requirements |
-|---|---|
-| **Standard FPV Camera** | Fixed (non-gimbaled); ≥720p @ 45fps video TX; no image crop/timing modification; vibration damped |
-| **Standard Magnification Gimbaled Camera** | 3-axis gimbal; ≥1/2" sensor @ 30fps; dual-sensor (≈24mm + ≥85mm equiv. FL); switchable video feed |
-| **Multispectral Imagery System** | RGB + NIR; synchronous shutter; sunlight (downwelling) sensor on top; optional nadir 3-axis gimbal |
-| **Advanced IR Optical Gas Imaging Camera** | 3-axis gimbal; ≈50mm equiv. FL; ≥25fps; sensitivity covers common industrial/petrochemical gases |
-| **General Stabilized Sensor Device Carrier** | 3-axis gimbal; 1/4-20 mount; 5–8kg capacity; follow-focus + signal outlet optional |
-| **Standard Geiger-Mueller Counter** | 2+ sensors for cross-reference; cosmic ray background shielding; high vibration protection; obstacle avoidance pairing |
-| **Ground Target Machine Vision System** | On-board compute (RPi/Jetson); target sort by size/shape/color/spectral; raster-to-vector; KML/KMZ output |
-
-#### UAV Geophysics
-| Payload | Key Requirements |
-|---|---|
-| **Low Altitude Magnetic Anomaly Sensor** | Zero/minimal ferrite components; distancing pylon from airframe; multi-axis compass + fusion algorithm; stable heading during flight |
-| **Compact Synthetic Aperture Radar** | High-precision GNSS + IMU + PPS timing; ≥1m resolution @ 2km; SDR-configurable frequency and scan direction |
-| **General Aerial LiDAR Scanner** | High-precision GNSS + IMU + PPS; ≥32 laser channels @ ≥20Hz; ≥1cm accuracy @ 100m; optional nadir 3-axis gimbal |
-| **Sentinel LiDAR (stationary full-dome)** | Mounts on top of airframe; full-dome coverage while landed; integrates Leica BLK-class scanners; GNSS integration; RGB coloured point cloud output |
-| **Aerial Water Body Sampling System** | Deploys/retrieves from aircraft; surface water collection; optional in-flight analysis; close-water risk mitigation |
-
-#### Interactive / Broadcast
-| Payload | Key Requirements |
-|---|---|
-| **Airborne Speaker** | Directional; ≥200m range; live voice / pre-record / TTS; multi-speaker option |
-| **High Capacity Flood Light** | Train-light-class brightness; 45–60° beam; 4000–4500K; flash/breathe modes |
-| **General Fishing Equipment** | Buoy/water-landing system; remote-controlled gear; downward 3-axis gimbal; emergency cutoff; waterproof (storm-rated) |
-| **Aerial Pellet Spreader** | Seeds/fertiliser/granules; capacity sensor; centrifugal or cyclonic dispersal; anti-blockage design; rain/moisture proof |
-| **Multi-Purpose Robotic Arm** | Multi-joint, foldable; side-mountable; minimal CG shift; safety switch + emergency detach |
-| **Tethering Converter** | Ground AC → stable onboard DC; backup battery for emergency landing; tether wear protection; optional signal/substance conduit |
-| **Airborne Electrical Warfare System** | SDR-controlled ISM + GNSS jamming; directional PCB panel antenna; standing-wave protection; 915MHz/1.2GHz backup control link *(significant regulatory considerations)* |
-
-#### Flight Assistance & Safety
-| Payload | Key Requirements |
-|---|---|
-| **Arrow Airframe Parachute System (AAPS)** | 100% reliability target; ballistic/pressure-launched; ≥20m minimum deployment altitude; maintenance-free design goal |
-| **Passive Propeller Defense System** | Protects propellers from horizontal/diagonal terrain and object incursion; lightweight/composite; impact shock absorbing; non-frangible |
-| **Mechanical Comm-Link Extension (Antenna Tracker)** | Directional PCB panel antenna; 2-axis gimbal (aircraft + ground); slip ring connectors; dual-pair failsafe option |
+Start a thread in the Arrow Discord, copy the
+[payload template](payloads/_template/), and design against the
+[ICD](interface/ICD.md). Payload development can be funded through Arrow
+grants & bounties.
 
 ---
 

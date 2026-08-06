@@ -15,6 +15,22 @@ project-quiver are the source of truth.
 The plate STEP contains the drone side of the quick-release mechanism
 (fixed top, press pins, springs). Your payload provides the mating side.
 
+## The payload-side plate (what your payload bolts to)
+
+The quick-release is a **COTS aluminum clip-plate pair**
+([Quick-Release Clip Plate, ~$34](https://www.alibaba.com/product-detail/Quick-Release-Clip-Plate-Clamp-Quick_1600982145247.html),
+BOM item 2112 — order **without PCB**). Each set includes both halves:
+
+- **Fixed half** (spring press-pins) — mounted on the aircraft.
+- **Clip half** — this is the payload side. Bolt it to your payload's top
+  surface, align it with the blind-mate PCB pads (orientation notch on the
+  board silkscreen), and it clips into the aircraft's fixed half by hand.
+
+Buy the same product and use the clip half; that guarantees mechanical
+compatibility with the flying aircraft. A STEP model of the clip half is not
+yet published (the vendored `2112_attach_plate.step` models only the
+drone-side half) — see TODO below.
+
 ## Mounting-point positions (drone coordinates)
 
 Frame: origin at airframe center, **+Z up, +Y forward**. Positions are
@@ -46,6 +62,7 @@ sideways to prevent abrasion and water ingress.
 
 ## TODO (tracked)
 
+- [ ] **STEP model of the payload-side clip plate** (measure/export from the
+      COTS part — the current 2112 STEP covers only the drone-side half)
 - [ ] Formal keep-out / envelope STEP exported from the full PT3 assembly
-- [ ] Payload-side mating geometry reference (the clip-in counterpart)
 - [ ] Per-port structural mass limits

@@ -36,12 +36,6 @@ The three ports are **not identical**. Design against the port you target:
 | **PWM aux channel** | FMU_CH1 | FMU_CH7 | FMU_CH8 |
 | Suggested static IP | 192.168.144.100 | 192.168.144.101 | 192.168.144.102 |
 
-> Historical note: pre-update Main PCB documentation showed CAN1 on the bottom
-> and right ports and no Ethernet on the left port. The current Main PCB
-> revision routes **CAN2 to all three ports** ("all payloads operate on CAN2")
-> and Ethernet to all three ports. The Attachment Interface PCB silkscreen and
-> net names still say `CAN1_P/CAN1_N`; electrically this is the CAN2 bus.
-
 ## 3. Power
 
 ### 12V_PL (all ports)
@@ -130,9 +124,12 @@ doubled power and ground pins for current capacity — pinout in the
 See [`mechanical/`](mechanical/) for the vendored STEP files, mounting-point
 positions in drone coordinates, and envelope guidance. Summary:
 
-- Quick-release plate mechanism (machined aluminum, spring press-pins) at each
-  port; PETG spacers mount the plates to the airframe. Side ports sit on 3 cm
-  extension adapters for body clearance; the bottom spacer has a wiring notch.
+- The quick-release mechanism is a **COTS aluminum clip-plate pair** (BOM
+  2112): the aircraft carries the fixed half (spring press-pins) at each
+  port; **your payload carries the mating clip half of the same product** —
+  see `mechanical/` for ordering info. PETG spacers mount the aircraft-side
+  plates to the airframe. Side ports sit on 3 cm extension adapters for body
+  clearance; the bottom spacer has a wiring notch.
 - Drone coordinate frame: **origin at airframe center, +Z up, +Y forward.**
   Bottom interface plate at Z ≈ −160.7 (payload mounting plane ≈ −171);
   side plates at X ≈ ±185.7.
