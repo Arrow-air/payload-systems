@@ -103,7 +103,7 @@ Payload folders are created when real design work starts — concepts live in th
 
 - **Discord:** [#multi-spectral-camera](https://discord.com/channels/853833144037277726/1481622578132025364) and other payload channels in the Arrow server
 - **Arrow DAO:** Payload development can be funded via Arrow grants & bounties
-- **License:** Hardware and documentation in this repo is released under [CERN OHL-S v2](https://ohwr.org/cern_ohl_s_v2.txt); software under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+- **License:** [CERN-OHL-S v2](LICENSE) — same as project-quiver
 
 ---
 
