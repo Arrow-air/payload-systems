@@ -18,34 +18,22 @@ If you have an idea for a payload, or want to contribute to one already in progr
 
 ---
 
-## Platform Compatibility
+## The Attachment Interface
 
-| Platform | Attachment Interface | Power Available | Data Interfaces |
+The authoritative specification is the **[Interface Control Document (ICD)](interface/ICD.md)** — per-port capabilities, pinouts, power rules, network conventions, and the mechanical mate. Payload designs declare the ICD version they target. Summary:
+
+| Platform | Attachment Interface | Power | Data |
 |---|---|---|---|
-| **Quiver (PT3+)** | Quick-release, 3× mounting points (bottom + 2× side) | 12V switched, 12V always-on | Ethernet, CAN, UART, PWM (FMU_CH1) |
+| **Quiver (PT3+)** | Quick-release, 3× hot-swap points (bottom + 2× side) | 12V_PL all ports (SSR-gated, ~25W guidance); 12VSW bottom only (2A) | Ethernet (all ports), CAN2/DroneCAN (all ports), 1× PWM aux per port |
 | **Quiver Mini** | Bottom-only, Quiver-compatible interface V1 | 6S-derived (TBD) | TBD |
 | Future platforms | To be defined | — | — |
 
-### Attachment Interface Pinout (Quiver PT3)
+Key facts (details and caveats in the ICD):
 
-The standard payload connector is a **12-pin MOLEX locking header** (part #2077601281, mating #2045231201). A 10-pin 2.54mm header variant is also supported.
-
-| Pin | Function | Notes |
-|---|---|---|
-| 1, 3 | ETH_RX+, ETH_RX- | 100BASE-T Ethernet |
-| 5, 7 | ETH_TX+, ETH_TX- | 100BASE-T Ethernet |
-| 2, 4 | 12VSW | Switched 12V (FC-controlled on/off) |
-| 6 | +12V | Always-on 12V |
-| 8 | FMU_CH1 | PWM output from flight controller |
-| 9, 10 | CAN1_P, CAN1_N | CAN bus |
-| GND | GND | Common ground |
-
-> The Attachment Interface PCB design files (KiCAD schematic, layout, gerbers, BOM) live in the [project-quiver repo](https://github.com/Arrow-air/project-quiver/tree/main/task-grant-bounty/pt3/electronics/0003-Attachment-Interface-PCB).
-
-**Power budget guidance:**
-- 12VSW is controlled by the flight controller — payloads should handle clean enable/disable
-- For payloads requiring 5V (e.g. Raspberry Pi): use an onboard buck converter (Mean Well SD-25B-05 or equivalent, rated for 60V+ input on Quiver's 14S system)
-- Total payload power draw: design within ~25W per interface (conservative; verify against Main PCB limits before exceeding)
+- **The three ports are not identical** — 12VSW and its relay exist only on the bottom port, PWM channel numbers differ per port, and the ports split across two Ethernet switch modules. Check the ICD §2 capability matrix.
+- **Blind-mate electrical connection** via the Attachment Interface PCB (V1.4, validated): the aircraft carries spring-loaded pins, the payload side populates landing pads. Design files live in [project-quiver](https://github.com/Arrow-air/project-quiver/tree/main/task-grant-bounty/pt3/electronics/0003-Attachment-Interface-PCB).
+- **No 5V, no UART** at the connector — payloads bring their own logic-rail DC-DC.
+- **Mechanical mating geometry** (STEP) and mounting-point coordinates are vendored in [`interface/mechanical/`](interface/mechanical/).
 
 ---
 
@@ -126,24 +114,22 @@ These are on the community radar but have no active development yet. The full so
 
 1. **Check the discussions** — see what's already being designed before starting fresh
 2. **Open a discussion** — new payload idea? Start a thread and gather input before committing to design
-3. **Follow the structure** — when a payload is ready for a design brief, create a folder `payloads/<payload-name>/` with a `README.md` covering: purpose, requirements, architecture options, BOM, and open questions
-4. **Interface compatibility** — any payload targeting Quiver must respect the attachment interface pinout and mechanical envelope; reference the Attachment Interface PCB docs
+3. **Start from the template** — when a payload is ready for design work, copy [`payloads/_template/`](payloads/_template/) to `payloads/<payload-name>/` and fill in its README (purpose, requirements, target port, ICD version)
+4. **Design against the ICD** — any payload targeting Quiver must respect the [ICD](interface/ICD.md): port capabilities, pinout, power rules, and mechanical envelope. Run the ICD §8 checklist before requesting review.
 
-### Folder Structure (proposed)
+### Repo Layout
 
 ```
+interface/
+├── ICD.md            ← the interface standard (versioned)
+├── mechanical/       ← mating STEP files + mounting-point coordinates
+└── pcb/              ← pointer to the Attachment Interface PCB in project-quiver
 payloads/
-├── multispectral-camera/
-│   ├── README.md          ← design brief
-│   ├── bom/
-│   ├── cad/
-│   └── firmware/
-├── cargo-container/
-└── ...
-docs/
-├── attachment-interface.md
-└── power-budget.md
+├── _template/        ← copy me to start a new payload
+└── <payload-name>/   ← one folder per payload: README, cad/, pcb/, software/, docs/
 ```
+
+Payload folders are created when real design work starts — concepts live in the tables above until then.
 
 ---
 
