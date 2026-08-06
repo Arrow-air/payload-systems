@@ -9,6 +9,7 @@ project-quiver are the source of truth.
 | File | Part | Used |
 |---|---|---|
 | `2112_attach_plate.step` | Quick-release interface plate (aluminum) — the drone-side mechanism your payload clips into | 3× (all ports) |
+| `2112_attach_plate_payload_side.step` | **Payload-side clip plate ("Replaceable Base")** — the part your payload bolts to. 50 × 50 mm footprint, 10.5 mm thick | 1× per payload |
 | `2111_attach_spacer.step` | Side-port spacer (PETG) | 2× (left/right) |
 | `2131_attach_spacer_bottom.step` | Bottom-port spacer with wiring notch (PETG) | 1× (bottom) |
 
@@ -27,9 +28,9 @@ BOM item 2112 — order **without PCB**). Each set includes both halves:
   board silkscreen), and it clips into the aircraft's fixed half by hand.
 
 Buy the same product and use the clip half; that guarantees mechanical
-compatibility with the flying aircraft. A STEP model of the clip half is not
-yet published (the vendored `2112_attach_plate.step` models only the
-drone-side half) — see TODO below.
+compatibility with the flying aircraft. The clip half is modeled in
+`2112_attach_plate_payload_side.step` — design your payload's mounting
+pattern against it, or start by bolting straight to the physical part.
 
 ## Mounting-point positions (drone coordinates)
 
@@ -62,7 +63,5 @@ sideways to prevent abrasion and water ingress.
 
 ## TODO (tracked)
 
-- [ ] **STEP model of the payload-side clip plate** (measure/export from the
-      COTS part — the current 2112 STEP covers only the drone-side half)
 - [ ] Formal keep-out / envelope STEP exported from the full PT3 assembly
 - [ ] Per-port structural mass limits
