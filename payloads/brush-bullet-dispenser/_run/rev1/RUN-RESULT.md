@@ -280,3 +280,54 @@ only the packager had no retry.
 **not cleared to print** until the three verify blockers are fixed (0.2 mm
 grub-pilot deepening + checker re-anchor, BOM washer string fixed in
 `dispenser.py` source, pilot-bore line added to the BOM).
+
+---
+
+## Close-out run (2026-08-08)
+
+A dedicated close-out run (`closeout-workflow.js`, two Fix rounds + two
+independent verification rounds, `CLOSEOUT-VERIFY-r1.md` / `CLOSEOUT-VERIFY-r2.md`)
+was launched to clear the three verify blockers above and re-check ground/prop
+clearance. **Final verdict: FAIL. Nothing closed. `r12` stays the shipped tag —
+there is no `r13`.**
+
+### What happened
+
+Both Fix rounds produced no work product at all. Confirmed at packaging time by
+direct command, not carried from the verifier:
+
+- `find /Users/hex/projects/payload-systems -name "*r13*"` → **zero files**;
+  `cad/exports/` still ends at tag `r12`.
+- No `BUILD-NOTES-closeout-r*.md` exists; there were never any builder claims to
+  verify.
+- `git diff --stat HEAD -- README.md docs/DESIGN.md cad/BOM.md cad/dispenser.py`
+  → **empty** (sources untouched since commit `f2a9451`).
+- `cad/renders/` still ends at `v1r6_*.png` — no `v1r7` renders exist.
+
+Both close-out verification rounds therefore had nothing to test and re-measured
+the shipped `r12` baseline instead (their numbers reproduce VERIFY.md's to four
+decimals; the r12 regression gate — 15/15 watertight, STEP-vs-STL ≤ 0.053 %,
+roof 9.000 mm at θ = 310, nose gap 1.500 mm — passed, because nothing changed).
+
+### Item-by-item, honest
+
+| Close-out item | State after this run |
+|---|---|
+| **B2.2 grub-pilot corridor** | **STILL OPEN (blocking).** Re-measured at pack time by the packager, exact OCP booleans on `cad/exports/pocket_disc_r12.step`, grub axis θ = 202.5°, Z = −341.25, verbatim output: `disc volume = 72.686 cm3` · `Dia0.7 corridor r=46.5 -> r=2.55 : disc material = 0.0770 mm3` · `Dia1.9 ... = 0.5671 mm3` · `Dia2.6 ... = 1.0619 mm3` · `Dia0.7/Dia2.6 stopped at r=2.75 : 0.0000 mm3`. The 0.200 mm full-section web between pilot floor (r = 2.750) and shaft flat (r = 2.550) is still in the shipped disc. Checker re-anchor also not done (`dispenser.py` unmodified). **Do not print the disc.** |
+| **BOM/doc source reconciliation** | **STILL OPEN.** The four corrected strings in `cad/BOM.md` (Ø38/Ø34×1.4 washer, Ø16.20 pilot bore, Ø5.90×0.95 windows, 350 g stepper) are true of the r12 geometry — both close-out verifiers re-measured them — but they remain the 2026-08-08 packaging **hand-patches**. `dispenser.py`'s source tables are unmodified; the BOM's own header still warns that the next regeneration re-introduces all four bad strings. |
+| **B6.5/B6.6 ground/prop clearance** | **STILL UNVERIFIED.** No build notes cite airframe STEPs; no gear-leg solids exist as STEPs in either checkout (`/Users/hex/projects/project-quiver` and `/tmp/pq-main` `landing_gear/steps/` contain only `1340_tube_joint.step` and `vendor/1330_main_adapter.step`). The carried 129.4 / 103.63 / 152.55 / 232.63 mm numbers remain unmeasured. Independently measured: assembly bottom **Z = −418.450** (247.400 mm below the mount plane). Re-check against the real gear before flight. |
+| **B7.1 fill/support docs** | Unchanged; still a **correctly-documented plateau** (close-out verifier re-confirmed the doc numbers against its own r12 geometry measurements). |
+
+### Closed by this run
+
+**Nothing.** No geometry, no source, no export, no render changed. The only new
+artifacts are the run records themselves (`CLOSEOUT-VERIFY-r1/r2.md`,
+`closeout-workflow.js`, `closeout-watchdog.sh`) and this section plus matching
+status-line updates in `README.md` / `docs/DESIGN.md`.
+
+### State at hand-off (unchanged from §5 above)
+
+**Shipped tag: `r12`. NOT cleared to print.** The to-close list in §5 stands
+verbatim: (1) deepen the grub pilot 0.200 mm + re-anchor the corridor probe at
+r = 2.55 with a control that must fail; (2) fix the four BOM strings in
+`dispenser.py`; (3) obtain real gear-leg STEPs and re-run the clearance study.

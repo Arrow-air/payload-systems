@@ -1,7 +1,10 @@
 # Brush Bullet Dispenser — Design
 
 Design package at **rev-1** (CAD close-out run, 2026-08-07→08, export tag
-`r12`). This is the full story of how the design got here: what was surveyed,
+`r12` — still the shipped tag: the 2026-08-08 close-out run **failed**, both fix
+rounds produced nothing, and no `r13` exists; see §10.8 and
+`_run/rev1/RUN-RESULT.md` "Close-out run (2026-08-08)").
+This is the full story of how the design got here: what was surveyed,
 what was traded, what twelve rounds of CAD found and fixed — six in rev-0
 (§4.1–4.7) and six more in rev-1 (§4.8, §4.9, **§10**) — what the electronics
 contract specifies, what was *not* built, and what is still wrong with it.
@@ -1233,3 +1236,19 @@ permanent false failure on a correct design.
 Items 1 and 2 are hours of work. Item 3 is a path fix. **B7, N10, N19, the ECO-4
 chamfer, the ELECTRONICS re-basing and every bench test remain open by design or
 by scope**, and are listed above rather than folded away.
+
+> **Close-out run result (2026-08-08): FAIL — all three items above are STILL
+> OPEN.** A dedicated close-out run (two fix rounds, two independent verify
+> rounds) was launched against exactly this list and produced no work product:
+> zero `*r13*` files anywhere in the repo, no close-out build notes,
+> `dispenser.py` / `cad/BOM.md` untouched since commit `f2a9451`, no `v1r7`
+> renders. The packager re-measured B2.2 on the shipped disc at pack time
+> (exact OCP boolean, `pocket_disc_r12.step`, θ = 202.5°, Z = −341.25):
+> Ø2.6 corridor to r = 2.55 contains **1.0619 mm³** of disc material
+> (Ø0.7: 0.0770; both controls to r = 2.75: 0.0000) — the 0.200 mm web is
+> still shipped. Item 3 additionally lacks its inputs: no gear-leg solids
+> exist as STEPs in either `project-quiver` checkout (only
+> `1340_tube_joint.step` + `vendor/1330_main_adapter.step`). **`r12` remains
+> the shipped tag and the package remains NOT cleared to print.** Full record:
+> `_run/rev1/CLOSEOUT-VERIFY-r1.md`, `_run/rev1/CLOSEOUT-VERIFY-r2.md`, and
+> the "Close-out run (2026-08-08)" section of `_run/rev1/RUN-RESULT.md`.
