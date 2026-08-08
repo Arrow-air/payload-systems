@@ -215,3 +215,68 @@ re-anchor the corridor probe at r = 2.55 with a control that must fail;
 clearance against the real airframe STEPs. B7, N10, N19, the ECO-4 chamfer, the
 ELECTRONICS §4 re-basing (stale by **49.1 mm** on the count-sensor Z) and every
 bench test remain open by design or by scope.
+
+## Workflow host record
+
+Appended 2026-08-08 by the detached host session after receiving the completion
+notification for run `wf_e00108ea-c63` (task `wpcixqehz`). The packager agent
+died on an API error, so the sections above were written by the workflow's
+fallback path; this section is the host's independent record.
+
+### Workflow return value (verbatim)
+
+```json
+{
+  "rounds": 6,
+  "closed": true,
+  "verifyPass": false,
+  "verifyBlocking": [
+    "B2.2 FAILS by 0.200 mm on pocket_disc_r12: the grub pilot bottoms at r=2.750 while the shaft D-flat is at r=2.550, leaving an unbroken full-section web of CF-PETG across the whole Ø2.6 pilot. Exact OCP booleans on the STEP at theta=202.5, Z=-341.25: Ø0.7 cylinder r=46.5->2.55 = 0.0770 mm3 of disc material; Ø1.9 = 0.5671 mm3; Ø2.6 = 1.0619 mm3 (= pi*1.3^2*0.200 exactly). Same cylinders stopped at r=2.75 all read 0.0000 mm3. BUILD-NOTES-r6.md section 7 prints 'grub corridor, Ø0.7 ray from the bore to the disc OD along theta=202.5: blocked at r = NOWHERE -- continuous void' — the checker starts its ray at the ROUND bore radius (3.05) or at the pilot floor, both outboard of the flat, so it is structurally blind to the web. This is a renamed-not-fixed instance of RT-1; fix the geometry by 0.2 mm AND re-anchor the checker ray at the flat radius.",
+    "cad/BOM.md orders the PTFE thrust washer at the wrong size. The modelled washer solid in dispenser_r12_assembly measures Ø38.00 OD / Ø34.00 ID x 1.400 mm (bbox ±19.000 x Z -352.200..-350.800, volume 317 mm3), seated in the 1.005 mm deep annular recess I measured in retaining_plate_chute_r12 at r 16.9..19.1 (floor Z=-352.255). The BOM row still reads 'PTFE washer | Dia30/Dia24x1.5 virgin PTFE' — that ID/OD lands directly on the four Ø3.4 gearbox bolt holes at r=11.30..14.70, and 1.5 mm will not fit the 1.005+0.500 mm seat. The mass in the row (0.7 g) WAS recomputed from the new solid; only the dimension string is stale. Ordering to this BOM yields a washer that cannot be assembled.",
+    "B3.4 is not satisfied: the motor pilot bore measures Ø16.20 (material starts at r=8.10 in the flange band Z -355.25..-351.25) and is stated nowhere in cad/BOM.md — no datasheet value, no explicit ASSUMPTION line. The punch list requires the pilot-bore diameter to be in the BOM with its source and to match the model to ±0.05 mm."
+  ]
+}
+```
+
+### Phase-by-phase summary
+
+1. **Punch-list synthesis** — one agent; produced `PUNCHLIST.md` (33 KB) from
+   `CONTEXT.md` plus the rev-0 state, enumerating the blocking items
+   (B-series) the build loop had to close.
+2. **Build/critic loop, rounds 1–6** — each round: one build agent (export tags
+   r7→r12, `BUILD-NOTES-r*.md`) followed by 4–5 parallel critics
+   (`CRITIQUE-r1..r6.md`). Critic pass/fail trajectory: r1 all-fail
+   (scores 2–4.5), r2 all-fail (0.45–7), r3 all-fail (0.62–6.5), r4 mixed
+   (one pass at 0.78), r5 mixed (two pass), r6 all four critics passed
+   (scores 0.82 / 8 / 8 / 8.5, non-blocking findings only) → loop declared
+   the CAD closed after round 6.
+3. **Verify** — one independent agent; **FAILED** (score 7) with the three
+   blocking findings in the return value above: the B2.2 grub-corridor web
+   (0.200 mm short, and the corridor checker is structurally blind to it),
+   the stale PTFE-washer dimension string in `cad/BOM.md`, and the
+   undocumented Ø16.20 motor pilot bore (B3.4).
+4. **Packager** — agent errored (API safeguard flag); the workflow's fallback
+   wrote sections 1–5 of this file, including the 2026-08-08 documentation
+   edits to `cad/BOM.md`, `README.md`, and `docs/DESIGN.md`.
+
+### Agent failures
+
+9 of 33 agents failed with the same terminal API error ("Opus 5's safeguards
+flagged this message"): build:r1, build:r2, build:r3, build:r6,
+critic:integration:r1, critic:integration:r3, critic:granule-path:r2,
+critic:count-sensor:r4, packager. The failed build/critic slots were re-run by
+the script's retry path (all six rounds produced build notes and critiques);
+only the packager had no retry.
+
+### Usage
+
+33 agents spawned, 24 completed, 9 errored, 0 skipped; 2,667 tool uses;
+~7.54 M subagent tokens; wall clock ≈ 16.9 h (2026-08-07 09:18 →
+2026-08-08 02:12).
+
+### Bottom line
+
+`closed: true` from the critic loop, but **verifyPass: false** — rev-1 is
+**not cleared to print** until the three verify blockers are fixed (0.2 mm
+grub-pilot deepening + checker re-anchor, BOM washer string fixed in
+`dispenser.py` source, pilot-bore line added to the BOM).
