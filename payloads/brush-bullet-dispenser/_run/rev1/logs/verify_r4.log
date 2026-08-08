@@ -1,0 +1,133 @@
+==============================================================================
+INDEPENDENT CHECK OF r10 EXPORTS  (trimesh 5.0.0, numpy 2.5.1)
+==============================================================================
+
+[1] B10 EXPORT INTEGRITY -- every part STL watertight, winding consistent, 0 non-manifold edges, STL volume within 0.5 % of its own STEP.
+    A FAILING part looks like r9's retaining_plate_chute: watertight=False, 188 open edges, 1538 three-face edges, +8.36 % volume.
+    part                      w/tight   wind  euler  nonman  open bodies   STL cm3  STEP cm3      d%  multiplicity
+    top_plate                    True   True    -36       0     0      1    95.755    95.780  -0.026  {2: 19812}
+    fill_cap                     True   True      0       0     0      1     7.347     7.349  -0.035  {2: 5325}
+    hopper                       True   True    -14       0     0      1   109.423   109.419  +0.004  {2: 16992}
+    meter_housing                True   True    -12       0     0      1   103.623   103.659  -0.035  {2: 17463}
+    pocket_disc                  True   True    -30       0     0      1    72.661    72.686  -0.034  {2: 36963}
+    agitator                     True   True      2       0     0      1     4.288     4.291  -0.053  {2: 4086}
+    brush_holder                 True   True      0       0     0      1     3.544     3.544  +0.001  {2: 918}
+    retaining_plate_chute        True   True    -48       0     0      1    71.886    71.903  -0.024  {2: 40974}
+    electronics_bay              True   True     -8       0     0      1    21.175    21.175  +0.002  {2: 15027}
+    bay_lid                      True   True    -10       0     0      1     8.598     8.598  +0.001  {2: 4614}
+    chute_plug                   True   True     -2       0     0      1     6.874     6.877  -0.039  {2: 3819}
+    service_stand                True   True      0       0     0      1   103.892   103.908  -0.015  {2: 1656}
+    sensor_cover                 True   True     -4       0     0      2     3.234     3.234  +0.000  {2: 3540}
+    count_windows                True   True      8       0     0      4     0.104     0.104  -0.041  {2: 3000}
+    sensor_boards                True   True      4       0     0      2     1.287     1.287  -0.012  {2: 3108}
+      [PASS] 15/15 part STLs clean (r9: 14/15)
+    assembly: bodies=24  open edges=0  multiplicity={2: 191100}  vol=587.685 cm3  winding=True
+      [PASS] assembly STL has 0 open edges and consistent winding (r9: 188 open, winding False, 2 inverted bodies)
+
+[2] COUNT SENSOR -- the ORDERED emitter has to fit. Datasheet solid (Dia5.8 x 0.7 flange + Dia5.0 barrel + R2.49 dome) seated on the board plane recovered FROM THE EXPORT, at 8.7 nominal and 9.0 max.
+    A FAILING part looks like r9: 11.2532 mm3 per LED into the plate at nominal, 14.6614 at max.
+    sensor_boards bbox x[25.500,43.500] y[-28.500,28.500] z[-401.250,-389.250]
+    boss/cover interface |y| = 32.500 (r9: 27.500)
+    board seating plane recovered from the export: |y| = 26.500 (r9: 23.500)
+    TSAL6200 8.7 mm (nominal), 4 placements: ^plate = 0.0000 mm3   ^cover = 0.0000 mm3
+      [PASS] emitter fits at nominal
+    TSAL6200 9.0 mm (max tolerance), 4 placements: ^plate = 0.0000 mm3   ^cover = 0.0000 mm3
+      [PASS] emitter fits at max tolerance
+    VBPW34FAS 6.4 x 3.9 x 1.2 SMD, 2 placements: ^plate = 0.0000 mm3
+      [PASS] receiver fits
+
+    ECO-3/9/5 aperture audit (ray-cast on the plate STL along +/-y).
+    A CLEAR beam axis shows ZERO crossings -- the ray never touches material.
+    A BLOCKED axis shows 4 (plate, bore, bore, plate): the mismatched x/z pairs
+    printed underneath are exactly that control, so 'zero crossings' cannot mean
+    'the ray missed the part'.
+      BEAM    x= 29.0 z= -392.250: 0 crossings 
+      BEAM    x= 35.0 z= -398.250: 0 crossings 
+      BEAM    x= 29.8 z= -392.250: 0 crossings 
+      BEAM    x= 35.8 z= -398.250: 0 crossings 
+      control x= 35.0 z= -392.250: 4 crossings -17.000 -10.583 10.583 17.000
+      control x= 29.0 z= -398.250: 4 crossings -17.000 -10.582 10.582 17.000
+      control x= 35.8 z= -392.250: 4 crossings -17.000 -10.322 10.322 17.000
+      control x= 29.8 z= -398.250: 4 crossings -17.000 -10.778 10.778 17.000
+      [PASS] all 4 beam/labyrinth axes are clear through the plate
+      inner run at |y|=13.0, z=-392.250: open x runs [27.405,30.600] -> centre 29.002 width 3.195
+      inner run at |y|=13.0, z=-398.250: open x runs [33.405,36.595] -> centre 35.000 width 3.190
+      labyrinth run at |y|=16.0, z=-392.250: open x runs [28.205,31.400] -> centre 29.802 width 3.195
+      labyrinth run at |y|=16.0, z=-398.250: open x runs [34.205,37.400] -> centre 35.802 width 3.195
+      aperture z-extent at x=29.0: [-393.845,-390.655] -> centre -392.250 height 3.190
+      aperture z-extent at x=35.0: [-399.845,-396.655] -> centre -398.250 height 3.190
+      ECO-9 vertical stagger = 6.000 mm (spec 6.000; a FAILING part reads 0.000 -- one centred beam)
+      [PASS] ECO-9 6.000 mm stagger
+
+[3] B7 RELEASE SWEEP, measured on the exported plate. Criterion: the granule is supported while its contact point is over flat plate-top material, i.e. while |pellet centre - port axis| >= the FIRST-MATERIAL radius at the plate top. Seat offset applied along the pocket->port chord (worst case).
+    r9 published 6.75..7.75 deg / 1.00 deg spread; the r3 critic measured 3.25..10.50 / 7.25.
+    plate top z = -351.250; first material at r = 8.748 from the port axis (r9 critic: 8.747)
+      D13.0 seat +1.00: support lost  5.00 deg into the index, pocket-axis-to-port  9.736, pellet-centre-to-port  8.736
+      D13.0 seat +0.00: support lost  7.00 deg into the index, pocket-axis-to-port  8.630, pellet-centre-to-port  8.630
+      D13.0 seat -1.00: support lost  8.75 deg into the index, pocket-axis-to-port  7.661, pellet-centre-to-port  8.661
+      D12.0 seat +1.50: support lost  4.25 deg into the index, pocket-axis-to-port 10.150, pellet-centre-to-port  8.650
+      D12.0 seat +0.00: support lost  7.00 deg into the index, pocket-axis-to-port  8.630, pellet-centre-to-port  8.630
+      D12.0 seat -1.50: support lost  9.50 deg into the index, pocket-axis-to-port  7.245, pellet-centre-to-port  8.745
+      D11.0 seat +2.00: support lost  3.25 deg into the index, pocket-axis-to-port 10.701, pellet-centre-to-port  8.701
+      D11.0 seat +0.00: support lost  7.00 deg into the index, pocket-axis-to-port  8.630, pellet-centre-to-port  8.630
+      D11.0 seat -2.00: support lost 10.50 deg into the index, pocket-axis-to-port  6.690, pellet-centre-to-port  8.690
+    -> window 3.25..10.50 deg into the 22.5 deg index; spread 7.25 deg over D11..D13, 3.75 deg at D13
+      [PASS] release spread reproduces the r3 critic's 7.25 deg (r9 claimed 1.00)
+
+[4] B8 -- deflector nose gap and FIRST CONTACT. B8.1 asks for a nose underside <= 1.50 mm above the disc at r = 22..46.5. Then: what does a proud fragment actually strike? Ray along the travel direction at its crown height.
+    r3 MODERATE 1 asserted 'a 5.95 mm square wall, lift/push 0.005, over the whole 1.50-7.45 band'.
+    disc top land z = -336.750 (bbox max is the hub at -320.250)
+    wiper station recovered from the export: theta = 147.63 deg
+      r= 22.0: nose underside 1.500 mm above the disc top
+      r= 26.0: nose underside 1.500 mm above the disc top
+      r= 30.0: nose underside 1.500 mm above the disc top
+      r= 34.0: nose underside 1.500 mm above the disc top
+      r= 38.0: nose underside 1.500 mm above the disc top
+      r= 42.0: nose underside 1.500 mm above the disc top
+      r= 46.5: nose underside 1.500 mm above the disc top
+      [PASS] nose gap <= 1.50 mm at every radius
+      1.80 mm proud, r=22.0: first contact at local y= +4.14, normal (ny=+1.000, nz=+0.000) -> face  90.0 deg from horizontal, lift/push  0.00
+      1.80 mm proud, r=32.0: first contact at local y= +4.21, normal (ny=+1.000, nz=+0.000) -> face  90.0 deg from horizontal, lift/push  0.00
+      1.80 mm proud, r=46.5: first contact at local y= +4.30, normal (ny=+1.000, nz=-0.000) -> face  90.0 deg from horizontal, lift/push  0.00
+      2.95 mm proud, r=22.0: first contact at local y= +2.51, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      2.95 mm proud, r=32.0: first contact at local y= +2.58, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      2.95 mm proud, r=46.5: first contact at local y= +2.67, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      4.08 mm proud, r=22.0: first contact at local y= +0.34, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      4.08 mm proud, r=32.0: first contact at local y= +0.40, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      4.08 mm proud, r=46.5: first contact at local y= +0.50, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      6.00 mm proud, r=22.0: first contact at local y= -3.35, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      6.00 mm proud, r=32.0: first contact at local y= -3.29, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+      6.00 mm proud, r=46.5: first contact at local y= -3.19, normal (ny=+0.461, nz=+0.887) -> face  27.5 deg from horizontal, lift/push  1.92
+
+[5] TORQUE PATH (B2) -- the disc bore must carry a D-flat on the vendor's Dia6 shaft with a 0.5 mm flat, over >= 10 mm.
+    A FAILING part reads r = 3.05 at every angle (a plain round bore, which is what r6 shipped).
+      z= -348.750: bore radius min 2.560 max 3.060; arc with r < 2.90 = 60 deg
+      [PASS] D-flat present at z=-348.75
+      z= -344.750: bore radius min 2.560 max 3.060; arc with r < 2.90 = 60 deg
+      [PASS] D-flat present at z=-344.75
+      z= -340.750: bore radius min 2.560 max 3.060; arc with r < 2.90 = 60 deg
+      [PASS] D-flat present at z=-340.75
+
+[6] FASTENER GRIP (A-9 / NB-2), ray-measured on the exports.
+    A FAILING bay screw looks like r9's M3x12: grip 13.920 mm, engagement 0.000, tip 1.920 mm short of the housing.
+    bay rib axis found at z = -330.000
+    head bearing plane y = -64.000; housing wall (off-axis ray) y = -49.656; GRIP = 14.344 mm
+      M3x12: tip at y = -52.000 -> MISSES the housing by 2.344 mm
+      M3x20: tip at y = -44.000 -> engages 5.656 mm
+      [PASS] BOM specifies the bay screw that actually reaches (M3x20)
+      [PASS] BOM carries the cartridge stop pin (NB-1)
+      [PASS] BOM has no live TSSP4038 line (B4.7)
+      [PASS] BOM contains VBPW34FAS
+      [PASS] BOM contains OPA2320
+      [PASS] BOM contains TSAL6200
+      [PASS] BOM contains PMMA
+      [PASS] BOM carries the two sensor PCBs (NB-8)
+
+[7] GRANULE PATH spot checks on the exports.
+    Dia13 column swept down the chute axis, 48 z-stations x 12 points: 0 points inside material (must be 0)
+      [PASS] Dia13 granule column is clear of the chute (B4.8)
+    B1 roof thickness, worst of 120 probes outside the ramp sector: 8.950 mm at theta=300, r=20.5 (r9: 9.00 everywhere; r6: 0.000 at theta=310)
+      [PASS] B1: roof >= 6.0 mm at every probe
+
+==============================================================================
+ALL CHECKS PASSED

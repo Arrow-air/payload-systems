@@ -918,10 +918,30 @@ destroyed PD, but not a transient phantom event. That residual is in §11.
 
 ## 4. Count sensor (the "verified count" requirement)
 
-CONTEXT: *"Commanded count must be VERIFIED (sensed), not assumed."* Sensing point
-is fixed by the r6 CAD: a through-beam across the Ø22 chute, **40 mm below the
-retaining plate** (Z ≈ −343.2, 10 mm above the chute exit), i.e. after the pellet
-has irrevocably left the mechanism [V `dispenser.py` L317, L1005-1017].
+CONTEXT: *"Commanded count must be VERIFIED (sensed), not assumed."* The sensing
+point is a through-beam across the Ø22 chute, after the granule has irrevocably
+left the mechanism.
+
+> **CORRECTION (rev-1 r12, 2026-08-08).** The sentence this section shipped —
+> *"40 mm below the retaining plate (Z ≈ −343.2, 10 mm above the chute exit)"* —
+> **was stale by 49.1 mm** and is struck. Measured on the shipped exports by the
+> round-5 count-sensor critic and reproduced on `r12`: release plane (retaining
+> plate top face) **Z = −351.250**; **beam A Z = −392.250, beam B Z = −398.250**;
+> chute mouth **Z = −418.300**. So the fall is **41.000 mm to beam A and
+> 47.000 mm to beam B**, and beam A is **26.050 mm** above the chute mouth, not
+> 10. The two beams therefore run at **v_A = 0.8969 m/s and v_B = 0.9603 m/s**
+> — 7.1 % apart — against the 0.8859 m/s this section computes from 40 mm.
+>
+> Consequences that must be carried into §4.2/§4.3 before the B1 dark-time
+> survey freezes any threshold: §4.3 takes the **longer** dark time (beam A), so
+> the Ø11 guarantee moves **10.41 → 10.28 ms** against the 9.7 ms gate and the
+> stated margin drops **7 % → 6.0 %**; the Ø8 best case moves 9.03 → 8.92 ms, so
+> the separator is **1.36 ms** wide, not 1.37; and **ECO-9's `Δt_mid` for the
+> 6.000 mm stagger becomes 6.461 ms, not 6.54 ms**. Nothing here is
+> disqualifying and B1 is what freezes the gate anyway — but the numbers in
+> §4.2 and §4.3 below are still computed from 40 mm and have **not** been
+> re-derived. That re-derivation is an open item (`BUILD-NOTES-r6.md` §9 item
+> 10); it was not done in round 6 because round 6's scope was the CAD.
 
 ### 4.1 Existing CAD provision
 
@@ -1210,9 +1230,30 @@ excess-gain sweep across the full 20–100 mA drive range at 25 °C and 60 °C.*
    10-second maintenance action, and the 5 mm tunnel plus the sensor behind it
    are **permanently sealed** — which is strictly better than the original
    intent, because the LED/PD cavity now never sees chute air at all. The window
-   is a **sacrificial, replaceable Ø6 × 1 mm PMMA disc**; specify replacement
-   whenever `beam_margin_pct` does not recover after a swab. Uncoated PMMA costs
-   ~8 % of the light — irrelevant against 182×.
+   is a **sacrificial Ø6 × 1 mm PMMA disc**; specify replacement whenever
+   `beam_margin_pct` does not recover after a swab. Uncoated PMMA costs ~8 % of
+   the light — irrelevant against 182×.
+
+   > **CORRECTION (rev-1 r12).** Two claims in this item are not supported by
+   > the geometry that was built, and are corrected rather than left standing:
+   >
+   > - **"Replaceable" is wrong; "swabbable" is right.** The seat is a blind
+   >   counterbore that opens only into the Ø22 chute bore, **26.050 mm** (beam
+   >   A) and **20.050 mm** (beam B) above the chute mouth, and the Ø3.2 tunnel
+   >   behind it cannot pass a Ø6 disc; `cad/BOM.md` bonds the disc with
+   >   UV-cure adhesive. Replacement means reaching 20–26 mm up a Ø22 tube or
+   >   destacking `retaining_plate_chute` — a workshop job, not a field action.
+   >   **Swabbing from the chute exit is supported** (the window face is flush
+   >   with the bore wall and nothing is proud of it: a Ø22.0 column on the
+   >   chute axis measures 0.0000 mm³ against plate, windows and boards).
+   > - **The 0.4 mm chamfered recess is NOT modelled.** The seat is
+   >   straight-walled: Ø6.000 mouth, 1.000 mm deep, window face at
+   >   |y| = 11.000, which is 0.417 mm outside the bore surface at the aperture
+   >   chord and tangent to it at x = 32. A chamfer was modelled in rev-1 round
+   >   6 and **withdrawn**, because the cone's rim is tangent to the Ø22 bore at
+   >   exactly that point and the part exported with 22 open + 22 non-manifold
+   >   edges. See `_run/rev1/BUILD-NOTES-r6.md` §6. Either this item or the seat
+   >   has to change; today the document and the part disagree.
 
    *Residual:* a flush window is exposed to pellet impact where a recessed one is
    not. The 0.4 mm chamfered recess and the sacrificial-part strategy are the
@@ -1714,14 +1755,30 @@ gasket under the lid — *target*, not a verified rating.
 
 ### 6.3 Harness routing and the cable-channel fit check
 
-Path: blind-mate PCB (Z = −181.5, centre) → the **5 × 2.5 mm channel in the top
-plate** → −Y rim → down the outside → bay at y = −75, Z = −286.4. The r6 design
-deliberately keeps the harness out of the pellet space [V BUILD-NOTES-r6 §1].
+**Corrected 2026-08-07 (rev-1 round 5, integration critic N-i1).** The
+"5 × 2.5 mm channel" below was the r6 geometry and has not existed since r7;
+`CABLE_W`/`CABLE_DEEP` are dead constants. The route and the fit check are
+restated here against the **measured** `*_r11` exports.
 
-**Fit [D]:** 9 conductors of 26 AWG PTFE (OD ≈1.05 mm) = 7.8 mm² in a 12.5 mm²
-channel = **62 % fill** — workable for a straight run with no connector passing
-through. **All 12 circuits would not fit** (13.9 mm² > 12.5 mm²), which is a
-second, independent reason not to use Ethernet.
+Path: blind-mate PCB (Z = −181.55, centre) → hollow stand-off neck (cavity
+42.70 × 42.70 mm) → Ø6.000 slot through the neck's −Y wall → **Ø6.000 closed
+tube along the top plate** (y −19 → −73) → **R8.0 swept elbow** (r10's elbow
+was solid printed material; measured r11: no solid point on either bore axis or
+on the elbow centreline) → Ø6.000 vertical spigot → Ø11.000 hopper-side conduit
+→ Ø7.400 bay riser socket. Harness coverage measured by lateral ray-casting on
+the exported meshes: **94.6 % of a 484.84 mm run**, the uncovered 26.17 mm
+being the two deliberate flexible joints (bay → cartridge service loop 14.76 mm,
+motor flying leads 4.40 mm) plus 4.00 mm at the neck-wall slot.
+
+**Fit [M, on the exports]:** the tightest section is the **Ø6.000 = 28.27 mm²**
+top-plate conduit, not 12.5 mm². 9 × 26 AWG PTFE (OD ≈ 1.05) = 7.79 mm² =
+**27.6 % fill**; all **12 circuits = 10.4 mm² = 36.8 %**, so the r6 conclusion
+("all 12 circuits would not fit") is **reversed by the real section** and is no
+longer an argument against Ethernet. What *is* still true, and is a shipped
+assembly constraint: the **Molex 12-circuit 1.25 mm-pitch shell (≈16.7 × 5.8 mm,
+diagonal 17.68 mm) does not pass a Ø6.0 bore and cannot turn the elbow**, so the
+harness is pulled through as loose crimped terminals (≈2.1 × 1.0 mm each) and
+J1 is populated at the neck after routing. No conduit is openable.
 
 **Voltage drop [D]:** 26 AWG = 0.134 Ω/m; 300 mm run, 700 mm round trip;
 at the 0.30 A worst case → **28 mV** on the motor rail, 14 mV on logic.

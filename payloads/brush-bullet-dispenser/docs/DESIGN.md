@@ -1,9 +1,15 @@
 # Brush Bullet Dispenser — Design
 
-Rev-0 design package. This is the full story of how the design got here: what
-was surveyed, what was traded, what six rounds of CAD found and fixed, what the
-electronics contract specifies, what was *not* built, and what is still wrong
-with it.
+Design package at **rev-1** (CAD close-out run, 2026-08-07→08, export tag
+`r12`). This is the full story of how the design got here: what was surveyed,
+what was traded, what twelve rounds of CAD found and fixed — six in rev-0
+(§4.1–4.7) and six more in rev-1 (§4.8, §4.9, **§10**) — what the electronics
+contract specifies, what was *not* built, and what is still wrong with it.
+
+**If you read one section, read [§10](#10-rev-1-close-out--what-closed-what-did-not).**
+It is the rev-1 close-out: what the run actually closed, what an independent
+verifier could and could not reproduce on the final exports, and the one
+blocker that is still open.
 
 **Reading rule used throughout.** Numbers are labelled by provenance:
 **[V]** verified against a cited source · **[D]** derived, arithmetic shown ·
@@ -140,13 +146,20 @@ miscount.
 
 ---
 
-## 4. CAD — six rounds
+## 4. CAD — six rev-0 rounds (and six more in rev-1)
 
-`cad/dispenser.py` is a single parametric build123d model, 2597 lines, that
-exports STEP + STL for 10 parts plus the assembly, renders 7 PNGs, regenerates
-`cad/BOM.md` with masses integrated from the actual solids, and **runs its own
-verification harness on every execution**. `cad/verify_exports.py` re-measures
-the exported files independently of the model.
+`cad/dispenser.py` is a single parametric build123d model — 2597 lines at rev-0,
+**6086 lines at r12** — that exports STEP + STL for 10 parts (**15 at r12**) plus
+the assembly, renders 7 PNGs per round, regenerates `cad/BOM.md` with masses
+integrated from the actual solids, and **runs its own verification harness on
+every execution**. `cad/verify_exports.py` re-measures the exported files
+independently of the model; rev-1 replaced it round by round with
+`verify_r2/r4/r5/r6.py`, of which **`verify_r6.py` is the current one**.
+
+The table below is the **rev-0** score history. The rev-1 rounds (export tags
+`r7`…`r12`) used a different four-critic panel — count-sensor, granule-path,
+assembly, integration, verdicts rather than scores — and are tabulated in
+[§10](#10-rev-1-close-out--what-closed-what-did-not).
 
 Each round was attacked by four adversarial critics — interference,
 pellet-path, buildability, mass-budget — who measure the **exported geometry**,
@@ -272,8 +285,72 @@ nose.
 The jam is still defeated — but by **crushing under the entry ramp** (14.1 N
 normal at metering current vs 7.5 N to shear, 1.9×; 23.4 N at recovery, 3.1×),
 which is CONTEXT defence **2**, not defence **1**. The build notes claimed
-defence 1. **The fix is one parameter: `NOSE_GAP` 3.00 → ≤1.50 mm.** It is not
-applied in this revision.
+defence 1. **The fix is one parameter: `NOSE_GAP` 3.00 → ≤1.50 mm.**
+
+> **STATUS OF THIS SECTION — everything above the line is the r6 (rev-0)
+> story and is kept as history. The `NOSE_GAP` fix WAS applied, in rev-1
+> round 1, and this paragraph is the correction the round-5 granule-path
+> critic required (it found the README and this section still publishing the
+> pre-fix numbers three rounds after the geometry changed — an RT-19 /
+> N15 documentation-integrity failure of exactly the kind this programme
+> exists to catch).** Measured on the r12 exports and reproduced
+> independently by the round-5 critic on r11 (`pocket_disc_r12.stl` and
+> `brush_holder_r12.stl` are **byte-identical** to r10/r11 — md5
+> `d02b663b…` and `ad2343fe…` — and `meter_housing` changed in r12 only at the
+> detent-plunger bore and the bay-screw pilot, neither of which is on the
+> granule path, so the two sets of numbers measure the same solids):
+>
+> - **There is no blind band.** The model's own r12 output: *"the nose covers
+>   r 20.0..46.7 at 1.500 mm, so nothing more than 1.500 mm proud ever reaches
+>   the ramp"*, and *"brush wipe 1.2 mm < roof clearance 1.5 mm"*. The round-5
+>   critic probed the same (byte-identical) solids on r11 and read **1.500 mm
+>   at r = 20.5, 22, 26, 30, 34, 38, 42, 46.5, 47.0** and **1.500 mm at 132
+>   roof probes**. max(nose gap) = min(roof clearance); the 1.50–3.00 mm band
+>   is closed.
+> - **The bristle still leads.** Bristle tip **+1.200 mm** above the disc top
+>   vs the rigid nose at 1.500 mm, so the compliant element contacts first for
+>   every proud object below 5 mm.
+> - **The nose stubs, it does not lift.** Swept-sphere first contact on the
+>   exported `brush_holder`, 0.05° steps: Ø5.0 (+1.80 proud) contacts at
+>   θ = 159.20°, Ø6.0 (+2.95) at 162.20°, Ø7.0 (+4.08) at 164.00°, Ø9.0
+>   (+6.00) at 166.55° — **n_z ≤ 0 in every case**, i.e. nothing is lifted
+>   over the nose. The old `cot(30°) = 1.73` ramp credit is **withdrawn**.
+> - **The 7.5 N figure was wrong and flattering.** Crush force at the measured
+>   section × 0.36 MPa: **Ø5.0 → 19.63 mm² → 7.07 N, Ø6.0 → 28.27 mm² →
+>   10.18 N, Ø7.0 → 38.48 mm² → 13.85 N**, against 12.2 N at normal metering
+>   current and 20.4 N in recovery. The Ø6 margin is **2.00× recovery /
+>   1.20× normal**, not 2.7×.
+> - **"25° entry ramp" is one radius of a range.** The relief is a constant
+>   dz/dθ surface, so the angle is radius-dependent: **36.12° at r = 20.5,
+>   34.21 at 22.0, 31.41 at 24.5, 25.05 at 32.0, 20.74 at 39.5, 17.83 at
+>   46.5**. Below r ≈ 21.9 the ramp's cot falls under the 1.44 self-locking
+>   line these documents use as a pass/fail criterion.
+> - **Where the backstop runs out** (round-4 and round-5 MODERATE, actioned in
+>   r6 and now printed by the model itself instead of only living in a
+>   critique). The widest **self-locking** sliver the pocket can hold is
+>   **w = 2.793 mm** by the model's bisection and **2.791 mm** by the critic's
+>   independent construction — the two agree on the width and differ on the
+>   crescent chord, so both sets are published:
+>
+>   | shard in the worst self-locking crescent | model (r12) | round-5 critic (r11) |
+>   |---|---|---|
+>   | 90° conforming | 20.65 mm² → 7.43 N → **2.74× / 1.64×** | 26.75 mm² → 9.63 N → **2.12× / 1.27×** |
+>   | 180° conforming | 41.30 mm² → 14.87 N → **1.37× / 0.82×** | 53.51 mm² → 19.26 N → **1.06× / 0.63×** |
+>   | full-ring crescent | 82.60 mm² → 29.74 N → **0.69× / 0.41× → STALLS** | 107.02 mm² → 38.53 N → **0.53× / 0.32× → STALLS** |
+>
+>   (margins are ×recovery 20.4 N / ×normal 12.2 N.) **Take the critic's
+>   column as the shipped bound** — it is the conservative one. Both say the
+>   same thing: the backstop covers a partial conforming shard, is marginal at
+>   180° at normal current, and **stalls** on a full-ring crescent. Stalling is
+>   the intended failure mode — a trapped whole granule needs 41 N and must
+>   never be milled — but it is a bound, and it belongs next to the headline.
+> - **Worst escaping fragment** (round-5 critic's construction on r11, not a
+>   model print): Ø4.740 (Ø13 granule centred in its pocket) / Ø5.612 (Ø12,
+>   seat −1.50 mm); every escapee still fits the exit port, tightest clearance
+>   **+0.101 mm**.
+>
+> σ = 0.36 MPa and µ = 0.4 remain **carried assumptions** (US4172714-derived);
+> the closing action is bench test IFDC S-115.
 
 This is the single best argument for the adversarial-critic structure: the
 directive asked for a critic that would *try to build the jam*, and it built one
@@ -329,6 +406,48 @@ was computed against. At release the pellet carries ω × 32 mm of lateral
 velocity: **0.126 m/s at 225 °/s → 0.16 m of drift** over the 1.28 s fall from
 8 m, against a 1 m total budget. This is why the electronics §3.4 release-speed
 clause (≤90 °/s) exists.
+
+> **rev-1 round 4 (export tag `r10`) — B7 status: still open, and the round-2
+> numbers below were WRONG in the direction that flattered the design.**
+> The r8/r9 sweep applied the ±lateral seat offset **radially** (pellet centre
+> at radius PCD ± e), which barely changes the distance to the port axis and
+> produced an artificially tight 1.00° spread. The worst case is the offset
+> lying **along the pocket→port chord** — a granule resting on the leading wall
+> of its pocket reaches the port earlier by exactly e. Re-measured that way on
+> `r10` at 0.25° steps (`cad/dispenser.py` B7 RELEASE SWEEP, reproduced
+> independently by `cad/verify_r4.py` on the exported plate):
+> **support is lost 3.25–10.50° into the 22.5° index (14.4–46.7 % of the move),
+> at pellet-centre-to-port separations of 6.690–10.701 mm, with a release-angle
+> spread of 7.25° across Ø11–Ø13 and 3.75° at Ø13 alone.** The independent
+> round-3 critique measured 3.25–10.50° / 7.25° / 3.75° on `r9`; the model and
+> the critique now agree. Everything the round-2 text said about the
+> *direction* of the finding stands, and it is worse than published: the
+> release is spread over 7.25° of disc rotation, not 1.00°.
+>
+> **rev-1 round 2 (export tag `r8`) — superseded, kept for the record.** The
+> exit port was reduced Ø18 → **Ø16** (rim radius
+> 8.75), which improved park retention (worst-placed Ø13 margin +2.74 mm, Ø12
+> +2.24, Ø11 +1.74) but did **not** close the release. Measured on the r8
+> geometry at 0.25° steps, across pellet diameter Ø11/Ø12/Ø13 and the full
+> ±lateral seat offset the pocket allows: **support is lost 6.75–7.75° into the
+> 22.5° index (30.0–34.4 % of the move), at a pocket-to-port centre separation
+> of 8.215–8.769 mm, with a release-angle spread of 1.00°** [SUPERSEDED — the
+> offset was applied radially; see the r10 block above] — against the
+> punch-list requirement that support be retained until the separation is
+> ≤ 1.0 mm. **The granule is therefore released while the disc is still moving,
+> through a partial lune, before the 150 ms dwell begins.** Lateral velocity at
+> the PCD is ω × 32 mm = **0.126 m/s** at the 225 °/s mean index rate and
+> **0.25 m/s** at a 450 °/s peak [D — the index profile is an assumption carried
+> from r6, not re-derived]. Any sentence anywhere in this repository claiming a
+> *stationary*, *concentric*, *zero-lateral-velocity* release, or a *full-port*
+> clear aperture at release, is wrong and is withdrawn; the model no longer
+> prints it. What survives of the two-phase argument is the dwell: fall time to
+> clear the 14.5 mm pocket is 54 ms against a 150 ms contract dwell (2.8×), so
+> the granule is guaranteed clear of the disc before the second index. Closing
+> B7 by geometry needs either a port smaller than the Ø13 worst-case granule
+> allows, or a mechanical gate below the pocket — both are architecture changes.
+> Full measured table: `_run/rev1/BUILD-NOTES-r4.md` §4 (r10, current)
+> and `_run/rev1/BUILD-NOTES-r2.md` §3 (r8, superseded).
 
 ### 4.7 Where r6 actually landed — measured
 
@@ -404,6 +523,122 @@ solid; **9/10 STLs watertight** — `meter_housing_r6.stl` has one non-manifold
 edge at exactly r 32.50, θ = 310.0°, z = −274.20, i.e. precisely on the ramp-bug
 line. The build notes claim 10/10, which is the opposite of what their own
 `verify_exports.py` prints.
+
+### 4.8 rev-1 r11 (round 5): a roll-up is not a measurement
+
+The rev-1 rounds continued the pattern in §4 — each round's blocker was
+invisible to the previous round's harness — and round 5's is the cleanest
+example in the whole programme. Round 4 shipped a **harness-coverage table**
+that printed `COVERED 18.00 mm top-plate elbow -> hopper conduit … 95.3 %`
+while that elbow was **solid printed material**: the strain-relief boss was
+unioned onto the plate after the two conduit bores were cut and re-filled the
+junction, so the largest conductor that could get from the attachment interface
+to the electronics bay was **Ø0.0**. The table could not see it, because the
+table was a roll-up of *parameters* — a list of segment lengths with a
+hand-typed COVERED flag — and no parameter changes when a boolean re-fills a
+bore.
+
+**Round 5's fix to the harness:** the route is a 3-D polyline, patency is a
+contains-scan along the bore axes, and coverage is measured by casting eight
+rays perpendicular to the run at every millimetre — *covered* means *laterally
+enclosed by printed material*, measured on the exported mesh. Measured result:
+both bore axes read no solid point, a Ø5.5 bundle sweeps every leg at
+**0.0000 mm³**, and coverage is **94.6 % of a 484.84 mm run**, with the
+uncovered 26.17 mm itemised and located (the bay→cartridge service loop *must*
+flex, so a conduit there would be a defect). The elbow itself is now an R8.0
+swept corner rather than a right angle, because a bundle cannot turn a square
+one. Full numbers and the independent checker's reproduction:
+`_run/rev1/BUILD-NOTES-r5.md` §2.
+
+Two other round-4 findings closed in the same round, both in the BOM-vs-geometry
+seam: the four gearbox screws were ordered as **cap heads for a 90° countersink**
+(a cap head measures 197.6 mm³ of interference with the metering disc over one
+spoke pitch and never returns to zero — the BOM now names M3×8 ISO 10642 /
+DIN 7991), and the plug-tether anchor lug stood **1.000 mm inside the Ø22 drop
+tube** while the model's log called the whole 206.0993 mm³ plate∩plug boolean
+"the designed 0.3 mm press fit" when only 83.504 mm³ of it was. Both are the
+same failure class as the coverage table: a number that was asserted rather
+than decomposed.
+
+### 4.9 rev-1 r12 (round 6): a boolean that silently does nothing
+
+Round 5's fix to the *aircraft-side* harness (§4.8) was real. Round 6's blocker
+was the other half of the same requirement, and its root cause is worth writing
+down because it is a trap in the tool, not in the design.
+
+The round-5 integration critic measured the **cartridge harness duct** — the
+network that has to get conductors from the electronics bay to the motor and to
+both count-sensor boards — and found **every leg 100 % solid on its own axis**:
+`exit leg 63/63, collector 187/187, return leg 261/261, vertical leg 205/205,
+motor branch 197/197` points inside printed material, largest conductor **Ø0.0**,
+and `retaining_plate_chute_r11` containing **zero enclosed voids**. The model
+believed it had bored that duct: it built a solid duct, built a matching set of
+bore cylinders, fused them, and subtracted the fuse.
+
+**Why the subtraction did nothing.** Every leg of the duct uses the same bore
+radius, and the legs meet at right angles. A fuse of *equal-radius perpendicular
+cylinders* is a degenerate-tangency case for OCC: `BRepCheck_Analyzer` reports
+the fused shape **invalid**, and `BRepAlgoAPI` answers a boolean against an
+invalid tool with an **empty result and no exception**. So `rp -= _bore` became
+a silent no-op, `rp.intersect(_bore)` read **0.0 mm³** even though a Ø1 sphere on
+the duct axis reads *inside both solids*, and every downstream number — volume,
+mass, the ledger — was self-consistent with a fix that was not in the geometry.
+The model's own harness metric could not see it either, because it measured
+**coverage** (is the route laterally enclosed?) and a solid rod is perfectly
+covered. *Coverage and patency are different questions.*
+
+The fix is two rules, now enforced in code by `cut_each()`:
+
+1. **Never fuse a set of cutting tools.** Keep them as primitives and cut with
+   each in turn; a degenerate fuse then cannot exist.
+2. **A boolean that removes nothing is a failure, not a pass.** Every tool is
+   validity-checked before use and the cut asserts a volume floor.
+
+Measured result on `r12`: **0 of 1757 axis points inside material across all 15
+legs**, a **Ø4.0 mm bundle sweeps every leg at 0.0000 mm³**, and the cut removed
+**8025.3368 mm³ = 10.19 g** of CF-PETG that r11 was carrying as solid. The
+independent checker reproduces it with a control that proves the probe is not
+blind (4000 random points in the part's bbox: 8.6 % read inside).
+
+Three more round-5 findings closed in the same round, and one deliberately not:
+
+- **The detent plunger had nothing to thread into** (assembly BLOCKING). Its
+  bore measured Ø5.199 then Ø6.399, unthreaded, and the comment in the model
+  called the counterbore a heat-set insert seat while **no M5 insert was ordered
+  anywhere in the BOM**. The detent is 96.5 of the 190.7 mN·m reaction budget,
+  so the latch had only the stop pin without it. It is now a **modelled Ø4.5 ×
+  13.5 mm thread-forming pilot** with a Ø5.2 ball clearance to the chamber —
+  measured on the export as a section that steps **5.100 → 4.400 going
+  outward**, which is what a threadable boss looks like and what a clearance
+  hole does not.
+- **The bay screws were 1.000 mm longer than their pilot, and the pilot was
+  open into the metering chamber** over 27.7 % of its section with 0.144 mm —
+  one FDM layer — of floor where it was closed. Floor moved out to y = −46.5 and
+  the screw dropped to M3×18; the pilot now reads **0.0 % open** with the same
+  raster, and the r11 floor is run as a control that comes back **33.9 % / 35.5 %
+  open**, so the probe is provably able to see the defect. The trade is stated:
+  thread engagement 5.08 → **3.58 mm** (1.19 × D), and the thinnest material
+  under the floor is **1.262 mm**, which is 8.8 × r11 but still under the
+  1.95 mm this package uses for insert bosses. That residual is carried open.
+- **Two 2.2 × 5.0 mm cable-tie slots left the granule bed open to the sky.**
+  They had been there since round 2, at plan radius 66.61 mm — inside the tank —
+  and the model's tank-vent self-check used **twelve hand-placed columns**, none
+  within 40 mm of them, printing "0 of 12 open" for nine rounds. The check is
+  now a **0.5 mm grid scan of the whole barrel bore (60 669 rays)**, the ties are
+  additive bridges with no hole in the lid, and the same scan found a *second*
+  defect nobody had reported: the fill cap's **lanyard hole went straight
+  through the 2.5 mm cap flange into the fill bore**. Both are closed; the scan
+  now reads **0.00 mm² unroofed inside the fill-cap O-ring seal**, with 7.25 mm²
+  in the cap-to-recess running clearance outside the gland, which is what the
+  nitrile cord seals.
+- **Not closed, and recorded as such:** ECO-4 asks for a 0.4 mm chamfer at the
+  count-window seat mouth. It was modelled and **withdrawn in the same round**,
+  because the seat mouth plane is tangent to the Ø22 chute bore at x = 32 and the
+  chamfer cone's rim is coincident with the seat cylinder there — the part came
+  back with **22 open and 22 non-manifold edges**, all at x = 31.99…32.01,
+  |y| = 11.000. B10 (watertight exports) is a blocking requirement and a
+  degenerate tangency is not a mesh-tolerance problem, so the seat ships
+  straight-walled and the deviation is written down instead.
 
 ---
 
@@ -538,7 +773,22 @@ recovery puts the motor case at ~95 °C), and **ECO-11** (magnet retention: 9
 loose magnets unqualified for vibration, where a migrated magnet is *both* a
 hard jam and loss of the safe-state decode).
 
-**None of the ECOs were merged into `cad/dispenser.py`.** That is RT-3.
+**rev-1 status (r10):** the *geometry* ECOs are merged and measured on the
+exports — ECO-3 (two Ø3.2 chord apertures per side at x = 29 / 35), ECO-9
+(6.000 mm vertical stagger, z = −392.250 / −398.250), ECO-4 (four Ø6 PMMA
+window seats cut against the bore so nothing is proud of it), ECO-5 (0.800 mm
+lateral labyrinth), ECO-12 (bolted cover, four clamp posts, 30 mm² of bearing
+on the board) and ECO-7/ECO-6 in the electronics bay. `cad/BOM.md` no longer
+lists the TSSP4038; it lists VBPW34FAS ×2, OPA2320, TSAL6200 ×2, four PMMA
+windows and the two sensor PCBs. The rev-0 sentence *"None of the ECOs were
+merged into `cad/dispenser.py`"* was true at r6 and is **false at r10**.
+What is **not** closed: ECO-1/ECO-2 (external finish α ≤ 0.4 vs the black
+CF-PETG in the BOM — punch-list N19), ECO-8 (third Hall) and ECO-10 (motor
+NTC) are electronics-side and were never in this run's scope. The optical
+budget in §4.4 is still written for a 32 mm path against a measured
+**43.1 mm** emitter-tip-to-detector path (≈100× excess gain, not 182×), and
+§4.2/§4.3's fall heights are still the doc's 40 mm against the measured
+38.0/44.0 mm — those are `ELECTRONICS.md` edits, still open.
 
 Ten bench tests gate the build (B1–B10), and one **ICD change request** is
 levied: **FMU_CH2 / K1 default state at FC boot is unspecified** — the only
@@ -609,9 +859,9 @@ exported geometry themselves rather than restating the build notes.
 
 | ID | Risk | Fix | Test that closes it |
 |---|---|---|---|
-| **RT-1** | r6 failed 3 of 4 critics and `dispenser.py` has not changed since. Three blockers reproduced independently: θ = 310° roof through-slot (0.00 mm at all 8 probe radii), disc bore r = 3.06 mm at all 24 angles (no D-flat → no torque path), gearbox holes on a 26 mm square vs the datasheet's Ø26 bolt circle | Run round 7 | The existing four-critic harness, re-run to PASS |
+| **RT-1** | **STILL OPEN after rev-1 — 3 of its 4 legs closed (§10.4).** Fixed and independently reproduced on `r12`: the θ = 310° roof through-slot is gone (9.000 mm of roof at all 8 radii × 16 angles), the gearbox holes are on the datasheet's Ø26 bolt circle (Ø3.40 at (±13, 0) and (0, ±13), 3.200 mm web), and the D-flat exists (r 2.550 flat / 3.050 round, 56° arc, 13.5 mm engagement). **Not fixed: the grub pilot dead-ends 0.200 mm short of the shaft flat** — Ø0.7 corridor 0.0770 mm³, Ø2.6 1.0619 mm³ = π·1.30²·0.200 exactly — so the disc still cannot be clamped to the shaft, and round 6's own checker *and* its assembly critic both called that corridor continuous because their ray starts outboard of the flat. Original rev-0 text: r6 failed 3 of 4 critics with disc bore r = 3.06 mm at all 24 angles (no D-flat → no torque path) and gearbox holes on a 26 mm square | Deepen the pilot 0.2 mm **and** re-anchor the probe at r = 2.55, with a control that must fail | The corridor boolean run **from the flat radius**, reading 0.0000 mm³ |
 | **RT-2** | **No electrical connection to the aircraft.** 19.35 mm blind-mate gap (8.85 mm even at the highest legal pad plane) vs ≤2 mm plunger travel. The notes offered "0.00 mm³ of payload inside the shaft" as proof the PCB *is* in the shaft — that metric is the proof it is not. The escape route is foreclosed: the payload clip half nests at most 0.54 mm into the drone-side channel over 8 tested poses | **ICD-side escalation**, not a payload open issue. 10.5 mm is payload-controllable; the residual is aircraft-side | Physical mate against the real 2112 + 3331 set |
-| **RT-3** | **"Verified count" exists only in a document describing hardware that is not in the CAD.** ECO-3 and ECO-9 never entered `dispenser.py` (L1005-1017 still cuts one Ø3.2 tunnel per side on the bore diameter in a 12 mm boss); `cad/BOM.md` still specifies the TSSP4038 receiver that ELECTRONICS §4.4 rejects | Merge ECO-3/ECO-9/ECO-4 into r7; update BOM | B1 dark-time survey (≥200 real drops + ≥100 fractured Ø7–10 mm pieces) |
+| **RT-3** | **CLOSED IN GEOMETRY at r10** (was: "verified count exists only in a document describing hardware that is not in the CAD"). Measured on `retaining_plate_chute_r10`: four Ø3.2 tunnels, two per side, axes at x = 29.000 / 35.000 and z = −392.250 / −398.250 → **6.000 mm ECO-9 stagger**; ECO-5 labyrinth offset 0.800 mm over the outer 2.505 mm; four ECO-4 window seats cut from the bore axis outward, window inner faces at \|y\| = 11.000 with **0.000 mm³ proud of the bore**; the ordered TSAL6200 now fits its cavity at its **datasheet** 8.7 ± 0.3 mm height (0.0000 mm³ against plate and cover at 9.0 mm max material — r9 buried 11.2532 mm³ per LED). BOM carries VBPW34FAS/OPA2320/TSAL6200/PMMA windows and no TSSP4038 | done in r10 | B1 dark-time survey (≥200 real drops + ≥100 fractured Ø7–10 mm pieces) still gates the **claim**; the geometry no longer blocks it |
 
 ### 7.2 High
 
@@ -674,7 +924,10 @@ enough that **wind drift alone is not the accuracy problem** — hover hold is.
 The red team's stated gate for calling this package rev-0:
 
 1. RT-1 / RT-2 / RT-3 **closed or explicitly declared unmet in `README.md`** —
-   done, they are declared unmet in [`../README.md`](../README.md).
+   done, they are declared in [`../README.md`](../README.md). **Rev-1 update:**
+   RT-3 is closed in geometry, RT-2's surviving half (the electronics bay) is
+   closed and its pin/pad half is out of scope by direction, and **RT-1 is still
+   declared unmet** — see [§10](#10-rev-1-close-out--what-closed-what-did-not).
 2. Bench tests added: **S-115** (pellet crush distribution, RT-11), **S-116**
    (fines generation rate, RT-12), **loaded-hopper solar soak** (RT-6),
    **humidity / swollen-pellet jam** (RT-7), **landing dust cycle** into B2
@@ -696,12 +949,287 @@ all-judges item since the trade study) and **weighing the actual motor**.
 |---|---|
 | `../README.md` | Status, compliance, declared-unmet blockers |
 | `DESIGN.md` | This document |
-| `../cad/dispenser.py` | Parametric build123d source, 2597 lines, with a self-verifying harness |
-| `../cad/verify_exports.py` | Independent export re-measurement, 348 lines (see RT-20) |
-| `../cad/BOM.md` | Auto-generated from measured solids |
-| `../cad/exports/` | 102 files — per-part STEP + STL and full assembly, rounds 1–6; **11 STEP + 11 STL at r6** |
-| `../cad/renders/` | 34 PNGs — iso, section, bottom, meter detail, fill station, bay lid, cartridge-out, rounds 1–6 |
-| `../electronics/ELECTRONICS.md` | 2129 lines: power tree, drive, sensing, DroneCAN contract, priced BOM, 12 ECOs, 10 bench tests, residual-risk register |
+| `../cad/dispenser.py` | Parametric build123d source, **6086 lines** at r12, with a self-verifying harness |
+| `../cad/verify_r6.py` | Independent export re-measurement, **395 lines**, current (reads only `exports/` + `BOM.md`). Earlier: `verify_exports.py`, `verify_r2/r4/r5.py` (see RT-20) |
+| `../cad/BOM.md` | Auto-generated from measured solids; **four COTS description strings hand-corrected at rev-1 packaging** — see §10 |
+| `../cad/exports/` | **288 files** — per-part STEP + STL and full assembly, rev-0 rounds 1–6 and rev-1 `r7`…`r12`; **16 STEP + 16 STL at `r12`** |
+| `../cad/renders/` | **69 PNGs** — iso, section, detail, bottom, fill station, bay lid, cartridge-out; rev-1 rounds are `v1r<N>_*` (7 at `v1r6`) |
+| `../electronics/ELECTRONICS.md` | **2186 lines**: power tree, drive, sensing, DroneCAN contract, priced BOM, 12 ECOs, 10 bench tests, residual-risk register. **Stale against r12** on the count-sensor Z — see §10 |
 | `sim/` | **absent** — §6 |
 | `software/` | out of scope by direction |
-| `../_run/` | 5 research docs, 4 concepts, survey, judging, 6 rounds of build notes with verbatim critic output, red team, gap review |
+| `../_run/` | rev-0: 5 research docs, 4 concepts, survey, judging, 6 rounds of build notes with verbatim critic output, red team, gap review |
+| `../_run/rev1/` | rev-1: `CONTEXT.md` (Thomas's directives), `PUNCHLIST.md`, `CRITIQUE-r1…r6.md`, `BUILD-NOTES-r2/r4/r5/r6.md`, **`VERIFY.md`** (independent fresh-eyes re-measurement of `r12`), `RUN-RESULT.md`, `logs/` |
+
+---
+
+## 10. Rev-1 close-out — what closed, what did not
+
+The rev-1 run (2026-08-07 → 08, six rounds, export tags `r7`…`r12`) had exactly
+one job: **make the CAD close against the punch list**
+([`../_run/rev1/PUNCHLIST.md`](../_run/rev1/PUNCHLIST.md)), under six directives
+from Thomas recorded verbatim in
+[`../_run/rev1/CONTEXT.md`](../_run/rev1/CONTEXT.md). No new mechanism
+exploration, no trade study, no simulation, no software. Every number in this
+section is either quoted from the round's tool output or was re-measured
+independently; where the two disagree, both are printed.
+
+### 10.1 The verdict in one paragraph
+
+**Two of the three rev-0 CAD blockers are closed and survive adversarial
+re-measurement. One is not.** RT-3 (the verified-count hardware that existed
+only in a document) is genuinely in the geometry. RT-2's surviving half (the
+electronics home — the pin/pad stack-up was ruled out of scope by directive 1)
+is a real sealed bay with a real board volume, real standoffs and real grommeted
+entries. **RT-1 is short by 0.200 mm**: the grub-screw pilot in the pocket disc
+dead-ends before it reaches the shaft flat, so the disc still cannot be clamped
+to the motor. Round 6's own checker, and the round-6 assembly critic, both
+reported that corridor as continuous — because both anchor their ray outboard of
+the feature they are testing. **The run therefore does not close.** It is a
+0.2 mm edit plus a checker fix away from closing, and the honest reading is that
+the geometry is much better than r6 and the *verification* is still the weak
+member.
+
+### 10.2 The six rounds
+
+| Round | Tag | Critic verdicts | What the round's root cause turned out to be |
+|---|---|---|---|
+| 1 | `r7` | count-sensor NOT CLOSED (4 blocking) · granule-path FAIL (2 BLOCKER) · assembly FAIL (4 blocking) | first geometry for the whole rev-1 feature set; ECO-4 not as specified, one sensor board not installable, BOM untouched |
+| 2 | `r8` | count-sensor NOT CLOSED (1 blocking) · assembly FAIL (3 blocking) · integration FAIL (4 blocking) | the neck/adapter and the bay landed, but three of integration's four blockers were **created by** the round's own fixes |
+| 3 | `r9` | granule-path FAIL (1 BLOCKER) · count-sensor NOT CLOSED (2 blocking) · assembly FAIL (2 blocking) | **export-integrity regression on the part that carries the exit port**; documented B7 release numbers did not reproduce |
+| 4 | `r10` | granule-path PASS-with-complaints · assembly FAIL (A-10) · integration BLOCKING FAIL | **RT-1 and RT-3 close in geometry here**; the gearbox screws were ordered as cap heads for a 90° countersink; the aircraft-harness conduit elbow was solid |
+| 5 | `r11` | count-sensor PASS-with-complaints · granule-path PASS-with-complaints · assembly FAIL (A-11) · integration BLOCKING FAIL (I-1) | **a roll-up is not a measurement** (§4.8): a coverage table printed 95.3 % over a solid elbow; the M5 detent plunger had nothing to thread into |
+| **6** | **`r12`** | **count-sensor PASS-w/c · granule-path PASS-w/c · assembly PASS · integration PASS-w/c** | **a boolean that silently does nothing** (§4.9): a degenerate fuse of equal-radius perpendicular cutting cylinders made `rp -= bore` a no-op, so the whole cartridge harness duct was solid printed material |
+
+Round 6 is the first rev-1 round with **no blocking finding from any of the four
+critics**. It is also the round the independent verifier failed — which is the
+point of having one.
+
+*Record-keeping defect, stated rather than papered over:* build notes exist for
+rev-1 rounds 2, 4, 5 and 6. **Rounds 1 and 3 have critiques but no build notes**
+(the round-1 count-sensor critic records that `BUILD-NOTES-r1.md` did not exist
+when it ran). What those two rounds changed is recoverable only from the
+following round's critique and from `logs/`.
+
+### 10.3 What closed, with the numbers
+
+Everything here was re-measured on the `r12` exports by a verifier who had seen
+no build round and never read `dispenser.py`
+([`../_run/rev1/VERIFY.md`](../_run/rev1/VERIFY.md)); B4 and B6 reproduce to the
+third decimal.
+
+- **The count-sensor hardware is real (RT-3, B4).** Four Ø3.10–3.20 tunnels, two
+  per side, axes at x = 29.000/35.000 and z = −392.250/−398.250 → the **6.000 mm
+  ECO-9 stagger**; a Ø0.2 probe reads **0.000 mm of material** on both beam axes
+  and 12.834 mm at the two off-diagonal controls; the ECO-5 labyrinth measures a
+  **0.800 mm** offset with a **0.800 mm** ledge, split ±0.400 so the clear lens
+  stays on the ECO-3 axis; four PMMA windows with inner faces at |y| = 11.000 and
+  **0.0000 mm³** proud of the Ø22 bore; a Ø13 granule swept down the chute
+  booleans to **0.0000 mm³** against plate, windows, cover and boards. The BOM
+  carries VBPW34FAS ×2 / OPA2320AIDR / TSAL6200 ×2 and **no TSSP4038**.
+- **The roof through-slot is gone (B1).** 8.980 mm of roof (STL chordal error on
+  a 9.000 mm STEP section) at all **8 radii × 16 angles**, including θ = 310°
+  where r6 read 0.000. The largest travel-opposing roof face over the transfer
+  arc is **1.98 mm²** against a 20 mm² threshold; r6 had **238 mm²**.
+- **The gearbox mounts on its own bolt circle (B3).** Four Ø3.40 holes at
+  (±13.00, 0) and (0, ±13.00) through a 4.000 mm flange — the datasheet Ø26 bolt
+  circle, replacing r6's 26 mm *square* — with a **3.200 mm** minimum web
+  (r6-naive: 0.30 mm) and a continuous 2.2 mm-wide thrust-washer annulus.
+- **Reach-in clearance is proved with numbers, not adjectives (directive 3, B6).**
+  Stand-off **h = 43.500 mm** on a **48 × 48 mm** neck (plan half-extent a
+  constant 24.000 mm from Z = −181.55 to −225.05); three of four 95 × 45 × 130 mm
+  gloved-hand corridors clear at **0.0000 mm³**, **including both opposing
+  ±X sides**; **0 vertices** of payload above Z = −171.000.
+- **The rejection band is no longer blind (B8).** max(nose gap) = **1.500 mm**
+  over the whole rejection arc = min(roof clearance) **1.500 mm**, with the
+  compliant bristle tip leading at **1.200 mm**. r6's constant 3.000 mm nose
+  left a band a fragment could enter and never be stopped by.
+- **The exports are clean (B10).** 15/15 part STLs watertight, **0 non-manifold
+  edges**, assembly 24/24 bodies and 0 open edges — reproduced edge-by-edge,
+  Euler characteristics and all, by an independent trimesh run.
+- **The mass ledger is measured, not asserted (B11).** Every part volume
+  reproduces to **≤ 0.04 %**. **LOADED @250 = 1432.5 g** on the shipped
+  slicer-realistic basis (4 perimeters at 0.4 mm, 25 % infill, padded EDT) →
+  **+68 g** under the 1500 g ceiling; **1493.5 g** with the 61 g per-open-item
+  reserve; the 100 %-infill pessimistic bound **1576.0 g** is **76 g over** and
+  is printed rather than hidden; max fill @421 = 1777.8 g; dry 1281.0 g.
+- **Refill has a rest position (directive 4, B12).** `service_stand` is a real
+  modelled part (103.892 cm³ → 132.0 g) and is correctly listed as **mandatory
+  GSE excluded from the flight ledger** — without it the dispenser stands on its
+  own gearbox output flange.
+- **Capacity is untouched, as directed.** 962 cm³ → 421 granules, a change of
+  ≪ 2 % from rev-0's ~422.
+
+### 10.4 What did not close
+
+**1. RT-1: a 0.200 mm web across the grub pilot — BLOCKING.** The corridor from
+the disc OD to the shaft is present and clean from r = 46 down to **r = 2.750**,
+and the shaft flat is at **r = 2.550**. The 0.200 mm between them is solid
+CF-PETG across the full Ø2.6 section. Exact booleans on `pocket_disc_r12.step`,
+first by the verifier and then reproduced digit-for-digit by the packager:
+
+```
+  Dia0.7 from r=46.5 to r=2.55 (the bore flat): disc material = 0.0770 mm3   <-- BLOCKED
+  Dia0.7 from r=46.5 to r=2.75:                 disc material = 0.0000 mm3
+  Dia1.9 from r=46.5 to r=2.55:                 disc material = 0.5671 mm3   <-- BLOCKED
+  Dia2.6 from r=46.5 to r=2.55:                 disc material = 1.0619 mm3   <-- BLOCKED
+  Dia2.6 from r=46.5 to r=2.75:                 disc material = 0.0000 mm3
+```
+
+1.0619 mm³ = π·1.30²·0.200 **exactly** — a full-section plug, not a sliver of
+mesh error. Everything else in the torque path is real: the D-flat runs r 2.550
+(flat) / 3.050 (round) over a **56° contiguous arc** with **13.5 mm** of axial
+engagement against a 12 mm vendor D-cut, the grub axis sits at θ = 202.5° which
+is the flat's exact mid-angle, and a Ø1.9 × 40 mm driver column booleans to
+**0.0000 mm³** against all seven surrounding parts. This is a one-line fix.
+
+**Why six rounds signed it off is the part worth keeping.** `BUILD-NOTES-r6.md`
+§7 prints *"grub corridor, Ø0.7 ray from the bore to the disc OD along
+θ = 202.5: blocked at r = **NOWHERE** — continuous void"*, and the round-6
+assembly critic independently reported *"a continuous grub corridor from the disc
+OD to the shaft"*. Both are wrong for the same reason: the ray is anchored at the
+**round** bore radius (3.05) or at the pilot floor, both **outboard** of the flat
+at 2.55, so neither probe can ever see the web. That is the third instance in
+this programme of one failure class — §4.8's coverage table that scored a solid
+rod as perfectly covered, §4.9's boolean that removed nothing and returned no
+error, and now a probe that starts past the feature it is testing. **A check that
+cannot fail is not a check**, and rev-1 shipped two rules against this
+(`cut_each()`'s volume floor, and controls that must fail) without ever applying
+them to the assembly probes. The fix is two lines: deepen the pilot 0.2 mm, and
+re-anchor the checker ray at the flat radius.
+
+**2. B7 — release is not from a stationary pocket. A recorded plateau, not a
+closure.** The granule leaves **3.25–10.50°** into the 22.5° index (spread 7.25°
+across Ø11…Ø13); separation at release **6.690–10.701 mm** against a B7.1
+requirement of ≤ 1.0 mm; lateral velocity **0.126 m/s** at the mean index rate,
+0.25 m/s at peak. The round-5 granule-path critic re-derived the window
+analytically from the measured rim and got 3.17–10.39°, spread 7.22° —
+agreement to ≤ 0.11° from a
+different construction. The punch list permits B7 as a plateau **only if every
+document says so**, and they do: the build notes, this section, and the README.
+Geometric closure needs an architecture change, which this run was explicitly
+told not to attempt.
+
+**3. Deviations recorded in round 6, each with its trade stated.**
+
+- **ECO-4's 0.4 mm window-seat chamfer is not modelled.** It was attempted and
+  **withdrawn in the same round**: the seat mouth plane is tangent to the Ø22
+  chute bore at x = 32 and the chamfer cone's rim is coincident with the seat
+  cylinder there, so the part came back with 22 open and 22 non-manifold edges,
+  all at x = 31.99…32.01, |y| = 11.000. Watertight exports are a blocking
+  requirement and a degenerate tangency is not a mesh-tolerance problem. Either
+  ELECTRONICS ECO-4 is amended or the seat is redesigned so the mouth is not
+  tangent to the bore.
+- **1.262 mm of material under the bay-screw pilot floor**, against the 1.95 mm
+  this package uses for insert bosses. It is 8.8× better than r11's 0.144 mm and
+  the pilot now reads **0.0 % open** into the metering chamber (with r11's floor
+  re-run as a control that comes back 33.9 % open, so the probe is provably able
+  to fail) — but it is thin, and it is carried open.
+- **Bay-screw thread engagement dropped 5.080 → 3.580 mm** (1.19 × D), bought
+  deliberately to close that breakthrough.
+- **The Ø2.0 × 60 mm beam cylinder clips the sensor cover by 0.1576 mm³** on beam
+  A, 6.5 mm behind the emitter board. Over the actual emitter-to-detector span it
+  is 0.0000 mm³, so this is off the optical path — but the punch-list test as
+  literally written is not satisfied, and both numbers are printed.
+- **The emitter board sits 0.500 mm off the boss face**, not the 1 mm the
+  punch-list test assumes; the literal "+1 mm all round" boolean reads
+  131.96 mm³. The receiver board passes the same test at 0.0000 mm³.
+
+**4. Carried open from earlier rounds, unactioned.** **N10** — the sump outlet is
+26.993 mm × 120.000° = **2.076 × D_max**, below every no-arch criterion for a
+slot; the defence is the agitator (one full sweep per 2.67 dispensed granules)
+and this stays an explicit plateau-with-complaint. **N19** — CF-PETG (α ≈ 0.95)
+on 9 of 10 external parts against ECO-1/ECO-2's α ≤ 0.4; a material decision
+nobody has made, and it is the same contradiction RT-6 raises. **N11** — no
+isolation gate, so clearing a jam still dumps ≈115 cm³ ≈ 51 granules. **N9/N5** —
+the tether hard point and the fill-cap detent are in the 12.0 g mass reserve, not
+in the geometry. **Two directive-2 complaints on the word "sealed"** — the gasket
+cord is 164–169 % of its groove volume (40 % squeeze, i.e. the BOM should order
+1.5 mm cord, not 2.0 mm) and there is **29.33 mm² of unsealed opening** at the
+roof spigot; until one of those is fixed the bay is dust-**resistant**, not
+sealed.
+
+**5. `ELECTRONICS.md` is stale against the geometry by 49.1 mm.** §4 still places
+the count sensor at Z ≈ −343.2, "10 mm above the chute exit"; it is modelled at
+**−392.250/−398.250**, i.e. 41.000/47.000 mm of fall, v = 0.8969/0.9603 m/s. The
+count-sensor critic asked for §4.2/§4.3 to be re-based and the Ø11 margin
+restated (7 % → 6.0 %). **Not done** — this run's scope was CAD. §4.5 also still
+calls window replacement "a 10-second maintenance action"; the seat is a blind
+bonded counterbore 20.050–26.050 mm up a Ø22 bore, so the window is **swabbable,
+not field-replaceable**.
+
+**6. Nothing has been tested.** σ = 0.36 MPa and µ = 0.4 (IFDC S-115) are carried
+assumptions, the dark-time survey that freezes the count gate (B1) is unrun, the
+packing-fraction fill calibration is unrun, **150.4 g of the 1164.5 g empty
+subtotal is estimate rather than measured geometry**, and the 350 g stepper has
+never been on a scale.
+
+### 10.5 The BOM defects, and a trap for whoever regenerates it
+
+The verifier checked `cad/BOM.md` against the geometry the same file's masses
+were integrated from, and found four **description strings** that would buy parts
+that do not fit. All four are corrected in `cad/BOM.md` and marked
+`[CORRECTED 2026-08-08]`; each correction below was re-measured by the packager
+on the `r12` exports.
+
+| Row | Said | Measures | Consequence if ordered as written |
+|---|---|---|---|
+| PTFE thrust washer | Ø30 / Ø24 × 1.5 | **Ø38 / Ø34 × 1.400**, 316.673 mm³, in a 1.005 mm recess at r 16.9…19.1 | the ordered ID/OD lands directly on the four Ø3.4 gearbox bolt holes at r 11.30…14.70, and is 0.1 mm too thick for the seat |
+| gearbox pilot bore (B3.4) | *stated nowhere* | **Ø16.20** (no material at r ≤ 7.50, full column at r ≥ 8.50 through the 4.000 mm flange) | the punch list asks for this diameter explicitly, with a source; the vendor boss diameter it clears is still an **ASSUMPTION** and must be caliper-checked on the real motor |
+| count windows ×4 | Ø6 × 1.0 | **Ø5.900 × 0.950**, 25.9727 mm³ each | the disc does not enter its seat. ECO-4 carries the same wrong number and needs amending |
+| stepper net mass | "310 g NET is an ASSUMPTION" | ledger and README carry **350 g** | a 40 g disagreement on the single largest COTS mass, in the two documents that decide whether the payload is under 1500 g |
+
+**The trap:** `cad/BOM.md` is auto-generated and says "do not edit by hand", but
+`dispenser.py` still emits all four of the old strings. **The next regeneration
+re-introduces every one of them** unless the source tables are fixed first. That
+is written at the top of the BOM as well.
+
+### 10.6 Four passes with zero margin
+
+These are recorded as passes in the punch list and they are passes — but they
+have no margin at all, and three of them are the kind that a real tolerance
+stack turns into a failure:
+
+- **sensor boss ↔ motor body: 4.000 mm** against a ≥ 4.0 mm requirement. The
+  punch list assumed 4.4 mm because it put the motor face at x = 17.6; the
+  modelled face is at x = 18.0.
+- **bearing seat Ø23.023–23.030** against a ≤ Ø23.03 limit for a 23.00 mm-OD
+  igus JFM-2023-07. The flange counterbore is also 1.70 mm deep for a 2.0 mm
+  flange, so the bearing flange stands **0.30 mm proud** of the roof.
+- **hopper insert bore depth 5.99 mm** against a required 6.00 mm (insert 5.7 +
+  0.3), with 1.01 mm of floor left.
+- **nose gap 1.500 mm exactly equal to roof clearance 1.500 mm** — which is the
+  *intent* of the B8 fix, but it means any print variation on either part
+  re-opens the blind band.
+
+### 10.7 What nobody has verified
+
+Stated so that no reader counts it as checked. The verifier could not reproduce:
+the harness five-volume boolean and the channel coverage/fill numbers (B5.4/B5.5
+— they only exist inside the model), the bay gasket groove loop (B5.3, below its
+scan resolution), lid-lift and driver-column sweeps (B5.6), the quick-release
+actuation envelope (B6.3 — the release half is drone-side), **ground and prop
+clearance (B6.5/B6.6 — the airframe STEPs were not present at the referenced
+path, and the stack moved down ~52 mm this rev)**, the B7 0.25° release sweep,
+B8.3/B8.4/B8.5, mount-screw engagement, the detent thread pilot, the B12
+rest-position and fill-route sweeps, and every non-blocking N-item.
+
+One authoring defect in the punch list itself, for whoever writes the next
+checker: **B1.1's "≥ 6.0 mm of roof at every probe outside θ = 96…131" and "full
+nominal at θ = 200° and 310°" contradict the designed 120° sump outlet** that the
+same document describes in N10. Written literally, that clause reports a
+permanent false failure on a correct design.
+
+### 10.8 What it would take to call rev-1 closed
+
+1. Deepen the disc's grub pilot **0.200 mm** so it breaks into the bore, and
+   **re-anchor the corridor probe at the flat radius (2.55), not the round bore
+   radius (3.05)** — with a control that must fail. Re-export, re-verify.
+2. Fix the four BOM strings **in `dispenser.py`**, so a regeneration does not
+   undo §10.5.
+3. Re-run ground and prop clearance against the real airframe STEPs, because the
+   payload dropped ~52 mm this rev and nobody has independently confirmed the
+   129.4 / 103.63 / 152.55 mm figures since.
+
+Items 1 and 2 are hours of work. Item 3 is a path fix. **B7, N10, N19, the ECO-4
+chamfer, the ELECTRONICS re-basing and every bench test remain open by design or
+by scope**, and are listed above rather than folded away.
