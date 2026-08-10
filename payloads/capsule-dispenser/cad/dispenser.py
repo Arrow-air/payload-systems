@@ -1793,13 +1793,20 @@ _flat_keep = Rot(Z=GRUB_A) * (Pos(BORE_FLAT_R + 25.0, 0,
 disc -= (_bore - _flat_keep)
 # M3 cup-point grub onto the shaft D-flat, on the SAME axis as the flat so it
 # presses square on it. The corridor is continuous from the disc OD to the
-# bore: Dia3.4 clearance r 9..47, then a Dia2.6 thread-forming pilot r 3..9.
+# bore: Dia3.4 clearance r 9..47, then a Dia2.6 thread-forming pilot from
+# r 9.25 down to a floor at r = 2.45 -- 0.10 mm INBOARD of the 2.55 bore
+# flat, so the pilot breaks fully through the flat web and the cup point can
+# reach the shaft at any +/-0.05 print tolerance. (rev1 close-out B2.2: the
+# r12 pilot floored at r = 2.75 and left a full-section 0.200 mm CF-PETG web
+# over the flat -- 1.0619 mm3 in the Dia2.6 corridor -- so the grub could
+# never touch the shaft. Inboard of the flat plane is bore void; 0.10 mm of
+# overshoot cuts nothing structural.)
 # GRUB_A = 202.5 deg is a half-station: with the dimples moved to the pocket
 # angles (above) it clears the pockets by 12.2 mm, the dimples by 17.6 mm and
 # the lightening holes by 5.7 mm -- all measured in the checks.
 Z_SETSCREW = Z_DISC_TOP + SETSCREW_Z_OFF
-disc -= Rot(Z=GRUB_A) * (Pos(6.0, 0, Z_SETSCREW) * Rot(Y=90)
-                         * Cylinder(GRUB_PILOT_R, 6.5))
+disc -= Rot(Z=GRUB_A) * (Pos(5.85, 0, Z_SETSCREW) * Rot(Y=90)
+                         * Cylinder(GRUB_PILOT_R, 6.8))
 disc -= Rot(Z=GRUB_A) * (Pos((9.0 + DISC_R + 1.0) / 2, 0, Z_SETSCREW)
                          * Rot(Y=90) * Cylinder(GRUB_CLEAR_R, DISC_R + 1.0 - 9.0))
 add("pocket_disc", disc, "#e8763a", density=DENS["petg_cf"],
@@ -2767,7 +2774,7 @@ import copy
 solids = {k: v["solid"] for k, v in parts.items()}
 aux_solids = {k: v["solid"] for k, v in aux.items()}
 os.makedirs(EXPORT_DIR, exist_ok=True)
-REV = "r12"         # rev-1 round 6 (r11 = round 5, r10 = round 4, r9 = round 3)
+REV = "r13"         # rev-1 close-out (r12 = round 6, r11 = round 5, r10 = round 4)
 PRINTED = ["top_plate", "fill_cap", "hopper", "meter_housing",
            "pocket_disc", "agitator", "brush_holder", "retaining_plate_chute",
            "electronics_bay", "bay_lid"]
@@ -3975,23 +3982,40 @@ for _z in _zs_bore:
     _rr_all.append(_row)
 _rr_all = np.array(_rr_all)
 _flat_mask = _rr_all < 2.80
-_arc_deg = 5.0 * _flat_mask.sum(axis=1).min()
+# The >=25 deg flat-arc requirement applies OUTSIDE the grub band: at heights
+# within +/-GRUB_PILOT_R of the setscrew axis the Dia2.6 pilot occupies the
+# middle of the flat BY DESIGN (close-out B2.2 -- the corridor must break
+# through to the shaft there; its ~61 deg footprint at r=2.55 is wider than
+# the 50 deg flat, so the flat reads 0 deg inside the band and that is the
+# fixed geometry, not a regression).
+_pilot_band = np.abs(_zs_bore - Z_SETSCREW) <= GRUB_PILOT_R + 0.05
+_arc_deg = 5.0 * _flat_mask[~_pilot_band].sum(axis=1).min()
+_arc_band = (5.0 * _flat_mask[_pilot_band].sum(axis=1).min()
+             if _pilot_band.any() else float("nan"))
 print(f"    bore radius swept at 5 deg x {len(_zs_bore)} heights over the "
       f"{Z_BORE_TOP - Z_DCUT_BOT:.1f} mm D-cut engagement: round part "
       f"{_rr_all[~_flat_mask].mean():.2f} +/- {_rr_all[~_flat_mask].std():.3f} mm, "
       f"FLAT part {_rr_all[_flat_mask].mean():.2f} +/- "
       f"{_rr_all[_flat_mask].std():.3f} mm over a contiguous {_arc_deg:.0f} deg "
-      f"arc at every height (need >=25 deg at r=2.55+/-0.05; r6 measured "
-      f"r=3.06 at ALL angles and both heights)")
+      f"arc at every height OUTSIDE the grub band (need >=25 deg at "
+      f"r=2.55+/-0.05; r6 measured r=3.06 at ALL angles and both heights); "
+      f"inside the grub band (|z-{Z_SETSCREW:.2f}| <= {GRUB_PILOT_R:.2f}) the "
+      f"flat reads {_arc_band:.0f} deg because the Dia{2*GRUB_PILOT_R:.1f} "
+      f"pilot breaks through it to the shaft (close-out B2.2, by design)")
+assert _arc_deg >= 25.0, "B2: flat arc lost outside the grub band"
 _ray_blocked = []
-for _r in np.arange(3.4, DISC_R, 0.25):
+# The ray MUST anchor at the bore FLAT (r = 2.55), not the round-bore radius:
+# anchoring at 3.4 is how six rounds missed a 0.200 mm web sitting at
+# r 2.55..2.75 (rev1 close-out B2.2 -- the independent verifier measured
+# 1.0619 mm3 of disc material there while this check printed "NOWHERE").
+for _r in np.arange(BORE_FLAT_R, DISC_R, 0.25):
     _p = Rot(Z=GRUB_A) * (Pos(_r, 0, Z_SETSCREW) * Sphere(0.35))
     if inter_vol(_p, solids["pocket_disc"]) > 1e-4:
         _ray_blocked.append(_r)
-print(f"    grub corridor, Dia0.7 ray from the bore to the disc OD along "
-      f"theta={GRUB_A:.1f}: blocked at r = "
+print(f"    grub corridor, Dia0.7 ray from the bore FLAT (r={BORE_FLAT_R:.2f}) "
+      f"to the disc OD along theta={GRUB_A:.1f}: blocked at r = "
       f"{('%.2f..%.2f' % (min(_ray_blocked), max(_ray_blocked))) if _ray_blocked else 'NOWHERE -- continuous void'} "
-      f"(r6: solid 10.60..24.47)")
+      f"(r12 anchored this ray at 3.40 and missed the 2.55..2.75 web; r6: solid 10.60..24.47)")
 _key = Rot(Z=GRUB_A) * (Pos(DISC_R + 20.0, 0, Z_SETSCREW) * Rot(Y=90)
                         * Cylinder((GRUB_KEY_AF + 0.4) / 2, 40.0))
 _key_tab = {k: inter_vol(_key, s) for k, s in solids.items()
@@ -5613,7 +5637,19 @@ print(f"    (the justified blocks total {sum(m for _, m in _att):.1f} g, i.e. "
 COTS = [
     ("geared stepper", "StepperOnline 14HS13-0804S-PG5 (5.18:1 planetary)",
      "VERIFIED vendor page: 0.14 N*m, 1.0 A/ph, backlash <=3 deg, max 3 N*m, "
-     "Dia6x18 D-cut, gross 0.38 kg; 310 g NET is an ASSUMPTION"),
+     "Dia6x18 D-cut, gross 0.38 kg; 350 g NET carried (rev1 B11.3: same "
+     "figure as the ledger/README, vendor catalogue class -- never on a "
+     "scale; closure is to weigh one)"),
+    # rev1 close-out B3.4: this row exists so the Dia16.20 pilot bore the
+    # retaining plate models for the gearbox output boss is stated WHERE THE
+    # ORDER HAPPENS, next to the part it must clear. Bore edge measured at
+    # r=8.10 through the 4.000 mm flange band; Dia26 bolt circle is datasheet;
+    # the BOSS diameter itself is not in the datasheet extract -> ASSUMPTION.
+    ("gearbox output boss", "(feature of the stepper above)",
+     "rev1 B3.4: retaining plate pilot bore modelled Dia%.2f for this boss; "
+     "Dia%.0f bolt circle VERIFIED (datasheet); the boss diameter the bore "
+     "must clear is an ASSUMPTION -- caliper-check the real motor before "
+     "printing the plate" % (2 * MOTOR_PILOT_R + 0.20, 2 * MOTOR_BC_R)),
     ("sleeve bearing", "igus iglidur J JFM-2023-07 (ID20/OD23/L7)",
      "length VERIFIED catalogued (TME/RS list JFM-2023-07/11/16/21); flange "
      "Dia30x2 ASSUMPTION"),
@@ -5630,8 +5666,11 @@ COTS = [
     ("count amp", "TI OPA2320AIDR (dual, rail-to-rail, transimpedance)",
      "ELECTRONICS 4.4 ASSUMPTION"),
     ("count emitter x2", "Vishay TSAL6200 (940 nm, 34 deg)", "ASSUMPTION"),
-    ("count windows x4", "Dia6 x 1.0 cast PMMA disc, sacrificial, bonded "
-     "(UV-acrylic or CA)", "ECO-4; laser-cut, PN ASSUMPTION"),
+    ("count windows x4", "Dia5.90 x 0.95 cast PMMA disc, sacrificial, bonded "
+     "(UV-acrylic or CA)", "ECO-4; laser-cut, PN ASSUMPTION -- rev1 B4.4: "
+     "order to the MODELLED size (window solids 5.900 x 0.950, seats at "
+     "x=29.0/35.0) or the disc will not enter its seat; ELECTRONICS ECO-4 "
+     "still says Dia6 x 1.0 and needs amending"),
     ("sensor-cover screws", "4x M2x6 self-tap into the boss ears",
      "ECO-12 retention (r7 ordered 2x M3 grubs for a hole that did not exist)"),
     ("Hall x2", "TI DRV5032FBDBZR", "ASSUMPTION"),
@@ -5649,14 +5688,23 @@ COTS = [
      "N-i4 PN ASSUMPTION"),
     ("sensor pads x2", "18 x 12 x 0.5 mm silicone pad", "PN ASSUMPTION"),
     ("plastite x3", "Delta PT-class K30x8 thread-forming", "PN ASSUMPTION"),
-    ("PTFE washer", "Dia30/Dia24x1.5 virgin PTFE (Essentra class)", "PN ASSUMPTION"),
+    ("PTFE washer", "Dia%.0f OD / Dia%.0f ID x 1.4 virgin PTFE (Essentra "
+     "class)" % (2 * WASH_RO, 2 * WASH_RI),
+     "PN ASSUMPTION -- rev1 B9d: sized from WASH_RI/RO so this string cannot "
+     "drift from the modelled washer again (the r12 string said Dia30/Dia24 "
+     "x1.5, which sat on the Dia26-circle bolt holes and was 0.1 mm too "
+     "thick for the seat)"),
     ("strip brush", "nylon mini strip brush, 1.6 mm backing, ~4 mm trim "
      "(Sealeze/Gordon Brush class)", "PN ASSUMPTION"),
     # rev1 B2.4: r7 stated this THREE different ways (COTS M2.5x4, fastener
     # table M3x4, model pilot Dia2.6 = M3 thread-forming). It is an M3, and
     # the string-equality check below asserts that the BOM says so.
     ("set screw", GRUB_SIZE + " hex socket cup-point grub (disc->shaft)",
-     "M3 thread-forming into the modelled Dia%.1f pilot" % (2 * GRUB_PILOT_R)),
+     "M3 thread-forming into the modelled Dia%.1f pilot; close-out r13 "
+     "(B2.2): pilot floor moved r=2.75 -> r=2.45, 0.10 mm inboard of the "
+     "2.55 bore flat -- the r12 disc had a 0.200 mm closed CF-PETG web here "
+     "and its grub could never touch the shaft; corridor now measured "
+     "continuous (corridor check, anchored at the flat)" % (2 * GRUB_PILOT_R)),
     ("O-ring", "1.5 mm cord, Dia43.6 ID nitrile (fill cap gland)", "class"),
 ]
 # =====================================================================
@@ -5845,7 +5893,10 @@ with open(os.path.join(HERE, "BOM.md"), "w") as fh:
              "flights, removed before flight).\n\n"
              "## COTS / non-printed\n\n| item | part | status | mass g |\n"
              "|---|---|---|---|\n")
-    _cots_mass = {"stepper": parts["stepper"]["mass"],
+    # keys must match the COTS row NAMES exactly -- "stepper" here vs the
+    # "geared stepper" row left the largest COTS mass blank in every BOM
+    # through r12 (close-out B11.3 adjunct, found regenerating r13)
+    _cots_mass = {"geared stepper": parts["stepper"]["mass"],
                   "sleeve bearing": parts["sleeve_bearing"]["mass"],
                   "PTFE washer": parts["thrust_washer"]["mass"],
                   "strip brush": parts["brush_bristles"]["mass"]}

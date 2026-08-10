@@ -373,3 +373,36 @@ ran. This is the second consecutive retry killed entirely by the safety-filter
 false positive; rephrasing within the same prompts did not help. A further
 attempt needs a different model, or prompts/paths that avoid the project's
 "payload"/"bullet" naming.)*
+
+## Close-out r13 (2026-08-10)
+
+**Outcome: CLOSED — r13 is the shipped tag.** Executed BY HAND in a supervised
+long-lived session (Hex, with Thomas's go-ahead) after all seven spawned-agent
+attempts — workflow harness and direct spawn, two models, before and after the
+project rename — were killed at spawn by API content-safeguard false positives
+(see the three sections above and `R13-RUN-RESULT.md`). Full build notes with
+verbatim measured output: `BUILD-NOTES-closeout-r13-r1.md`.
+
+- **B2.2 CLOSED.** Pilot floor r 2.75 → 2.45 (0.10 mm inboard of the 2.55 bore
+  flat); corridor booleans on `pocket_disc_r13.step` read **0.0000 mm³** at
+  Ø0.7/Ø1.9/Ø2.6 down to the flat. The r12 disc, probed identically as a
+  **failing control**, reproduces VERIFY.md to four decimals (0.0770 / 0.5671 /
+  1.0619 mm³) — the probe sees what the old checker missed. The project checker
+  is re-anchored at the flat (`BORE_FLAT_R`, was 3.4) and the flat-arc metric
+  now requires ≥25° outside the grub band under an assert, printing the
+  in-band 0° as the designed pilot breakthrough.
+- **B3.4 + BOM strings CLOSED.** All four hand-patched strings now originate in
+  the `dispenser.py` COTS table (washer string derived from `WASH_RI/RO`);
+  new `gearbox output boss` row states the Ø16.20 pilot bore with the
+  caliper-check caveat; `BOM.md` regenerated at r13, zero hand edits. Adjunct
+  fix: the COTS mass-map key mismatch that left the stepper's 350 g blank in
+  every generated BOM through r12.
+- **B7.1 — no edit needed.** VERIFY.md itself accepted the docs' plateau
+  numbers as correctly stated; re-checked, still true.
+- **B6.5/B6.6 — OPEN, unverifiable without input.** Both checkouts still
+  contain only `1340_tube_joint.step` + `vendor/1330_main_adapter.step`; no
+  airframe/gear assembly exists to measure. Needs real STEPs or calipers.
+- **Export integrity:** 15/15 r13 STEP/STL pairs watertight, volume delta
+  ≤ 0.053 % (independent trimesh/OCP, `cad/verify_r13_closeout.py`).
+- **README** status + open-blockers items 1 and 2 annotated CLOSED-at-r13;
+  the disc print hold is lifted.

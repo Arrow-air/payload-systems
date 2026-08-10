@@ -1,6 +1,6 @@
 # capsule Dispenser
 
-**Status:** design — **rev-1 CAD close-out, export tag `r12`, NOT cleared to print.** Two of the three rev-0 CAD blockers (RT-2's bay implication, RT-3's count hardware) are closed in geometry and reproduce under independent re-measurement. **RT-1 is not**: a fresh-eyes verifier, and then the packager, both measured a **0.200 mm closed web** across the disc's grub-screw pilot, so the disc still cannot be clamped to the motor shaft. **A dedicated close-out run (2026-08-08) failed to clear this: both fix rounds produced nothing (no `r13` exports, no source changes), so `r12` remains the shipped tag, the 0.200 mm web is still in the shipped disc (re-measured at pack time: 1.0619 mm³ of material in the Ø2.6 corridor to r = 2.55), the BOM corrections remain regeneration-fragile hand-patches, and the ground/prop clearance numbers remain unverified.** See [Open blockers](#open-blockers-read-before-building); full evidence in [`_run/rev1/VERIFY.md`](_run/rev1/VERIFY.md), [`_run/rev1/CLOSEOUT-VERIFY-r2.md`](_run/rev1/CLOSEOUT-VERIFY-r2.md) and the round-by-round record in [`_run/rev1/RUN-RESULT.md`](_run/rev1/RUN-RESULT.md).
+**Status:** design — **rev-1 close-out complete, export tag `r13` (2026-08-10).** All three rev-0 CAD blockers are now closed in geometry and reproduce under independent re-measurement. **RT-1 closed at r13:** the grub pilot now breaks through the bore flat (floor r = 2.75 → 2.45); the corridor measures **0.0000 mm³** of disc material at Ø0.7/Ø1.9/Ø2.6 down to the flat, with the r12 disc re-measured alongside as a **failing control** (1.0619 mm³ at Ø2.6 — the probe provably sees the web the old checker missed, and that checker is re-anchored at the flat with an assert). The four BOM corrections now originate in `dispenser.py`'s source tables (regeneration-proof), and the standing print hold is lifted for the disc. **Still open:** ground/prop clearance (B6.5/B6.6) is *unverifiable without input* — no airframe/landing-gear STEPs exist in any checkout; the clearance row below remains build-notes-carried until measured against the real gear. Close-out evidence: [`_run/rev1/BUILD-NOTES-closeout-r13-r1.md`](_run/rev1/BUILD-NOTES-closeout-r13-r1.md), verification script `cad/verify_r13_closeout.py`; historical record in [`_run/rev1/VERIFY.md`](_run/rev1/VERIFY.md) and [`_run/rev1/RUN-RESULT.md`](_run/rev1/RUN-RESULT.md).
 **Target port(s):** bottom (J31 — the only port with 12VSW)
 **ICD version:** 1.0
 **Champion:** thomasg
@@ -61,7 +61,10 @@ package survived**: B1 (roof slot), B3 (bolt geometry), B4 (count sensor), B6
 all reproduce independently, B4 and B6 to the third decimal. **Three things did
 not**, and one of them is a hard blocker:
 
-1. **BLOCKING — the disc still cannot be clamped to the shaft (RT-1 is not
+1. **[CLOSED at r13, 2026-08-10 — pilot floor moved to r = 2.45, checker
+   re-anchored at the flat; corridor measured 0.0000 mm³ with the r12 disc as
+   failing control. Historical finding below, kept verbatim.]**
+   **BLOCKING — the disc still cannot be clamped to the shaft (RT-1 is not
    closed).** The grub-screw pilot dead-ends at r = 2.750 against a shaft flat
    at r = 2.550, leaving a **0.200 mm closed web of CF-PETG across the full
    Ø2.6 section**. The packager reproduced all five of the verifier's booleans
@@ -80,7 +83,10 @@ not**, and one of them is a hard blocker:
    can't-fail-probe class as RT-19/RT-20. **Fix: deepen the pilot 0.2 mm to
    break into the bore, and re-anchor the checker ray at the flat radius.**
    Until then, do not print the disc.
-2. **BOM defects, now corrected at packaging (see the `[CORRECTED 2026-08-08]`
+2. **[CLOSED at r13, 2026-08-10 — all four strings moved into `dispenser.py`'s
+   COTS source table (washer string now derived from the geometry constants);
+   BOM.md is regenerated, no hand-patches remain. Historical finding below.]**
+   **BOM defects, now corrected at packaging (see the `[CORRECTED 2026-08-08]`
    rows in `cad/BOM.md`).** The PTFE thrust washer was ordered **Ø30/Ø24 × 1.5**
    against a modelled solid of **Ø38/Ø34 × 1.4** — the ordered ID/OD sits on top
    of the four Ø3.4 gearbox bolt holes; the gearbox **pilot bore Ø16.20** that

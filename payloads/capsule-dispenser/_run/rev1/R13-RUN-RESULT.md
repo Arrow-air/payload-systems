@@ -58,3 +58,5 @@ round actually produces exports before the verify/package phases can pass.
 2. Packager agent did not commit — performed host-fallback commit
    (`git add -A`; message: `rev-1 close-out r13 outputs (host fallback)`).
    Not pushed.
+
+**Postscript 2026-08-10 evening:** the close-out was subsequently completed BY HAND in a supervised session — see `RUN-RESULT.md` §"Close-out r13 (2026-08-10)" and `BUILD-NOTES-closeout-r13-r1.md`. r13 is the shipped tag; this file remains the record of the failed workflow attempt only.
