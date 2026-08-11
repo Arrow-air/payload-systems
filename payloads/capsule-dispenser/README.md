@@ -114,6 +114,9 @@ in any checkout to measure against; needs real geometry or calipers.
 ## Folder layout
 
 - [`README.md`](README.md) — this file: the dispenser as it currently is.
+- [`BUILD.md`](BUILD.md) — how to build it: print settings, ordering gates,
+  bench prep, the (forced) assembly sequence with QC checks, first-power and
+  pre-flight gates.
 - [`cad/`](cad/) — parametric build123d source (`dispenser.py`; the model
   prints its full check suite on every build), auto-generated
   [`BOM.md`](cad/BOM.md), current close-out checker
