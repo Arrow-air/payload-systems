@@ -1,4 +1,11 @@
-# capsule Dispenser — Design
+# Capsule Dispenser — Design rationale and evolution
+
+> **Reviewing the dispenser as it currently is? Read
+> [`../README.md`](../README.md) instead** — current specs, verification
+> status and compliance, r13 numbers only. This document is the full design
+> record: why each decision was made and how the geometry evolved across
+> twelve rounds plus close-out. Numbers here may be superseded by later
+> rounds; the README always carries the current value.
 
 Design package at **rev-1** (CAD close-out run, 2026-08-07→08, export tag
 `r12` — still the shipped tag: the 2026-08-08 close-out run **failed**, both fix
