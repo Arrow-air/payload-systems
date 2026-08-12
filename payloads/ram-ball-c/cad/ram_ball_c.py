@@ -52,9 +52,9 @@ CLIP_T = 10.5           # clip plate thickness (grip length for mount screws)
 WELL_X, WELL_Y = 16.6, 24.6   # blind-mate well mouth: 0.3 mm around the
                               # 16 x 24 board, SHARP corners — a corner round
                               # here intrudes on the board's square corners
-INSERT_D = 3.2          # Ruthex M2 heat-set insert bore
-INSERT_L = 4.0
-INSERT_BORE_DEPTH = 5.2  # insert + one diameter of clearance below
+MOUNT_HOLE_D = 3.2      # through-holes: M3 close clearance, and the same
+                        # Ø works as a Ruthex M2 heat-set insert bore if you
+                        # press an insert into the top instead
 
 # --- RAM Size C ------------------------------------------------------------
 BALL_D = 38.1           # 1.5 inch
@@ -115,7 +115,7 @@ with BuildPart() as adapter:
         Circle(BORE_D / 2)
     extrude(amount=ball_bottom_z - 1.0 - (-WELL_DEPTH + 1.0), mode=Mode.SUBTRACT)
 
-    # M2 heat-set insert bores in the top face
+    # Ø3.2 mounting holes, all the way through the body
     with Locations(Plane.XY):
         with Locations(
             (BOLT_XY, BOLT_XY),
@@ -123,7 +123,7 @@ with BuildPart() as adapter:
             (-BOLT_XY, BOLT_XY),
             (-BOLT_XY, -BOLT_XY),
         ):
-            Hole(radius=INSERT_D / 2, depth=INSERT_BORE_DEPTH)
+            Hole(radius=MOUNT_HOLE_D / 2, depth=BODY_T + 1.0)
 
     # Orientation marker: triangle engraved on the +Y wall, apex toward the
     # clip plate. +Y is aircraft-forward on the bottom port.
@@ -143,5 +143,4 @@ bb = part.bounding_box()
 print(f"Bounding box: {bb.size.X:.1f} x {bb.size.Y:.1f} x {bb.size.Z:.1f} mm")
 print(f"Top face Z=0, ball bottom Z={ball_bottom_z:.2f} (center {ball_center_z:.2f})")
 print(f"Volume: {part.volume / 1000:.1f} cm^3  (~{part.volume / 1000 * 1.27:.0f} g in PETG)")
-print(f"Mount screw: M2x12 through the {CLIP_T} mm clip plate -> "
-      f"{12.0 - (CLIP_T - 1.4):.1f} mm engagement in a {INSERT_L} mm insert")
+print(f"Mount holes: 4x Ø{MOUNT_HOLE_D} through the {BODY_T} mm body at (±{BOLT_XY}, ±{BOLT_XY})")

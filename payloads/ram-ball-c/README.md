@@ -67,11 +67,19 @@ the bottom port.
   the load), 0.12–0.16 mm layers, ball-side up with the top face on the bed.
   The well roof and slot bridge ≤ 16 mm — no supports needed; supports OFF
   under the ball (the tangent neck keeps overhangs gradual).
-- **Hardware:** 4× M2 heat-set inserts (Ruthex-type, Ø3.2 bore) into the top
-  face; 4× **M2×12** ISO 4762 through the clip plate from the drone side
-  (~2.9 mm thread engagement — M2×10 leaves under 1 mm, don't substitute);
-  the COTS clip half itself (BOM 2112, see
-  [`interface/mechanical/`](../../interface/mechanical/README.md)).
+- **Hardware:** the 4 mounting holes are **Ø3.2 through-holes** through the
+  full 16 mm body. Two ways to fasten to the clip half (BOM 2112, see
+  [`interface/mechanical/`](../../interface/mechanical/README.md)):
+  - M2 route (matches the plate's Ø3.9 head pockets): press M2 heat-set
+    inserts (Ruthex-type, same Ø3.2 bore) into the hole tops, then
+    **M2×12** ISO 4762 from the drone side (~2.9 mm engagement — M2×10
+    leaves under 1 mm, don't substitute).
+  - Through-bolt route: hardware passed the full stack from the underside —
+    note the plate's head-clearance columns are only Ø3.9, so heads/nuts
+    larger than that can't sit on the drone side; check your clip half
+    before choosing this.
+  The through-holes also let you drive out a spent insert or clear a
+  cross-threaded screw without sacrificing the print.
 - A rigid printed ball grips fine in RAM arms but damps less than RAM's
   rubberized balls; if a device turns out vibration-sensitive, the fix is at
   the device end (RAM shock plate) or a marine-grade steel C ball on a

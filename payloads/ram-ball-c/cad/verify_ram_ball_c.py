@@ -38,7 +38,7 @@ check("nothing above Z=0", mx[2] < 0.01, f"max Z {mx[2]:.3f}")
 check("footprint <= 50 x 50", mx[0] - mn[0] <= 50.0 and mx[1] - mn[1] <= 50.0,
       f"{mx[0]-mn[0]:.1f} x {mx[1]-mn[1]:.1f}")
 
-# 2. Mount insert bores at (+/-19, +/-19): Ø3.2 cylinders, axis Z, from STEP
+# 2. Mount holes at (+/-19, +/-19): Ø3.2 cylinders, axis Z, from STEP
 step = import_step(str(HERE / "ram_ball_c_adapter.step"))
 bores = []
 for f in step.faces().filter_by(GeomType.CYLINDER):
@@ -46,12 +46,14 @@ for f in step.faces().filter_by(GeomType.CYLINDER):
     if abs(ax.direction.Z) > 0.99 and abs(f.radius - 1.6) < 0.05:
         bores.append((round(ax.position.X, 1), round(ax.position.Y, 1)))
 expected = {(19.0, 19.0), (19.0, -19.0), (-19.0, 19.0), (-19.0, -19.0)}
-check("4x M2 insert bores at (+/-19, +/-19)", expected <= set(bores),
+check("4x Ø3.2 mount holes at (+/-19, +/-19)", expected <= set(bores),
       f"found {sorted(set(bores))}")
-# bore depth: solid at (19,19,-6) [below bore], void at (19,19,-4) [inside]
-inside = mesh.contains(np.array([[19, 19, -6.0], [19, 19, -4.0]]))
-check("insert bore depth ~5.2 (open at -4, solid at -6)",
-      bool(inside[0]) and not bool(inside[1]))
+# through-holes: open along the full 16 mm body at every hole position
+probe = np.array([[sx * 19, sy * 19, z]
+                  for sx in (1, -1) for sy in (1, -1)
+                  for z in (-2.0, -8.0, -15.5)])
+check("mount holes go all the way through (open at -2/-8/-15.5)",
+      not mesh.contains(probe).any())
 
 # 3. Blind-mate well: the full 16 x 24 shaft footprint must be open down to
 #    the well floor so the pads PCB + Molex J1 can hang below the clip plate
