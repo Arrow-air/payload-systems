@@ -1,15 +1,13 @@
 # RAM Ball C
 
-**Status:** design
+**Status:** prototype (first article printed in PA6-CF)
 **Target port(s):** bottom / side 1 / side 2 (mechanical-only payloads work on any port)
 **ICD version:** 1.0
-**Champion:** Hex (Thomas's agent) / `@Hex` on Discord
-**Discussion:** Discord thread *Quiver ram ball C*
 
 One 3D-printed part that bolts to the payload-side quick-release clip plate
 and exposes a **1.5" RAM Size-C ball**, so anything in the RAM ecosystem
 (double-socket arms, cradles, cameras, antennas…) can hang off a Quiver
-mounting point and be re-aimed without tools. Wiring from the blind-mate PCB
+mounting point and be re-aimed without tools. Wiring from the attachment interface PCB
 still comes through.
 
 ![ball side](cad/renders/iso_ball.png)
@@ -18,7 +16,7 @@ still comes through.
 
 Clips onto any Quiver port via the standard quick-release, presents a Size-C
 ball pointing away from the aircraft (down on the bottom port, outboard on the
-sides). Two wiring routes from the blind-mate PCB:
+sides). Two wiring routes from the attachment interface PCB:
 
 - **Side channel** — 10 × 6 mm slot from the PCB well out the −Y face.
 - **Axial bore** — Ø10 mm straight down the neck and out the ball's bottom
@@ -30,15 +28,14 @@ sides). Two wiring routes from the blind-mate PCB:
 
 | | |
 |---|---|
-| Mass | ~75 g printed (PETG, solid) + clip half + fasteners ≈ 150 g, before the RAM arm and device |
+| Mass | ~75 g printed solid + clip half + fasteners ≈ 150 g, before the RAM arm and device |
 | Power | none itself; pass-through wiring only |
 | Data | pass-through wiring only |
 | Port | any |
 
 Load guidance: RAM rates C-size arms to roughly 1–2 kg in vibration
-environments; a printed PETG/ASA ball is the compliant element in the stack.
-Keep the hung mass + arm well inside the platform's payload budget and treat
->1 kg on a printed ball as needing a pull test first (same logic as the
+environments. Keep the hung mass + arm well inside the platform's payload
+budget and treat >1 kg on a printed ball as needing a pull test first (same logic as the
 capsule dispenser's RT-13 retention test).
 
 ## Geometry provenance
@@ -49,7 +46,7 @@ capsule-dispenser r6 containment scan of
 (see `capsule-dispenser/cad/dispenser.py`, "clip-plate map"; r5 of that
 project bolted into the blind-mate window by trusting eyeballed numbers):
 
-- mount pattern 4× M2 at (±19, ±19), Ø3.9 head-clearance columns in the plate
+- mount pattern 4× Ø3 at (±19, ±19)
 - blind-mate shaft 16 × 24 through the plate; the payload-side pads PCB
   mounts to the plate's own tabs and hangs below it
 - clip plate 50 × 50 × 10.5 mm
@@ -63,23 +60,15 @@ the bottom port.
 
 ## Build
 
-- **Print:** PETG or ASA, 100 % infill (it's small; the ball and neck carry
-  the load), 0.12–0.16 mm layers, ball-side up with the top face on the bed.
+- **Print:** PA6-CF is what the first article was printed in and is ideal
+  (stiff, strong, wear-resistant ball surface); PETG/ASA also work. 100 %
+  infill (it's small; the ball and neck carry the load), 0.12–0.16 mm
+  layers, ball-side up with the top face on the bed.
   The well roof and slot bridge ≤ 16 mm — no supports needed; supports OFF
   under the ball (the tangent neck keeps overhangs gradual).
-- **Hardware:** the 4 mounting holes are **Ø3.2 through-holes** through the
-  full 16 mm body. Two ways to fasten to the clip half (BOM 2112, see
-  [`interface/mechanical/`](../../interface/mechanical/README.md)):
-  - M2 route (matches the plate's Ø3.9 head pockets): press M2 heat-set
-    inserts (Ruthex-type, same Ø3.2 bore) into the hole tops, then
-    **M2×12** ISO 4762 from the drone side (~2.9 mm engagement — M2×10
-    leaves under 1 mm, don't substitute).
-  - Through-bolt route: hardware passed the full stack from the underside —
-    note the plate's head-clearance columns are only Ø3.9, so heads/nuts
-    larger than that can't sit on the drone side; check your clip half
-    before choosing this.
-  The through-holes also let you drive out a spent insert or clear a
-  cross-threaded screw without sacrificing the print.
+- **Hardware:** 4× Ø3.2 mounting holes straight through the 16 mm body,
+  matching the clip half's (±19, ±19) pattern (BOM 2112, see
+  [`interface/mechanical/`](../../interface/mechanical/README.md)).
 - A rigid printed ball grips fine in RAM arms but damps less than RAM's
   rubberized balls; if a device turns out vibration-sensitive, the fix is at
   the device end (RAM shock plate) or a marine-grade steel C ball on a
@@ -90,7 +79,7 @@ the bottom port.
 - `cad/ram_ball_c.py` — parametric source (build123d). Running it exports
   `ram_ball_c_adapter.stl` / `.step` next to itself.
 - `cad/verify_ram_ball_c.py` — independent checks on the exports (trimesh
-  containment + STEP face queries): envelope, insert pattern, well clear of
+  containment + STEP face queries): envelope, mount-hole pattern, well clear of
   the full board footprint, both cable paths, ball diameter, clamp-band
   integrity. All 12 pass on the committed exports.
 - `cad/renders/` — preview renders.

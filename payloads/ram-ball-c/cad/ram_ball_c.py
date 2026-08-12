@@ -2,16 +2,15 @@
 
 One printed part: bolts to the underside of the payload-side quick-release
 clip plate (2112_attach_plate_payload_side.step) and exposes a 1.5" (38.1 mm)
-RAM Size-C ball pointing away from the aircraft. Wiring from the blind-mate
-PCB can exit either through a side channel or straight down a Ø10 bore
+RAM Size-C ball pointing away from the aircraft. Wiring from the attachment
+interface PCB can exit either through a side channel or straight down a Ø10 bore
 through the neck and ball (out the ball's bottom pole, clear of the RAM
 socket's clamp band).
 
 Interface geometry is taken from the capsule-dispenser r6 containment scan
 of the vendored clip-plate STEP (payloads/capsule-dispenser/cad/dispenser.py,
 "clip-plate map"), not re-assumed:
-  - mount pattern: 4x M2 at (+/-19, +/-19), Ø3.90 head-clearance columns
-    in the clip plate, screws enter from the drone side of the plate
+  - mount pattern: 4x Ø3 at (+/-19, +/-19)
   - blind-mate shaft through the plate: 16 x 24 (X x Y), PCB tab bosses at
     (+/-4, +/-10) — the payload-side pads board hangs below the plate
   - clip plate: 50 x 50 x 10.5 aluminum
@@ -52,9 +51,7 @@ CLIP_T = 10.5           # clip plate thickness (grip length for mount screws)
 WELL_X, WELL_Y = 16.6, 24.6   # blind-mate well mouth: 0.3 mm around the
                               # 16 x 24 board, SHARP corners — a corner round
                               # here intrudes on the board's square corners
-MOUNT_HOLE_D = 3.2      # through-holes: M3 close clearance, and the same
-                        # Ø works as a Ruthex M2 heat-set insert bore if you
-                        # press an insert into the top instead
+MOUNT_HOLE_D = 3.2      # Ø3.2 through-holes (3 mm hardware, close clearance)
 
 # --- RAM Size C ------------------------------------------------------------
 BALL_D = 38.1           # 1.5 inch
