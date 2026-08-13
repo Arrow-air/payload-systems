@@ -1,0 +1,33 @@
+=== B2.2 grub corridor to the shaft flat (theta=202.5, Z=-341.25, flat r=2.55) ===
+
+  pocket_disc_r13.step (STEP volume 72.685 cm3)
+    Dia0.7 corridor r=46.5 -> r=2.55 : disc material = 0.0000 mm3
+    Dia1.9 corridor r=46.5 -> r=2.55 : disc material = 0.0000 mm3
+    Dia2.6 corridor r=46.5 -> r=2.55 : disc material = 0.0000 mm3
+
+  pocket_disc_r12.step (STEP volume 72.686 cm3)
+    Dia0.7 corridor r=46.5 -> r=2.55 : disc material = 0.0770 mm3
+    Dia1.9 corridor r=46.5 -> r=2.55 : disc material = 0.5671 mm3
+    Dia2.6 corridor r=46.5 -> r=2.55 : disc material = 1.0619 mm3
+
+  r13 corridors clear: PASS
+  r12 failing control at Dia2.6: 1.0619 mm3 (expected ~1.0619 = pi*1.30^2*0.200) -> CONTROL VALID
+
+=== r13 export integrity (watertight + STEP-vs-STL volume) ===
+  agitator_r13                     watertight=True  STEP     4.291 cm3  STL     4.288 cm3  delta 0.053%  ok
+  bay_lid_r13                      watertight=True  STEP     8.598 cm3  STL     8.598 cm3  delta 0.001%  ok
+  brush_holder_r13                 watertight=True  STEP     3.544 cm3  STL     3.544 cm3  delta 0.001%  ok
+  chute_plug_r13                   watertight=True  STEP     6.721 cm3  STL     6.718 cm3  delta 0.037%  ok
+  count_windows_r13                watertight=True  STEP     0.104 cm3  STL     0.104 cm3  delta 0.041%  ok
+  electronics_bay_r13              watertight=True  STEP    21.175 cm3  STL    21.175 cm3  delta 0.002%  ok
+  fill_cap_r13                     watertight=True  STEP     7.548 cm3  STL     7.545 cm3  delta 0.034%  ok
+  hopper_r13                       watertight=True  STEP   109.419 cm3  STL   109.423 cm3  delta 0.004%  ok
+  meter_housing_r13                watertight=True  STEP   103.856 cm3  STL   103.819 cm3  delta 0.035%  ok
+  pocket_disc_r13                  watertight=True  STEP    72.685 cm3  STL    72.660 cm3  delta 0.034%  ok
+  retaining_plate_chute_r13        watertight=True  STEP    63.960 cm3  STL    63.945 cm3  delta 0.023%  ok
+  sensor_boards_r13                watertight=True  STEP     1.287 cm3  STL     1.287 cm3  delta 0.012%  ok
+  sensor_cover_r13                 watertight=True  STEP     3.198 cm3  STL     3.198 cm3  delta 0.000%  ok
+  service_stand_r13                watertight=True  STEP   103.908 cm3  STL   103.892 cm3  delta 0.015%  ok
+  top_plate_r13                    watertight=True  STEP    95.572 cm3  STL    95.550 cm3  delta 0.023%  ok
+
+=== VERDICT: B2.2 CLOSED; export integrity PASS ===
