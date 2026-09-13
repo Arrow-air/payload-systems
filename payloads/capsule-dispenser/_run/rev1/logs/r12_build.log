@@ -1,0 +1,767 @@
+  cut_each(cartridge harness duct bores (B5 / I-1)): 14 tools, removed 8025.3368 mm3 from 80301.8148 mm3 -> 72276.4780 mm3
+exports written to /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/exports
+
+================ B10 EXPORT INTEGRITY (mesh census of the shipped STLs; r9: retaining_plate_chute 188 open + 1538 three-face edges, +8.36 % volume) ================
+  part                       watertight  winding  euler  nonman  open bodies   faces   STL cm3  STEP cm3  delta %  edge-multiplicity
+  top_plate_r12                    True     True    -38       0     0      1   22420    95.550    95.572   -0.023  {2: 33630}
+  fill_cap_r12                     True     True      0       0     0      1    3062     7.545     7.548   -0.034  {2: 4593}
+  hopper_r12                       True     True    -14       0     0      1   11328   109.423   109.419   +0.004  {2: 16992}
+  meter_housing_r12                True     True     -8       0     0      1   11598   103.819   103.856   -0.035  {2: 17397}
+  pocket_disc_r12                  True     True    -30       0     0      1   24642    72.661    72.686   -0.034  {2: 36963}
+  agitator_r12                     True     True      2       0     0      1    2724     4.288     4.291   -0.053  {2: 4086}
+  brush_holder_r12                 True     True      0       0     0      1     612     3.544     3.544   +0.001  {2: 918}
+  retaining_plate_chute_r12        True     True    -76       0     0      1   33678    63.945    63.960   -0.023  {2: 50517}
+  electronics_bay_r12              True     True     -8       0     0      1   10018    21.175    21.175   +0.002  {2: 15027}
+  bay_lid_r12                      True     True    -10       0     0      1    3076     8.598     8.598   +0.001  {2: 4614}
+  chute_plug_r12                   True     True     -2       0     0      1    2338     6.718     6.721   -0.037  {2: 3507}
+  service_stand_r12                True     True      0       0     0      1    1104   103.892   103.908   -0.015  {2: 1656}
+  sensor_cover_r12                 True     True     -4       0     0      2    2360     3.198     3.198   +0.000  {2: 3540}
+  count_windows_r12                True     True      8       0     0      4    2000     0.104     0.104   -0.041  {2: 3000}
+  sensor_boards_r12                True     True      4       0     0      2    2072     1.287     1.287   -0.012  {2: 3108}
+  dispenser_r12_assembly           True     True   -193       0     0     24  142442   579.898   579.993   -0.016  {2: 213663}
+  -> PART STLs watertight with 0 non-manifold edges: 15/15 (r9: 14/15, and the one failure was the part that carries the count sensor, the exit port and the chute)
+  -> assembly: 24 mesh bodies for 24 solids, 0 open edges, 0 non-manifold edges, volume 579.898 cm3 vs 579.993 cm3 of source solids (-0.016 %). NOTE the assembly is a COMPOUND of separate closed shells: trimesh merges coincident vertices across bodies, so any face-to-face contact between two parts shows up as a 4-face edge. Non-zero here means 'two parts touch', not 'the mesh is broken' -- r9 had 188 genuinely OPEN edges, which is a different failure.
+  -> mesh-body count vs expected (a DISCONNECTED lug or a sealed internal void shows up here): all as expected
+
+================ GEOMETRY CHECKS (measured) ================
+Z-STACK AUDIT (derived vs the value written in the source comment; N12 asks for both columns and +/-0.05 mm):
+  Z_MOUNT        derived   -171.000   comment   -171.000   delta  +0.000  ok
+  Z_CLIP_TOP     derived   -171.050   comment   -171.050   delta  +0.000  ok
+  Z_PLATE_BOT    derived   -181.550   comment   -181.550   delta  +0.000  ok
+  Z_TOP_TOP      derived   -233.550   comment   -233.550   delta  +0.000  ok
+  Z_TOP_BOT      derived   -238.550   comment   -238.550   delta  +0.000  ok
+  Z_HOP_BOT      derived   -270.550   comment   -270.550   delta  +0.000  ok
+  Z_FUN_BOT      derived   -326.250   comment   -326.250   delta  +0.000  ok
+  Z_ROOF_BOT     derived   -335.250   comment   -335.250   delta  +0.000  ok
+  Z_DISC_TOP     derived   -336.750   comment   -336.750   delta  +0.000  ok
+  Z_DISC_BOT     derived   -350.750   comment   -350.750   delta  +0.000  ok
+  Z_RPLATE_TOP   derived   -351.250   comment   -351.250   delta  +0.000  ok
+  Z_RPLATE_BOT   derived   -355.250   comment   -355.250   delta  +0.000  ok
+  Z_SENSOR       derived   -395.250   comment   -395.250   delta  +0.000  ok
+  Z_CHUTE_BOT    derived   -405.250   comment   -405.250   delta  +0.000  ok
+  Z_GEAR_BOT     derived   -384.450   comment   -384.450   delta  +0.000  ok
+  Z_MOTOR_BOT    derived   -418.450   comment   -418.450   delta  +0.000  ok
+CLIP-PLATE MAP (containment scan of the imported vendor STEP, 0.5 mm grid x 0.4 mm z; r5 used a Dia2.4 cylinder + a <5 mm3 threshold and read a through-WINDOW as a bolt hole):
+  through-opening n= 1301  centre (   0.00,   0.00)  x [ -7.50,  7.50]  y [-11.50, 11.50]
+  through-opening n=   25  centre ( -19.00, -19.00)  x [-20.00,-18.00]  y [-20.00,-18.00]
+  through-opening n=   25  centre ( -19.00,  19.00)  x [-20.00,-18.00]  y [ 18.00, 20.00]
+  through-opening n=   25  centre (  19.00, -19.00)  x [ 18.00, 20.00]  y [-20.00,-18.00]
+  through-opening n=   25  centre (  19.00,  19.00)  x [ 18.00, 20.00]  y [ 18.00, 20.00]
+  through-opening n=    9  centre (  -4.00, -10.00)  x [ -4.50, -3.50]  y [-10.50, -9.50]
+  through-opening n=    9  centre (  -4.00,  10.00)  x [ -4.50, -3.50]  y [  9.50, 10.50]
+  through-opening n=    9  centre (   4.00, -10.00)  x [  3.50,  4.50]  y [-10.50, -9.50]
+  through-opening n=    9  centre (   4.00,  10.00)  x [  3.50,  4.50]  y [  9.50, 10.50]
+  through-opening n=    3  centre ( -24.33, -24.33)  x [-24.50,-24.00]  y [-24.50,-24.00]
+  through-opening n=    3  centre ( -24.33,  24.33)  x [-24.50,-24.00]  y [ 24.00, 24.50]
+  through-opening n=    3  centre (  24.33, -24.33)  x [ 24.00, 24.50]  y [-24.50,-24.00]
+  through-opening n=    3  centre (  24.33,  24.33)  x [ 24.00, 24.50]  y [ 24.00, 24.50]
+  -> MOUNT pattern DERIVED: (+/-19.00, +/-19.00) = 38 x 38; hole dia 2.90 through the 4.1 mm bolting slab; head pocket above it dia 3.90 -> M2 socket head (dia 3.8) fits with 0.05 mm radial clearance. r5 bolted to (+/-6.5,+/-10.5), which this scan shows is INSIDE the blind-mate shaft.
+  -> BLIND-MATE shaft mapped at x +/-7.75, y +/-11.75 (through); 4 PCB tabs at (+/-4,+/-10) with dia 1.90 holes = the vendor's own board mounts. The payload board is placed THERE (r5 put it at y=-35, 35 mm off the pins).
+  payload PCB now spans x [-8.00,8.00] y [-12.00,12.00] z [-188.15,-181.55]; pad face at Z=-181.55 directly under the shaft. Fit in the mapped shaft: -0.50 mm in X, -0.50 mm in Y (vendor board = vendor shaft).
+  payload material inside the blind-mate shaft column: 0.00 mm3 (must be 0; r5 had 0.0 here too -- and 0.0 pads, which was the bug)
+  mount (+19.0,+19.0): insert-boss stock   52.8 mm3, screw shank vs plate  0.00 (~0), head envelope vs plate  0.00 (~0), driver column to Z=-171  0.00 (~0)
+  mount (+19.0,-19.0): insert-boss stock   52.8 mm3, screw shank vs plate  0.00 (~0), head envelope vs plate  0.00 (~0), driver column to Z=-171  0.00 (~0)
+  mount (-19.0,+19.0): insert-boss stock   52.8 mm3, screw shank vs plate  0.00 (~0), head envelope vs plate  0.00 (~0), driver column to Z=-171  0.00 (~0)
+  mount (-19.0,-19.0): insert-boss stock   52.8 mm3, screw shank vs plate  0.00 (~0), head envelope vs plate  0.00 (~0), driver column to Z=-171  0.00 (~0)
+  B9a MOUNT SCREW: head-bearing plane (measured on the vendor STEP) Z=-177.45; insert top Z=-184.05 -> GRIP 6.60 mm; M2x10 -> thread engagement 3.40 mm into a 4.0 mm insert (PASS; need >=3.2 and <= insert length so it cannot bottom out). r6: grip 9.10, M2x10 -> 0.90 mm.
+  payload volume above the plate face and OUTSIDE the 50x50 clip footprint: 0 mm3 (fill cap wing bar; ICD keep-out STEP is still an open ICD TODO -- carried as a NOTE, re-measured each run)
+
+PER-PART CONNECTIVITY (must be 1 solid each -- r2 root-cause check):
+  clip_plate               1 solid(s)  OK
+  top_plate                1 solid(s)  OK
+  fill_cap                 1 solid(s)  OK
+  hopper                   1 solid(s)  OK
+  meter_housing            1 solid(s)  OK
+  pocket_disc              1 solid(s)  OK
+  thrust_washer            1 solid(s)  OK
+  sleeve_bearing           1 solid(s)  OK
+  agitator                 1 solid(s)  OK
+  brush_holder             1 solid(s)  OK
+  brush_bristles           1 solid(s)  OK
+  retaining_plate_chute    1 solid(s)  OK
+  stepper                  1 solid(s)  OK
+  electronics_bay          1 solid(s)  OK
+  bay_lid                  1 solid(s)  OK
+  blindmate_pcb            1 solid(s)  OK
+  summary: 0 disconnected parts
+assembly STL bodies: 24 (expected = 24 solids -> OK)
+  bodies with non-positive volume (inverted normals): 0 (r7: 4)
+
+PRINT ORIENTATIONS (support-needing area, measured on exported STLs; r5: 6 orientations searched):
+  top_plate              best: rotX+90              9.7% needs support   (as-modeled 29.3%)
+  fill_cap               best: rotY-90              5.4% needs support   (as-modeled 28.8%)
+  hopper                 best: flipped (rotX180)    0.9% needs support   (as-modeled 4.2%)
+  meter_housing          best: flipped (rotX180)    7.7% needs support   (as-modeled 17.4%)
+  pocket_disc            best: as-modeled           2.9% needs support   (as-modeled 2.9%)
+  agitator               best: rotX+90              8.9% needs support   (as-modeled 11.2%)
+  brush_holder           best: rotX+90              5.3% needs support   (as-modeled 32.9%)
+  retaining_plate_chute  best: flipped (rotX180)    8.2% needs support   (as-modeled 21.0%)
+  electronics_bay        best: rotX+90             11.0% needs support   (as-modeled 16.6%)
+  bay_lid                best: rotX+90              0.0% needs support   (as-modeled 1.6%)
+
+assembly bbox X [-78.0, 78.0]  Y [-92.0, 78.0]  Z [-418.4, -171.1]
+stack below mounting plane: 247.4 mm (bottom Z = -418.4)
+ground clearance at rest:   129.4 mm (ground Z = -547.89)
+cross-check, assembly-mesh -> leg TUBE axes only: 103.6 mm (known to over-report; not the carried figure)
+FULL-GEAR clearance (mesh-to-mesh, 327243 gear pts, exact point-to-triangle refine): 103.63 mm (r3 critic independent: 83.42 mm)
+prop clearance (r2 interference critic, full-assembly measurement): lowest propulsion solid Z -18.50 -> vertical gap 152.5 mm; blade disk Z +44.04, tip r 304.8 at hubs (+/-449.4,+/-449.4) -> radial gap 239.3 mm
+
+pocket pitch at PCD 25.1 mm; web between pockets 10.1 mm
+disc t 14.0 vs worst pellet 13.0: seated pellet rests on the retaining plate (through the 0.5 under-gap) -> top 1.5 mm below disc surface (r3 critic correction; conservative); stacked 2nd sphere protrudes 11.5 mm (brush wipes >1.2 mm)
+fragment window: brush wipe 1.2 mm < roof clearance 1.5 mm -> anything passing the brush passes the roof
+restack window: wiper station spans theta 131.9..164.1 deg (18 mm at PCD); from its downstream edge to the roof entry (130 deg) is 1.9 deg = 1.05 mm at PCD (<< pellet radius 6 mm -> nothing can restack into a pocket after the wiper)
+funnel angle 68 deg (r4: 60.0, at/below the printed-PETG mass-flow threshold), h=55.7 mm; rotation direction -Z (CW from above): pockets pass wiper 148deg then roof edge 130deg; arrow engraved at theta=157.5 r25.5
+
+WIPER (r6, 2 parts): holder 18.0 x 3.0 mm, bristle channel 1.8 x 1.2 mm; COTS strip backing 1.6 mm; measured free trim 6.25 mm (bristle bbox z -335.55..-328.16, tip at disc+1.20 = wipe line)
+  compliance [D]: single Dia0.15 nylon filament k = 0.0008 N/mm; ~30 filaments in contact -> ~0.02 N/mm, vs the r4 solid CF-PETG fin at 6 N/mm (247x stiffer). Concept 2.3's 'compliant' claim is restored in the sense that matters (contact force on a friable pellet), NOT as a 20 mm Kinze trim.
+  INNER support: seat floor stock under the holder at r16 52.2 mm3 (5.80 mm of roof below the rebate)
+  OUTER support: the wall window is open below the holder (the bristles pass through it), so the outer end is carried by the end tab M3 into the wall pilot at z=-338.1: pilot thread stock 40.0 mm3, tab spans z -340.6..-326.2 and covers the window mouth
+  holder beam check [D]: 27 mm free span, tangential load, I = 1458.0 mm4; at the r6 RECOVERY force 20.4 N (the whole drive, applied at the nose) sigma = 0.8 MPa and deflection 0.001 mm (CF-PETG ~50-70 MPa yield)
+  wiper-seat leak class: free height above the holder at the wall (r49) = 0.00 mm, tangential clearance 2 x 0.15 mm -> nothing of pellet or fines class (>=3 mm) escapes outboard; the hopper cone foot closes the seat top and the end tab closes its outer mouth
+  CONTACT ORDER (Dia4 fragment on the disc face, swept 0.25 deg; the compliant element must be first at every height):
+    proud   2.0 mm: brush_bristles@162.00deg -> brush_holder@158.50deg   OK (compliant first)
+    proud   3.0 mm: brush_bristles@162.00deg -> brush_holder@158.50deg   OK (compliant first)
+    proud   5.0 mm: brush_bristles@162.00deg -> brush_holder@158.50deg   OK (compliant first)
+    proud   7.0 mm: brush_bristles@162.00deg -> brush_holder@158.50deg   OK (compliant first)
+    proud   9.0 mm: brush_bristles@162.00deg -> brush_holder@162.00deg -> meter_housing@127.25deg   OK (compliant first)
+    proud  11.5 mm: brush_bristles@162.00deg -> brush_holder@162.00deg -> meter_housing@133.00deg   OK (compliant first)
+    brush_holder  :   512.6 mm2 of upstream-facing faces, area-weighted n_z +0.70, square-stub area (|n_z|<0.05) 80.52 mm2 = 15.7% (r5's entry: 100%)
+    meter_housing :   467.7 mm2 of upstream-facing faces, area-weighted n_z -0.73, square-stub area (|n_z|<0.05) 89.53 mm2 = 19.1% (r5's entry: 100%)
+
+B8.3 FIRST-CONTACT AUDIT (ray along the travel direction at the crown height of a proud object; r3 MODERATE 1 claimed a 89.6-89.8 deg wall over the whole 1.50-7.45 mm band):
+     1.80 mm proud (Dia5.0 fragment, D13 seat, centred):
+        r22.0: y= +4.00 n=(+1.000,+0.000) face  90.0 deg from horiz, lift/push  0.00
+        r32.0: y= +4.00 n=(+1.000,+0.000) face  90.0 deg from horiz, lift/push  0.00
+        r46.5: y= +4.00 n=(+1.000,-0.000) face  90.0 deg from horiz, lift/push  0.00
+     2.95 mm proud (Dia6.0 fragment, D13 seat, centred):
+        r22.0: y= +2.37 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+        r32.0: y= +2.37 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+        r46.5: y= +2.37 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+     4.08 mm proud (Dia7.0 fragment, D13 seat, centred):
+        r22.0: y= +0.19 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+        r32.0: y= +0.19 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+        r46.5: y= +0.19 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+     6.00 mm proud (Dia9.0-class shard):
+        r22.0: y= -3.50 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+        r32.0: y= -3.50 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+        r46.5: y= -3.50 n=(+0.461,+0.887) face  27.5 deg from horiz, lift/push  1.92
+     7.60 mm proud (above the nose top (7.45)):
+        r22.0: y= +8.85 n=(+0.707,+0.707) face  45.0 deg from horiz, lift/push  1.00
+        r32.0: y= +8.85 n=(+0.707,+0.707) face  45.0 deg from horiz, lift/push  1.00
+        r46.5: y= +8.85 n=(+0.707,+0.707) face  45.0 deg from horiz, lift/push  1.00
+
+B8.3b SWEPT-SPHERE FIRST CONTACT (rounded fragment, 0.05 deg steps, closest-point query on the exported brush_holder; the r4 critic showed the crown-height ray above is only valid for a flat-topped column):
+     sign convention: n_z < 0 means the reaction presses the fragment DOWN into the pocket; n_z > 0 would mean it is LIFTED over the nose
+     Dia 5.0 crown + 1.80, r=26.7: first contact theta  159.20, contact height +1.500 mm above the disc, n=(-0.251,-0.402,-0.880) -> |n_z|/|n_tang| =  1.89 (pressed DOWN)
+     Dia 5.0 crown + 1.80, r=32.0: first contact theta  157.30, contact height +1.500 mm above the disc, n=(-0.249,-0.399,-0.883) -> |n_z|/|n_tang| =  1.90 (pressed DOWN)
+     Dia 6.0 crown + 2.95, r=26.7: first contact theta  162.20, contact height +1.500 mm above the disc, n=(-0.453,-0.725,-0.519) -> |n_z|/|n_tang| =  0.63 (pressed DOWN)
+     Dia 6.0 crown + 2.95, r=32.0: first contact theta  159.80, contact height +1.500 mm above the disc, n=(-0.453,-0.724,-0.520) -> |n_z|/|n_tang| =  0.62 (pressed DOWN)
+     Dia 7.0 crown + 4.08, r=26.7: first contact theta  164.00, contact height +1.500 mm above the disc, n=(-0.511,-0.818,-0.264) -> |n_z|/|n_tang| =  0.28 (pressed DOWN)
+     Dia 7.0 crown + 4.08, r=32.0: first contact theta  161.30, contact height +1.500 mm above the disc, n=(-0.511,-0.818,-0.264) -> |n_z|/|n_tang| =  0.28 (pressed DOWN)
+     Dia 9.0 crown + 6.00, r=26.7: first contact theta  166.55, contact height +1.500 mm above the disc, n=(-0.530,-0.848,+0.000) -> |n_z|/|n_tang| =  0.00 (pure anti-travel STUB, no vertical component)
+     Dia 9.0 crown + 6.00, r=32.0: first contact theta  163.40, contact height +1.500 mm above the disc, n=(-0.530,-0.848,+0.000) -> |n_z|/|n_tang| =  0.00 (pure anti-travel STUB, no vertical component)
+     Dia13.0 crown +11.50, r=26.7: first contact theta  175.00, contact height +7.450 mm above the disc, n=(-0.417,-0.667,-0.617) -> |n_z|/|n_tang| =  0.88 (pressed DOWN)
+     Dia13.0 crown +11.50, r=32.0: first contact theta  175.00, contact height +7.450 mm above the disc, n=(-0.484,-0.775,-0.405) -> |n_z|/|n_tang| =  0.50 (pressed DOWN)
+    nose geometry for reference: flat underside at 1.50 mm spans local y -8.80..+4.00; the LEADING end face is a blunt vertical tip only 0.60 mm tall (y = +4.00, z = 1.50..2.10 above the disc, 16.0 mm2 total); above it the confronting face is the 30.0 deg forward ramp running to the rail underside at 7.45 mm.
+
+TRANSFER-ARC CEILING PROFILE (lowest housing material above the disc face, mm above disc top; r5: a square step from open to 1.508):
+      theta:   131.0   130.0   128.0   125.0   120.0   110.0    96.0    90.0    45.0     5.0
+  r= 24.5       open   10.25    9.75    9.00    7.75    5.00    1.50    1.50    1.50    1.50
+  r= 32.0       open   10.25    9.75    9.00    7.75    5.00    1.50    1.50    1.50    1.50
+  r= 39.5       open   10.25    9.75    9.00    7.75    5.00    1.50    1.50    1.50    1.50
+  r= 45.5       open   10.25    9.75    9.00    7.75    5.00    1.50    1.50    1.50    1.50
+  ramp: 25 deg from horizontal cut into the roof UNDERSIDE, tangential run 19.3 mm = 34.6 deg of arc at the PCD; the ceiling is open at the entry edge at every radius (PASS) and descends to 1.5 mm. Mechanical advantage on a proud fragment [D]: a drive force F normal to the ramp gives F_vert = F/(tan25 + mu) = 1.15 F at mu=0.4 -- the ramp CRUSHES a proud fragment down into the pocket instead of stubbing it against a square edge.
+  ENTRY-RAMP ANGLE IS A RANGE, NOT '25 deg' (constant dz/dtheta -> the arc length, hence the angle, scales with r):
+     r= 20.5: ceiling 10.000 -> 1.500 = drop 8.500 mm over 11.649 mm of arc -> 36.12 deg, cot = 1.370   <- below the 1.44 self-locking line
+     r= 22.0: ceiling 10.000 -> 1.500 = drop 8.500 mm over 12.501 mm of arc -> 34.21 deg, cot = 1.471
+     r= 24.5: ceiling 10.000 -> 1.500 = drop 8.500 mm over 13.922 mm of arc -> 31.41 deg, cot = 1.638
+     r= 32.0: ceiling 10.000 -> 1.500 = drop 8.500 mm over 18.184 mm of arc -> 25.05 deg, cot = 2.139
+     r= 39.5: ceiling 10.000 -> 1.500 = drop 8.500 mm over 22.445 mm of arc -> 20.74 deg, cot = 2.641
+     r= 46.5: ceiling 10.000 -> 1.500 = drop 8.500 mm over 26.423 mm of arc -> 17.83 deg, cot = 3.109
+     no action: the nose covers r 20.0..46.7 at 1.500 mm, so nothing more than 1.500 mm proud ever reaches the ramp and anything less never touches it.
+
+REVERSE-STROKE FREE TRAVEL (recovery runs +theta; ceiling ray-cast at the PCD on meter_housing + brush_holder, 0.25 deg steps; r2's shipped '< 6 deg' bound is SUPERSEDED by these numbers):
+     park theta          2.0 mm proud       5.0 mm proud      11.5 mm proud
+        135.0     n/a ( 1.50 mm)  n/a ( 1.50 mm)  n/a ( 1.50 mm)
+        157.5          107.75 deg       102.50 deg  n/a ( 8.64 mm)
+        180.0           85.25 deg        80.00 deg        70.25 deg
+        202.5           62.75 deg        57.50 deg        47.75 deg
+        225.0           40.25 deg        35.00 deg        25.25 deg
+        247.5           17.75 deg        12.50 deg         2.75 deg
+     -> GUARANTEED reverse free travel at ANY park the object can actually occupy: 2.0 mm proud -> 17.75 deg, 5.0 mm proud -> 12.50 deg, 11.5 mm proud -> 2.75 deg. Anything the nose lets through is <= 1.50 mm proud and has the full stroke; an 11.5 mm STACK (a second granule sitting on a seated one) is the case that is bounded, and the bound is the measured number above, not '< 6 deg'.
+
+================ WEDGE-JAM (CONTEXT directive) ================
+4. POCKET GEOMETRY: bore r7.50, depth 14.0 + 0.5 under-gap; a seated Dia13 pellet's crown sits 1.50 mm BELOW the disc top (the shear line), so a whole seated pellet is never in the shear plane. Anything that settles below the shear line is safe by construction.
+   worst-case wedged sliver (the r5 critic's construction), rebuilt:
+     w mm  seats(y) mm  below-top mm  wedge half-angle  self-lock?  proud-of-nose height  shear area mm2  shear force N
+     1.0       0.00         8.00             0.0         YES                 9.50             6.9           2.5
+     2.0       3.46         4.54            16.1         YES                 6.04            17.0           6.1
+     3.0       4.69         3.31            23.1          no                 4.81            25.5           9.2
+     5.0       6.00         2.00            33.7          no                 3.50            25.0           9.0
+   (shear area = sliver thickness x the measured crescent chord; shear stress taken as the 0.36 MPa the US4172714 crush figure normalises to -- ASSUMPTION, IFDC S-115 bench test is the closing action)
+   SHEAR-BACKSTOP BOUND (this is where 'shear as backstop' stops working; construction: conforming shard of radial width w on the crescent radius r_s, sheared at the 1.500 mm nose/roof plane):
+     widest SELF-LOCKING sliver w = 2.793 mm (half-angle = atan(mu=0.4) = 21.80 deg), seats 4.483 mm above the granule centre, crescent radius r_s = 4.707 mm
+     90 deg conforming shard  arc   7.39 mm  A   20.65 mm2  F    7.43 N  ->  2.74x at recovery (20.4 N),  1.64x at normal current (12.2 N)
+     180 deg conforming shard arc  14.79 mm  A   41.30 mm2  F   14.87 N  ->  1.37x at recovery (20.4 N),  0.82x at normal current (12.2 N)
+     full-ring crescent       arc  29.57 mm  A   82.60 mm2  F   29.74 N  ->  0.69x at recovery (20.4 N),  0.41x at normal current (12.2 N)  <- STALLS
+     (the round-5 granule-path critic derived the same bound independently on the r11 exports and got w = 2.791 mm -> 9.63 N (2.12x / 1.27x), 180 deg shard 19.26 N (1.06x / 0.63x), full ring 38.53 N (0.53x / 0.32x). Both constructions say the same thing: the backstop covers a partial shard and runs out at a full-ring crescent, where the drive STALLS rather than shears -- which is the intended failure mode, and it is now printed instead of implied.)
+
+TORQUE BUDGET at the disc (r5 MAJOR: 'there is no torque budget anywhere in the model or the notes'):
+     28.6 mN*m  pellet-bed friction on the exposed disc face (Janssen p_sat 1111 Pa x 1894 mm2 = 2.1 N, mu=0.4)
+     41.1 mN*m  agitator fingers ploughing the sump (440 mm2 frontal, passive x3)
+     17.5 mN*m  wiper deflector nose (159 mm2 frontal)
+     11.5 mN*m  sleeve bearing + PTFE thrust washer
+     96.5 mN*m  detent plunger release (2.5 N end force, R8 x 0.4 seat -> flank 18.2 deg -> 2.10 N at r46)
+    195.1 mN*m  TOTAL worst-case running load
+  DRIVE: 14HS13-0804S-PG5, 0.14 N*m x 5.18 x 0.9 = 0.65 N*m available; normal metering at 60% current = 0.39 N*m (2.0x the budget), recovery at 100% = 0.65 N*m
+  -> force at the pocket lip (r=32): normal 12.2 N (3.4x UNDER the 41 N whole-pellet crush load -- a trapped whole pellet stalls, it is never milled), recovery 20.4 N (2.2x OVER the 9.2 N worst wedged-sliver shear force, still 2.0x under whole-pellet crush). r5 had 5.6 N and rebutted CONTEXT requirement 2; r6 meets it.
+  2. SHEAR BACKSTOP bound: at 20.4 N the drive can shear any proud section up to 57 mm2 (the whole pocket bore is 177 mm2, the worst credible wedged sliver 25 mm2)
+  1. REJECTION BEFORE WEDGE (restated for a ROUNDED fragment; the cot(30) = 1.73 ramp credit is WITHDRAWN -- see B8.3b above: for every fragment class up to Dia9 the swept-sphere first contact is the nose's leading bottom corner at 1.500 mm (a stacked Dia13 granule meets the rail underside higher up instead), and the reaction normal has n_z <= 0 in every case, so NOTHING is lifted over the nose): the nose STUBS the fragment and it is returned to the open 120 deg sump window, or it yields. Crush force at the measured section x 0.36 MPa [A, US4172714-derived; CLOSURE = IFDC S-115]: Dia5.0 -> 19.63 mm2 -> 7.07 N, Dia6.0 -> 28.27 mm2 -> 10.18 N, Dia7.0 -> 38.48 mm2 -> 13.85 N, against 12.2 N at normal current and 20.4 N in recovery -- everything up to Dia7 yields inside the drive's capability, and every one of these is far under the 41 N whole-granule crush load, so a whole granule still STALLS rather than being milled. Behind the nose the transfer-arc entry is a 25 deg ramp at the PCD, not a square edge, but that angle is radius-dependent (measured above).
+  3. DETECT + RECOVER: per-pocket Hall magnet (8) + index magnet -> phase is verified EVERY index, not just at boot (r5 Judge-1 item); StallGuard + gearbox current sensing; recovery = reverse-oscillate at normal current, then bounded shear attempts at 100% current with the chute beam armed, then fault. The count sensor is BELOW the meter, so a recovery cannot manufacture a phantom count.
+dimple angles: ['0.0', '45.0', '90.0', '135.0', '180.0', '225.0', '270.0', '315.0'] (rev1: at the POCKET angles), plunger at 67.5 -> park phase 22.5 deg, i.e. parked pockets sit 22.5 deg off the exit port, unchanged from r6, and a pocket magnet sits under the 112.5 deg Hall at park (ECO-2, asserted)
+dimple cavity volumes (mm3, uniform => radial axes ok): 3.64 3.64 3.64 3.64 3.64 3.64 3.64 3.64   spread 0.00
+PARK LENS: pocket at +/-22.5 deg vs the port RIM r8.75 (bore r8.0 + 0.75 chamfer) -> centre distance 12.49 mm, lens 3.76 mm (r5 quoted 4.01 using r9, which is not the retaining edge; the r5 critic measured 5.51). Pellets and fragments >= 3.76 mm are RETAINED when parked; smaller ones are an UNCOMMANDED RELEASE CLASS -- intrinsic (closing it needs port_rim + pocket_r <= 12.49 mm, i.e. a port smaller than a pellet). Park retention margin vs the rim for D13: +2.74 mm, D12: +2.24 mm, D11: +1.74 mm (D11 = the bottom of the CONTEXT +/-1 mm band; the r5 critic measured -0.014 mm there and r6's smaller chamfer is what buys it back).
+hall cavity @90.0 deg vs exit hole: overlap 0.00 mm3, planar margin ~40.7 mm
+hall cavity @112.5 deg vs exit hole: overlap 0.00 mm3, planar margin ~49.7 mm
+
+B7 RELEASE SWEEP (measured on the modelled port + pocket geometry; the r6/r7 'STATIONARY RELEASE / zero lateral velocity / full port aperture' claim is WITHDRAWN; r9's 1.00 deg spread is SUPERSEDED):
+    D13.0 seat +1.00 mm: support lost at   5.00 deg into the 22.5 deg index (22.2 % of the move), pocket-axis-to-port  9.736 mm, pellet-centre-to-port  8.736 mm (B7.1 asks <= 1.0 mm)
+    D13.0 seat +0.00 mm: support lost at   7.00 deg into the 22.5 deg index (31.1 % of the move), pocket-axis-to-port  8.630 mm, pellet-centre-to-port  8.630 mm (B7.1 asks <= 1.0 mm)
+    D13.0 seat -1.00 mm: support lost at   8.75 deg into the 22.5 deg index (38.9 % of the move), pocket-axis-to-port  7.661 mm, pellet-centre-to-port  8.661 mm (B7.1 asks <= 1.0 mm)
+    D12.0 seat +1.50 mm: support lost at   4.25 deg into the 22.5 deg index (18.9 % of the move), pocket-axis-to-port 10.150 mm, pellet-centre-to-port  8.650 mm (B7.1 asks <= 1.0 mm)
+    D12.0 seat +0.00 mm: support lost at   7.00 deg into the 22.5 deg index (31.1 % of the move), pocket-axis-to-port  8.630 mm, pellet-centre-to-port  8.630 mm (B7.1 asks <= 1.0 mm)
+    D12.0 seat -1.50 mm: support lost at   9.50 deg into the 22.5 deg index (42.2 % of the move), pocket-axis-to-port  7.245 mm, pellet-centre-to-port  8.745 mm (B7.1 asks <= 1.0 mm)
+    D11.0 seat +2.00 mm: support lost at   3.25 deg into the 22.5 deg index (14.4 % of the move), pocket-axis-to-port 10.701 mm, pellet-centre-to-port  8.701 mm (B7.1 asks <= 1.0 mm)
+    D11.0 seat +0.00 mm: support lost at   7.00 deg into the 22.5 deg index (31.1 % of the move), pocket-axis-to-port  8.630 mm, pellet-centre-to-port  8.630 mm (B7.1 asks <= 1.0 mm)
+    D11.0 seat -2.00 mm: support lost at  10.50 deg into the 22.5 deg index (46.7 % of the move), pocket-axis-to-port  6.690 mm, pellet-centre-to-port  8.690 mm (B7.1 asks <= 1.0 mm)
+  -> release window 3.25..10.50 deg into the index; spread 7.25 deg across D11..D13, 3.75 deg at D13 alone (r9 published 1.00 deg from a radial-offset construction and the r3 critic measured 7.25/3.75 independently -- these now agree). Separation at release 6.690..10.701 mm. B7.1 (support retained until |separation| <= 1.0 mm) FAILS: the pellet leaves while the disc is still moving. Lateral velocity at the PCD = omega x 32 mm = 0.126 m/s at the 225 deg/s mean index rate and 0.25 m/s at a 450 deg/s peak [D, profile assumption carried from r6, not re-derived]. THIS IS A RECORDED PLATEAU, not a closure -- see BUILD-NOTES-r4 B7 and the corrected README/DESIGN text. Park retention is unaffected and is re-printed above.
+
+EXIT KINEMATICS: the index is TWO-PHASE -- park(+22.5 deg) -> index 22.5 deg to the port -> DWELL -> index 22.5 deg to the next park. (a) release happens 3.25..10.50 deg INTO the first index, i.e. before the dwell begins, through a partial lune -- NOT from a stationary, concentric pocket (measured above); (b) the drop window is still a DWELL parameter, not a race -- fall time to clear the 14.5 mm pocket is 54 ms, so the contract dwell is 150 ms (2.8x); (c) the dwell is what guarantees the pellet is clear of the disc before the second index, and that part of the r6 argument survives.
+exit drop line: straight vertical at (32, 0) -> 32 mm from the airframe centreline; chute bore Dia22 gives 4.5 mm of radial clearance around a worst-case pellet
+IR beam at Z=-395.2 (40 mm below plate); v at beam = 0.89 m/s; occlusion ~17 ms (12 mm pellet + 3 mm beam); sensor faces recessed 5.0 mm from bore
+chute ID 22.0 < 2xD: two-body arch needs two pellets in the chute; free-fall transit 101 ms << the two-phase cycle -> temporally excluded (rebuttal held from r2)
+INTERFACE CONSTRAINT (r6, replaces r4's '>=150 ms index period'): the ICD command contract is INDEX 22.5 deg -> DWELL >= 150 ms -> INDEX 22.5 deg -> park; one pellet per 45 deg, <= 3 pellets/s. The dwell is the only timing the count loop depends on and it is a firmware constant, not a kinematic race.
+usable hopper volume (to fill line -248.6): 962 cm3
+capacity: worst-case barrel packing 421 pellets (497 g); sphere basis 586 (691 g); requirement >=250 -> PASS (1.68x)
+421-pellet fill line (raised rib) at Z=-249.0 (10.5 mm below the lid): volume below the line 954 cm3 = 419 pellets worst-case (target 421) / 582 sphere-basis
+250-pellet fill line (raised rib) at Z=-274.4 (35.9 mm below the lid): volume below the line 564 cm3 = 248 pellets worst-case (target 250) / 344 sphere-basis
+FILL-LINE RULE (r6): the MAX rib is the VOLUMETRIC brim line (421 pellets, 497 g). CONTEXT exempts pellet mass above the 250 baseline from the 1.5 kg ceiling, and the ceiling case is therefore the 250 load. For transparency the NO-EXEMPTION limits are printed too: on the quadruple-conservative ledger (CF-PETG 1.31 g/cm3, stepper 380 g gross, 100% infill, +10%) empty = 1323.4 g -> only 132 pellets, which is BELOW the 250 hard minimum: that reading is infeasible with a geared drive and r6 says so instead of quietly moving a rib. On the measured-infill ledger the same strict rule gives ~288 pellets. r5's rib was 393 on a 190 g direct drive.
+SERVICE DRAIN: pellets below the funnel outlet + one pellet layer (z<-313.2) = 114 cm3 = ~50 pellets. That is the residue that can fall when the cartridge is dropped AFTER the documented drain (QR the payload, invert, remove the fill cap, pour back into the tub) -- not the 421-pellet load.
+
+PELLET TRANSIT (Dia13 sphere vs all parts; every station must be 0):
+  fill port (cap off)               0.000 mm3  OK
+  hopper cylinder mid               0.000 mm3  OK
+  funnel wall tangent               0.000 mm3  OK
+  funnel wall @skirt 30             0.000 mm3  OK
+  funnel wall @skirt 105            0.000 mm3  OK
+  funnel wall @skirt 225            0.000 mm3  OK
+  funnel wall @skirt 30, low        0.000 mm3  OK
+  funnel wall @skirt 105, tab top    0.000 mm3  OK
+  funnel outlet                     0.000 mm3  OK
+  resting on disc, fill arc         0.000 mm3  OK
+  resting on sump floor @60         0.000 mm3  OK
+  resting on sump floor @300, inboard    0.000 mm3  OK
+  in exit hole                      0.000 mm3  OK
+  chute top                         0.000 mm3  OK
+  at IR beam                        0.000 mm3  OK
+  chute exit                        0.000 mm3  OK
+  below aircraft                    0.000 mm3  OK
+  seated in pocket th=180           0.000 mm3  OK (disc indexed +0.0 deg)
+  seated under brush th=133         0.000 mm3  OK (disc indexed +13.0 deg)
+  seated at roof edge th=129        0.000 mm3  OK (disc indexed -6.0 deg)
+  seated, transfer th=90            0.000 mm3  OK (disc indexed +0.0 deg)
+  seated, transfer th=45            0.000 mm3  OK (disc indexed +0.0 deg)
+  seated over exit port th=0        0.000 mm3  OK (disc indexed +0.0 deg)
+  worst station: funnel wall @skirt 30, low 0.000 mm3
+
+INSERTION / TOOL-PATH CHECKS (r4 harness additions):
+  skirt screw @theta= 30.0: shank path  0.00 mm3 (~0), driver envelope  8.24 mm3 (~0; r3 BLOCKER: 44.2), pilot stock  41.0 mm3 (>0)
+  skirt screw @theta=105.0: shank path  0.00 mm3 (~0), driver envelope  8.24 mm3 (~0; r3 BLOCKER: 44.2), pilot stock  41.0 mm3 (>0)
+  skirt screw @theta=225.0: shank path  0.00 mm3 (~0), driver envelope  8.24 mm3 (~0; r3 BLOCKER: 44.2), pilot stock  41.0 mm3 (>0)
+  wiper slide sweep (0..40 mm radial retraction, 20 steps, holder+bristles) vs statics (~0 = OK):
+    sweep x meter_housing               0.00
+    sweep x hopper                      0.00
+    sweep x pocket_disc                 0.00
+    sweep x agitator                    0.00
+    sweep x electronics_bay             0.00
+    sweep x top_plate                   0.00
+    sweep x retaining_plate_chute       0.00
+    sweep x sleeve_bearing              0.00
+
+  B2 DISC->SHAFT TORQUE PATH (r6: a plain round bore on a D-cut shaft, and a grub pilot that dead-ended at r=10.60 in solid material):
+    bore radius swept at 5 deg x 12 heights over the 13.5 mm D-cut engagement: round part 3.03 +/- 0.030 mm, FLAT part 2.63 +/- 0.076 mm over a contiguous 50 deg arc at every height (need >=25 deg at r=2.55+/-0.05; r6 measured r=3.06 at ALL angles and both heights)
+    grub corridor, Dia0.7 ray from the bore to the disc OD along theta=202.5: blocked at r = NOWHERE -- continuous void (r6: solid 10.60..24.47)
+    driver access, Dia1.9 x 40 mm key column on the grub axis from r=46 outward vs every other solid: meter_housing 0.000 -> total 0.000 mm3 (the wall access port at theta=202.5 is what makes this 0)
+    grub axis z=-341.25; shaft top -337.2; screw body -342.75..-339.75 clears the bushing sleeve bottom -334.95 by 4.80 mm -> the Dia20 journal surface is UNBROKEN
+  bay lid (B5.6): 4x Dia6 x 25 mm driver columns total 0.00 mm3 vs every OTHER solid (~0); 2x rib driver paths through the lid's Dia6 holes total 0.00 mm3 (~0)
+  bay lid REMOVAL sweep (20 mm outboard, 11 steps) vs every other solid: 0.00 mm3
+  CARTRIDGE DROP-OUT SWEEP (unlock -22 deg + 60 mm descent, 21 steps, 4 members x every static part, bbox-prefiltered; r3 REVERSED the latch handedness, so the unlock rotation is now -22, not +22):
+    TOTAL 0.00 mm3, first blocking step: None (r4 measured 860.07 mm3 here, 853 of it the agitator -> the documented service path did not exist)
+  agitator removal (lift 30 mm up into the funnel, 16 steps) vs hopper 0.00 / housing 0.00 mm3 -- it comes off the hex upward with the hopper removed (bench item, not a field item)
+  jam access, cartridge OUT: Dia8 rod from below to the wiper plane 133      0.00 mm3 (~0 = reachable)
+  jam access, cartridge OUT: Dia12 rod from below to the wiper plane 133      0.00 mm3 (~0 = reachable)
+  jam access, cartridge OUT: Dia8 rod from below to the roof edge 129        0.00 mm3 (~0 = reachable)
+  jam access, cartridge OUT: Dia12 rod from below to the roof edge 129        0.00 mm3 (~0 = reachable)
+  jam access, cartridge OUT: Dia8 rod from below to the fill arc 180         0.00 mm3 (~0 = reachable)
+  jam access, cartridge OUT: Dia12 rod from below to the fill arc 180         0.00 mm3 (~0 = reachable)
+
+ALL-PAIRS interference (120 pairs, bbox-prefiltered, ShapeList-safe; >0.5 mm3 flagged):
+  clip_plate               x top_plate                     0.00  OK
+  clip_plate               x blindmate_pcb                 0.00  OK
+  top_plate                x fill_cap                      0.00  OK
+  top_plate                x hopper                        0.00  OK
+  top_plate                x blindmate_pcb                 0.00  OK
+  fill_cap                 x hopper                        0.00  OK
+  hopper                   x meter_housing                 0.00  OK
+  hopper                   x pocket_disc                   0.00  OK
+  hopper                   x sleeve_bearing                0.00  OK
+  hopper                   x agitator                      0.00  OK
+  hopper                   x brush_holder                  0.00  OK
+  hopper                   x brush_bristles                0.00  OK
+  hopper                   x electronics_bay               0.00  OK
+  meter_housing            x pocket_disc                   0.00  OK
+  meter_housing            x thrust_washer                 0.00  OK
+  meter_housing            x sleeve_bearing                0.00  OK
+  meter_housing            x brush_holder                  0.00  OK
+  meter_housing            x brush_bristles                0.00  OK
+  meter_housing            x retaining_plate_chute         0.00  OK
+  meter_housing            x stepper                       0.00  OK
+  meter_housing            x electronics_bay               0.00  OK
+  pocket_disc              x thrust_washer                 0.00  OK
+  pocket_disc              x sleeve_bearing                0.00  OK
+  pocket_disc              x agitator                      0.00  OK
+  pocket_disc              x brush_holder                  0.00  OK
+  pocket_disc              x brush_bristles                0.00  OK
+  pocket_disc              x stepper                       0.00  OK
+  thrust_washer            x retaining_plate_chute         0.00  OK
+  thrust_washer            x stepper                       0.00  OK
+  sleeve_bearing           x agitator                      0.00  OK
+  sleeve_bearing           x brush_holder                  0.00  OK
+  brush_holder             x brush_bristles                0.00  OK
+  brush_holder             x stepper                       0.00  OK
+  retaining_plate_chute    x stepper                       0.00  OK
+  retaining_plate_chute    x electronics_bay               0.00  OK
+  electronics_bay          x bay_lid                       0.00  OK
+  summary: 36 bbox-overlapping pairs boolean-checked, 0 collisions, 0 check-failures
+fill cap vs top plate: locked 0.00 mm3, inserted(+90deg) 1.43 mm3 (both must be ~0)
+latch-lug swing sweep (r52..55.3, th a-5.3..a+27.3, z inset 0.05) vs housing / bay (must be ~0):
+  lug@ 60.0: x housing     0.00  x bay     0.00
+  lug@180.0: x housing     0.00  x bay     0.00
+  lug@300.0: x housing     0.00  x bay     0.00
+cartridge rotation (-22 deg): chute/boss cluster max r 44.4 mm < ring bore r52.3 -> inserts/rotates clear
+agitator swept annulus (r<=46.900000000000006, z -325.90..-318.35) vs statics (~0 = OK):
+  swept x brush_holder            0.00
+  swept x brush_bristles          0.00
+  swept x hopper                  0.00
+  swept x meter_housing           0.00
+  swept x top_plate               0.00
+  swept x sleeve_bearing          0.00
+  sump-floor film under the fingers 0.55 mm; the bed's outer boundary at the sump-floor plane is the hopper CONE FOOT, measured at r47.40 (r5 claimed the chamber wall r47 and the critic corrected it) -> unswept ring r46.7..47.40 = 207 mm2 (0.70 mm wide; r5 claimed 147, the critic measured 343)
+
+motor face x=17.6 vs chute outer wall x=19.0 -> clearance 1.4 mm (14HS13-0804S flat face; leads clocked -X)
+
+FILL-CAP EXTRACTION (B12.2 / A-5), measured on the model, not narrated:
+  cap spans Z -239.550..-228.200; lift to clear the plate top face (-233.55) = 6.000 mm (r8: 6.45 mm required against 0.65 mm available)
+  cap near edge y=15.50 (recess) / 16.00 (flange) vs the neck's relieved +Y face y=15.00 over Z -233.55..-221.55 -> 0.50 mm of plan land, and 12.0 mm of relieved height for a 6.00 mm lift
+  LEG 1 turn to unlock, swept union 0..90 deg at the seat: 25.8080 mm3, ALL of it the N5 detent tab riding the recess wall (1.4327 mm3 at every angle off the dimple; the tab is a modelled cantilever spring, deflection 0.40 mm)
+  LEG 2 axial lift 0..12 mm at the unlock angle, swept union: 0.1732 mm3 above the detent term (1.6059 total)
+     lift   2.0 mm ->    0.4588 mm3
+     lift   4.0 mm ->    0.0000 mm3
+     lift   6.0 mm ->    0.0000 mm3
+     lift   8.0 mm ->    0.0000 mm3
+     lift  10.0 mm ->    0.0000 mm3
+     lift  12.0 mm ->    0.0000 mm3
+  LEG 3 lateral +Y 0..45 mm at lift 8.0: 0.0000 mm3
+  -> the shipped extraction is: turn 90 deg, lift 6.0 mm, lift again/withdraw +Y. No leg needs the cap to pass under the neck.
+  B5-b FACE GLAND: 2.0 x 0.8 mm groove at r=25.0, centreline perimeter 157.08 mm; 720-point scan of the material UNDER the groove floor -> CLOSED 360.0 deg, no interruption (r8: 42.0 deg of the sealing bore did not exist -- two through-notches)
+     seal stack: cord 1.5, gland depth 0.8, flange rides 0.4 proud -> compressed 1.2 = 20% squeeze [D]
+  B5-b tank -> NECK CAVITY: 0 of 12 Dia1.2 columns from inside the tank to the clip-plate underside are open (must be 0; r8's -Y bayonet notch vented the tank straight into the harness neck).
+     ^ THIS CHECK IS NOT SUFFICIENT AND IS KEPT ONLY AS HISTORY: 12 hand-placed columns cannot certify a ~15 000 mm2 lid, and it printed '0 of 12 open' for nine rounds while 22.00 mm2 of the lid was missing (granule-path MODERATE 1). The grid scan below is the real test.
+  r6 TANK-ROOF GRID SCAN: 60669 upward rays at 0.50 mm over the barrel bore r <= 69.500 from z = -239.6 vs hopper+top_plate+fill_cap (cap FITTED): 29 open cells = 7.25 mm2 of UNROOFED granule bed
+     INSIDE the fill-cap O-ring gland (r <= 25.0 from the fill axis, nothing seals it): 0.00 mm2   <- must be 0.00
+     OUTSIDE it (cap flange r27.0 in the r27.5 recess = the designed running clearance, sealed by the 2.0 x 0.8 mm gland + the 1.5 mm nitrile cord, which is a BOM line and not a modelled solid): 7.25 mm2
+     open-cell bbox: x -23.50..26.00  y 25.00..34.50; radius from the fill axis 27.02..27.46 mm
+     (a failing part looks like r2..r11: 438 open cells / 27.38 mm2, including two 2.2 x 5.0 mm rectangles at (+/-9, -66) at plan radius 66.61 mm, and 13 cells at r 9.0..11.0 from the fill axis where the lanyard hole went through the cap)
+  N5 bayonet engagement: plate lugs r 20.0..23.0 = 3.00 mm radial x 7.0 mm x2 = 42.0 mm2 of retaining face; groove play 0.20 mm
+
+============ REV-1 r3: ROUND-2 BLOCKING FINDINGS ============
+A-7 CARTRIDGE FREE ROTATION (r8: hard stop in -theta only, 24.65 deg free in +theta = the direction the stator reaction pushes, ending in the drop-out window):
+  free band WITHOUT the lock pin: -24 .. +0 deg (1 deg steps, exact booleans vs meter_housing)
+     -26 deg ->    47.487 mm3
+     -25 deg ->    11.692 mm3
+     -24 deg ->     0.000 mm3
+      +0 deg ->     0.000 mm3
+      +0 deg ->     0.000 mm3
+      +1 deg ->    11.692 mm3
+      +2 deg ->    47.487 mm3
+  M3x6 STOP PIN at theta=51.0 (r 52.8..58.8): ^ retaining_plate 0.0000 mm3 seated, ^ meter_housing 4.3118 mm3 (= the thread-forming interference in the Dia2.6 pilot)
+     back-rotation  +0 deg -> lug ^ pin    0.000 mm3
+     back-rotation  -1 deg -> lug ^ pin    0.000 mm3
+     back-rotation  -2 deg -> lug ^ pin    0.005 mm3
+     back-rotation  -3 deg -> lug ^ pin    4.343 mm3
+     back-rotation  -5 deg -> lug ^ pin   17.731 mm3
+  -> two-sided band WITH the pin fitted: -2 .. +0 deg. Drive torque 0.6527 N*m reacts on the +theta shelf faces: 3 lugs x 14.0 mm2 = 42.0 mm2 at r=53.55 -> 12.2 N -> 0.290 MPa on CF-PETG (r8 relied on 0.068 N*m of lug friction: a 9.6x deficit)
+  pin driver access, Dia8 x 30 mm radial from r=60: 0.0000 mm3
+
+COUNT-SENSOR: the DATASHEET optoelectronics fit (r9 was built against a 5.8 mm TSAL6200 that came from a critique, not a drawing; the datasheet part is 8.7 +/- 0.3 mm and buried 11.2532 mm3 per LED in the r9 plate):
+  aperture plane |y|=17.0; board inner face |y|=26.5; outer face |y|=28.5; cavity floor |y|=30.5 -> component height 9.50 mm, post length 2.00 mm
+  sensor_boards (2x PCB + 2x TSAL6200 + 2x VBPW34FAS, modelled envelopes) ^ retaining_plate_chute = 0.0000 mm3
+  sensor_boards ^ sensor_cover = 0.0000 mm3
+  sensor_boards ^ count_windows = 0.0000 mm3
+  TSAL6200 max-material envelope (nominal 8.7 mm, Dia5.8x0.7 flange + Dia5.0 barrel run FLAT to the apex, which contains the R2.49 dome), 4 placements: ^ plate = 0.0000 mm3, ^ cover = 0.0000 mm3  (r9 at 8.7: 11.2532 per LED)
+  TSAL6200 max-material envelope (max 9.0 mm, Dia5.8x0.7 flange + Dia5.0 barrel run FLAT to the apex, which contains the R2.49 dome), 4 placements: ^ plate = 0.0000 mm3, ^ cover = 0.0000 mm3  (r9 at 8.7: 11.2532 per LED)
+  VBPW34FAS datasheet solid (6.4x3.9x1.2 SMD), both placements: ^ plate = 0.0000 mm3
+  LED tip |y| = 17.50 at the 9.0 mm worst case vs the cavity floor 17.00 -> 0.50 mm of air (0.80 mm at nominal). The Dia5.0 barrel cannot enter the Dia3.2 aperture, so this clearance is what the fit depends on.
+  optical path, emitter tip |y|=17.8 to PD face |y|=25.3 = 43.1 mm (r9 geometry: 38-40 mm). ELECTRONICS 4.4 computes 182x excess gain over a 32 mm path; inverse-square at 43.1 mm gives 100x. Still a large dust margin, but 4.4's headline is 1.81x optimistic against the geometry that exists -- carried as an open ELECTRONICS edit, not silently kept.
+  NB-1 BOARD LOCATION: cavity 20.400 (x) x 14.400 (z) around an 18.000 x 12.000 board = +/-1.200 / +/-1.200 mm of float in r9. The cover now carries 4 locating ribs 0.8 mm thick at x +/-9.6, z +/-6.6, 3.5 mm deep -> board float +/-0.200 mm in x and +/-0.200 mm in z, with 0.200 mm of rib-to-cavity clearance; lateral capture over the board edge = 1.500 mm
+  NB-4 DATUMS PUBLISHED: the devices sit on the LABYRINTH mouths x = 29.000 / 35.000 (not the ECO-3 aperture axes 29/35), z = -392.250 / -398.250, board centre x = 34.500; pitch 6.000 x 6.000 mm unchanged
+
+A-6 SENSOR-COVER INSERTION (r8: 488.4789 mm3 swept, no clear direction; the harness duct stood 0.50 mm outboard of the cover):
+  cover +Y: radial swept union over 30 mm (16 stations) vs plate+stepper+windows = 0.0000 mm3; seated 0.0000 mm3
+  cover -Y: radial swept union over 30 mm (16 stations) vs plate+stepper+windows = 0.0000 mm3; seated 0.0000 mm3
+  harness material outboard of the cover face |y|=32.5 in the cover's own x/z envelope: the duct's lowest run is at z=-414.30 (crown -410.30), 0.55 mm below the cover's bottom face
+
+B5-a ELECTRONICS BAY (r8: 42.0000 mm clear aperture for a 42.0 mm board = 0.0000 mm of clearance):
+  clear aperture 46.0000 (w) x 36.0000 (h) mm -> a 42.0 x 34.0 board passes with 4.0000 / 2.0000 mm of clearance
+  42 x 34 x 12 board seated on the ECO-7 standoffs ^ bay = 0.0000 mm3
+     board clearance +x              5.0 mm (B5.1 asks >= 1.5)
+     board clearance -x              5.0 mm (B5.1 asks >= 1.5)
+     board clearance +z              1.8 mm (B5.1 asks >= 1.5)
+     board clearance -z              2.0 mm (B5.1 asks >= 1.5)
+     board clearance -y (outboard)   6.0 mm (B5.1 asks >= 1.5)
+  board insertion sweep through the aperture (-Y, 30 mm): 0.0000 mm3
+
+I-1 CARTRIDGE-DUCT PATENCY (bay -> motor, bay -> both count boards). r11: every leg 100.0 % SOLID on its own axis; largest conductor Dia0.0
+    sensor cavity riser +Y       L  12.35 mm | axis points inside material    0/  50 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    low run in Y +Y              L  10.00 mm | axis points inside material    0/  41 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    low run in X +Y              L  27.00 mm | axis points inside material    0/ 109 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    vertical leg +Y              L  51.05 mm | axis points inside material    0/ 205 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    collector run +Y             L  46.50 mm | axis points inside material    0/ 187 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    sensor cavity riser -Y       L  12.35 mm | axis points inside material    0/  50 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    low run in Y -Y              L  10.00 mm | axis points inside material    0/  41 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    low run in X -Y              L  27.00 mm | axis points inside material    0/ 109 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    vertical leg -Y              L  51.05 mm | axis points inside material    0/ 205 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    collector run -Y             L  46.50 mm | axis points inside material    0/ 187 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    return leg (+Y -> -Y)        L  65.00 mm | axis points inside material    0/ 261 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    motor branch                 L  49.20 mm | axis points inside material    0/ 197 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    motor stub                   L  10.50 mm | axis points inside material    0/  43 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    exit leg (-> bay)            L  15.50 mm | axis points inside material    0/  63 (  0.0 %) | Dia4.0 bundle ^ plate =    0.0000 mm3
+    TOTAL 0/1748 axis points inside material; worst Dia4.0 bundle intersection 0.0000 mm3
+    duct-bore material actually removed by cut_each = 8025.3368 mm3 = 10.19 g of CF-PETG at 100 % infill (r11 removed 0.0000)
+
+B5-c HARNESS ROUTE, MEASURED ON THE EXPORTS (r10 shipped a PARAMETER roll-up that read 95.3 % covered while the elbow was solid; this block reads the meshes):
+     mesh under test: 10 exported part STLs (agitator, bay_lid, brush_holder, electronics_bay, fill_cap, hopper, meter_housing, pocket_disc, retaining_plate_chute, top_plate), 123158 faces
+     100.0 % covered    46.00 mm  (worst enclosing wall 73.00 mm)  neck cavity (blind-mate PCB -> neck base)
+      63.6 % covered    11.00 mm  (worst enclosing wall 42.50 mm)  neck -Y wall exit slot -> top-plate conduit   <- NOT as the route description assumes
+     100.0 % covered    54.00 mm  (worst enclosing wall 42.50 mm)  top-plate conduit, neck wall -> elbow tangent
+     100.0 % covered    12.56 mm  (worst enclosing wall  5.56 mm)  top-plate ELBOW (R8.0 quarter turn)
+     100.0 % covered    79.75 mm  (worst enclosing wall  5.50 mm)  vertical spigot -> hopper conduit -> bay riser
+      11.8 % covered    16.72 mm  (worst enclosing wall 25.74 mm)  bay -> cartridge duct SERVICE LOOP (must flex: the cartridge drops out)
+      81.2 % covered    15.50 mm  (worst enclosing wall  2.50 mm)  cartridge duct, bay end -> x=0 collector   <- NOT as the route description assumes
+      89.8 % covered    49.20 mm  (worst enclosing wall  4.00 mm)  motor branch, collector -> motor rear plane   <- NOT as the route description assumes
+     100.0 % covered    10.50 mm  (worst enclosing wall 51.70 mm)  motor branch, inboard to the lead socket
+       0.0 % covered     4.40 mm  (worst enclosing wall  0.00 mm)  motor flying leads, socket -> can face
+     100.0 % covered    51.05 mm  (worst enclosing wall 48.95 mm)  sensor duct +Y: collector -> vertical leg
+     100.0 % covered    27.00 mm  (worst enclosing wall 67.50 mm)  sensor duct +Y: low run in X
+      80.0 % covered    10.00 mm  (worst enclosing wall 26.25 mm)  sensor duct +Y: low run in Y -> ear bottom   <- NOT as the route description assumes
+     100.0 % covered     4.55 mm  (worst enclosing wall 12.46 mm)  sensor riser +Y inside the boss
+     100.0 % covered    51.05 mm  (worst enclosing wall 48.95 mm)  sensor duct -Y: collector -> vertical leg
+     100.0 % covered    27.00 mm  (worst enclosing wall 67.50 mm)  sensor duct -Y: low run in X
+     100.0 % covered    10.00 mm  (worst enclosing wall 37.45 mm)  sensor duct -Y: low run in Y -> ear bottom
+     100.0 % covered     4.55 mm  (worst enclosing wall 12.46 mm)  sensor riser -Y inside the boss
+  total modelled harness run 484.84 mm; MEASURED covered 451.75 mm = 93.2 % (B5.5 asks >= 90 %); uncovered 33.08 mm
+     uncovered   4.00 mm at: neck -Y wall exit slot -> top-plate conduit
+     uncovered  14.76 mm at: bay -> cartridge duct SERVICE LOOP (must flex: the cartridge drops out)
+     uncovered   2.91 mm at: cartridge duct, bay end -> x=0 collector
+     uncovered   5.02 mm at: motor branch, collector -> motor rear plane
+     uncovered   4.40 mm at: motor flying leads, socket -> can face
+     uncovered   2.00 mm at: sensor duct +Y: low run in Y -> ear bottom
+  motor lead socket at (0.0, -22.0, -412.45) -> gap to the motor can face (|y|=17.6) = 4.40 mm [A: NEMA-14 leads exit the can; CLOSURE = the delivered motor]
+  B5.4 the cartridge duct never enters the granule space: duct solid ^ hopper 0.0000, ^ meter_housing 0.0000, ^ pocket_disc 0.0000 mm3
+
+ROUND-2 NON-BLOCKING items closed by geometry:
+  NB-1 chute_plug ^ count_windows = 0.0000 mm3 (r8: 0.5981 mm3 on each beam-B window); plug land now z -389.00..-381.00 = 8.0 mm ABOVE the windows (top window edge -389.30), shank relieved to Dia21.2; ^ retaining_plate 83.5035 mm3 = the designed 0.3 mm press fit
+  NB-2 bay-lid rib-driver corridor INCLUDING the lid itself: 0.0000 mm3 (r8: 0.7069 mm3 of the lid's own register lip -- the r8 check excluded bay_lid from its own corridor test)
+  NB-1(assembly) shaft-end clearance: bore blind face Z=-335.750, shaft top Z=-337.250 -> 1.500 mm (r8: 0.000, so the shaft, not the PTFE washer, set the disc height)
+  NB-4(assembly)/B12.1 the LOWEST FLIGHT SOLID is stepper at Z=-418.450; service-stand ground plane Z=-426.45 -> clearance 8.000 mm (BUILD-NOTES-r2 printed 16.20 mm by measuring the retaining plate, not the motor)
+
+WALL THICKNESS (inward ray-cast on the exported STLs, mm):
+  top_plate              min  0.11  p1  1.00  p5  1.50     7.4% of sampled area under 1.95 mm  (1% grazing rays dropped)
+  fill_cap               min  0.90  p1  0.90  p5  0.90    12.4% of sampled area under 1.95 mm  (0% grazing rays dropped)
+  hopper                 min  1.00  p1  1.50  p5  1.50     6.0% of sampled area under 1.95 mm  (3% grazing rays dropped)
+  meter_housing          min  0.01  p1  1.68  p5  2.46     1.2% of sampled area under 1.95 mm  (2% grazing rays dropped)
+  pocket_disc            min  0.20  p1  1.73  p5  5.16     1.1% of sampled area under 1.95 mm  (6% grazing rays dropped)
+  agitator               min  1.50  p1  1.50  p5  1.50    11.7% of sampled area under 1.95 mm  (0% grazing rays dropped)
+  brush_holder           min  0.00  p1  0.46  p5  0.60    23.0% of sampled area under 1.95 mm  (8% grazing rays dropped)
+      -> 9.5% of samples read under 1.0 mm and 13% of THOSE lie within 2 mm of the deflector tip plane z=-335.2: they are the 30 deg WEDGE (blunted to a 0.6 mm tip face), not a wall. The rail section is 18 x 3 mm and the thinnest real wall is the bristle-channel outer web at 0.9 mm (stress-checked above).
+  retaining_plate_chute  min  0.20  p1  1.25  p5  1.50    29.6% of sampled area under 1.95 mm  (1% grazing rays dropped)
+  electronics_bay        min  0.70  p1  1.50  p5  1.55     6.0% of sampled area under 1.95 mm  (1% grazing rays dropped)
+  bay_lid                min  0.90  p1  2.00  p5  2.00     0.7% of sampled area under 1.95 mm  (0% grazing rays dropped)
+  plate radial web @theta=160: solid runs ['39.0-40.4', '43.6-45.6', '46.8-47.9'] -> widest 2.00 mm
+  plate radial web @theta=200: solid runs ['39.0-40.4', '43.6-45.6', '46.8-47.9'] -> widest 2.00 mm
+  plate radial web @theta=260: solid runs ['39.0-40.4', '43.6-45.6', '46.8-47.9'] -> widest 2.00 mm
+  plate radial web @theta=300: solid runs ['39.0-40.4', '43.7-45.6', '46.8-47.9'] -> widest 1.90 mm
+  plate radial web @theta=330: solid runs ['39.0-40.4', '43.6-45.6', '46.8-47.9'] -> widest 2.00 mm
+  -> min radial web between the inner slots and the rim slots 1.90 mm (r4 critic measured 1.0 mm over ~176 deg)
+
+SUMP APERTURE (measured at theta=190, z=-327.2): open radial runs ['8.00-15.00', '20.25-46.75']; the pellet window (the run containing the PCD) is r20.25..46.75 = 26.50 mm x 120.0 deg annular window; equivalent circular orifice D48.7. That is 2.04x the worst-case pellet -- CONCEPT-pocket-wheel 3's '~95 mm orifice' is WRONG and is struck in BUILD-NOTES-r5; the anti-bridging defence is the agitator, not the aperture size.
+
+BEARING: iglidur-class flanged sleeve ID20.0/OD23.0, flange Dia30.0, journal length 7.0 mm at z -334.95..-327.95; seat probe (bushing vs housing counterbore) 0.00 mm3, hub-in-bore radial clearance 0.10 mm modeled. [D] p = 3 N / (20 x 7) = 0.0214 MPa vs iglidur J ~35 MPa static -> 1633x margin; L/D = 0.35 is short, so it constrains disc TILT and takes the bed load off the stepper bearings rather than acting as a precision journal (stated, not hidden).
+  agitator self-capture: it is held by gravity alone, so inverting the payload for the service drain drops it off the hex. It cannot leave the hopper (OD 93 vs the Dia46 fill port) and the funnel outlet r47.5 limits its radial float to 0.8 mm, so on re-righting it lands concentric within 0.8 mm and drops onto the hex within 30 deg of hand rotation (45 deg lead-in chamfer modeled on the spigot top).
+  agitator thrust face: rides on the bushing flange standing 0.30 mm proud of the sump floor (iglidur-on-TPU, not PETG-on-TPU); hex drive engagement 5.70 mm, 15.0 mm across flats, 0.4 mm AF clearance
+
+MODELED FASTENING (r5):
+  clip->top_plate: 4x M2 SHCS from the drone side, through the MAPPED vendor holes at (+/-19,+/-19) (dia 2.90), heads in the plate's own dia 3.90 pockets, into M2 heat-set inserts in the top plate (r5 bolted into a through-window: BLOCKING)
+  blind-mate PCB: 4x M2 into the CLIP PLATE's own tabs at (+/-4,+/-10); the payload only provides the sealed well + cable route
+  top_plate->hopper: 6x M3 at r74.0 into Dia4 heat-set inserts in the hopper flange (both hole sets modeled)
+  hopper->housing: 3x RADIAL M3 plastite through skirt tabs at theta (30.0, 105.0, 225.0), z=-330.2, into Dia2.5x4.4 wall pilots -- driver comes in horizontally from outside
+  bay->housing: 2x M3x18 through rib+inner wall into Dia2.5x7 wall pilots; driver access via Dia6 holes in the BAY LID
+
+SERVICE PROCEDURE FACTS (measured, not narrated -- assembly NB-8):
+  1. MOTOR IS NOT FIELD-REPLACEABLE IN PLACE. Driver columns on the 4 gearbox screws (r=13 bolt circle), +Z, 25 mm, vs every OTHER assembled solid: Dia1.5 -> 62.9104 mm3, Dia3.4 -> 322.3960 mm3, Dia6.0 -> 1475.8318 mm3, Dia8.0 -> 3463.0870 mm3 -> largest clear driver in situ = Dia0.0. The motor is fastened and removed ONLY as the plate+motor cartridge (that is what the quarter-turn latch is for).
+  2. THE DISC MUST BE INDEXED TO theta = 202.5 deg before the grub can be fitted: the disc's grub pilot, the housing access port and the shaft flat only line up there (the continuous Dia2.6 void measured above is measured at that clocking). The grub must be pushed 43.00 mm radially down the Dia3.4 channel; there is no retrieval path if it is dropped in the chamber.
+  2b. THE 4 x RX-M2x4 MOUNT INSERTS GO IN FROM THE UNDERSIDE of top_plate, while it is still a loose part (assembly r4 NB-1: 'a perfectly buildable sequence -- it is just not written anywhere'). Measured at (19, 19): Dia2.500 lead from the top face z=-181.550 down to -188.050, then the Dia3.200 x 4.000 mm insert bore, then a Dia4.800 relief shaft. A Dia3.2 insert cannot pass the Dia2.5 lead, so it is heat-set from below; the shoulder is a positive depth stop.
+  4. LASH AT THE DRIVE-REACTION STOP is 0.5141 deg (assembly NB-4, measured on the r10 exports; free band -24.5142..+0.5142 deg, bounded to 2.4573 deg with the stop pin fitted). On a 22.5 deg index that is 2.28 % of a station of angular error the FIRST time the drive loads in each direction, and it must be in the count-contract text: the count is taken at the chute beam, not from the commanded angle, so lash cannot manufacture a count.
+  5. SERVICE-STAND CLEARANCE is 8.000 mm (assembly NB-5): stand ground plane z=-426.45, lowest assembly solid = the motor can at z=-418.45. The load path is the meter_housing latch-ring underside on the stand's 3 pads -- printed structure, not the can.
+  3. THE DISC MUST BE COUNTER-INDEXED BY THE UNLOCK ANGLE (-22 deg) when the cartridge goes in or out: the shaft D-flat and the disc D-bore flat are a keyed pair, so at the wrong relative angle the cartridge fouls the disc (the r3 critic measured 4.2552/4.6955/5.1242 mm3 at -20/-22/-24 deg and 0.0000 with the disc counter-indexed). The disc is free in the bearing until the grub is torqued, so this is a hand motion, not a fixture.
+
+FASTENER GRIP / ENGAGEMENT (measured by ray-cast on the exported STLs; r9: bay screw engagement 0.000 mm):
+  ray crossings: bay rib boss y ['-64.000', '-49.517']; housing y ['-50.080', '-44.852', '44.862', '50.072']
+  bay->housing: head bearing plane y=-64.000 (bay rib outer face), first threadable housing material y=-50.080 (off-axis ray, so this is wall, not pilot), pilot bottom y=-46.500
+    GRIP = 13.920 mm; M3x18 tip lands at -46.000; THREAD ENGAGEMENT = 3.580 mm (available 3.580 mm; r9's M3x12 achieved 0.000 and stopped 1.920 mm short of the housing)
+    r6 TRADE, stated not hidden (assembly A-12): r11 bought 5.080 mm of engagement by bottoming the pilot at y = -45.000, which broke through the CURVED chamber wall over 27.7 % of the bore section and left 0.144 mm of floor where it did not. Moving the floor to -46.500 closes it with 2.043 mm of material under the WORST point of the bore section, and costs 1.500 mm of thread. 3.580 mm = 1.19 x D of thread-forming engagement in CF-PETG on a 2-screw joint that carries no drive reaction (the bay hangs off the housing rib; the reaction path is the latch + stop pin + detent).
+  hopper skirt tabs: head bearing r=56.20, housing OD r=52.00 -> GRIP 4.200 mm; M3x8 presents 3.800 mm of thread to a 4.100 mm pilot -> ENGAGEMENT 3.800 mm (1.27 x D), 0.300 mm of pilot left before the screw bottoms (r9: 4.850 mm of thread into a 4.100 mm pilot -> bottomed out 0.750 mm before clamping)
+  bay lid: 4x M3 self-tap into corner-boss pilots
+  wiper: radial slide-in into an open-topped seat + end-tab M3 radial screw into a housing pilot; bristle strip pushed into the holder channel from the outboard end (both are field-replaceable)
+  cartridge: 3x quarter-turn lugs into ring slots; disc M3x4 set screw at z=-341.2 onto the shaft flat, tightened with the cartridge out (a motion r5 actually verifies)
+  agitator: NO fastener -- hex-driven free rotor, lifts off upward (r4's set screw inside the funnel throat is deleted)
+
+============ REV-1 r5: ROUND-4 CRITIC FINDINGS ============
+R5-1 CONDUIT ELBOW PATENCY (r10, measured by the integration critic on top_plate_r10.stl: vertical bore axis SOLID over z -237.50..-225.00, horizontal bore axis SOLID over y -84.00..-72.00, largest conductor that could cross the elbow = Dia0.0):
+     vertical spigot axis (x=0, y=-81.0), z -248.55..-230.55 at 0.25 mm: NO SOLID POINT (bore is open end to end)
+     horizontal bore axis (x=0, z=-230.55), y -81.00..-19.00 at 0.25 mm: NO SOLID POINT (bore is open end to end)
+     elbow centreline arc (R8.0, 65 points): NO SOLID POINT (the corner is a radius, not a step)
+  Dia5.5 bundle [A: 9-conductor 26 AWG PTFE] swept along each leg of the modelled route, exact boolean vs top_plate + hopper + electronics_bay:
+        0.0000 mm3   neck cavity (blind-mate PCB -> neck base)
+        0.0000 mm3   neck -Y wall exit slot -> top-plate conduit
+        0.0000 mm3   top-plate conduit, neck wall -> elbow tangent
+        0.0000 mm3   top-plate ELBOW (R8.0 quarter turn)
+        0.0000 mm3   vertical spigot -> hopper conduit -> bay riser
+     -> total 0.0000 mm3 (r10: the same sweep read 2.535 / 213.825 / 166.308 mm3 on three legs)
+     largest-bundle probe: Dia5.5 over the WHOLE top-plate route ^ top_plate = 0.0000 mm3
+     largest-bundle probe: Dia6.0 over the WHOLE top-plate route ^ top_plate = 0.9898 mm3
+     largest-bundle probe: Dia7.0 over the WHOLE top-plate route ^ top_plate = 718.8920 mm3
+     largest-bundle probe: Dia8.0 over the WHOLE top-plate route ^ top_plate = nan mm3
+     -> largest conductor bundle that crosses the elbow = Dia5.5 (r10: Dia0.0)
+  N-i2 CONNECTOR vs BORE: the aircraft-side shell is a Molex 12-circuit 1.25 mm-pitch housing, ~16.7 x 5.8 mm envelope [A: catalogue figure from memory, CLOSURE = the ordered PN drawing]. Its diagonal 17.68 mm does NOT pass the measured Dia6.0 conduit bore and cannot turn the R8.0 elbow. SHIPPED WORKFLOW, stated as an assembly constraint: the harness is routed as 12 LOOSE CRIMPED terminals (each ~2.1 x 1.0 mm, bundle 10.4 mm2 = 36.8 % of the 28.27 mm2 bore) and the J1 housing is populated at the neck AFTER routing. No conduit is openable.
+
+R5-2 A-10 GEARBOX SCREW HEAD (r10 BOM ordered `M3x8 SHCS` for a 90 deg countersink; measured by the assembly critic: 8.8652 mm3 per screw static and 49.4066 mm3 over one 45 deg spoke pitch, and it never returns to zero):
+     countersink as modelled: cone r1.70 at z=-352.650 -> r3.05 at z=-351.250 (90 deg included), shank Dia3.40 to the gearbox face z=-355.250
+     FLUSH FLAT HEAD (ISO 10642 / DIN 7991): GRIP 4.000 mm (plate TOP FACE z=-351.250 to the gearbox flange face z=-355.250), M3x8 leaves 4.000 mm of thread beyond the grip -- the screw must NOT be lengthened. The assembly critic printed 3.950/4.050 for the same joint because they seated the head 0.050 mm below the top face; the difference is the head clearance, not a geometry change.
+     flat head x4 ^ EVERY other assembly solid (static, assembled clocking) = 0.0000 mm3; ^ its own countersink in retaining_plate_chute = 0.0000 mm3 (it seats IN the cone, so this is the seat contact, not interference)
+     disc swept over one 45 deg spoke pitch (3 deg steps), heads static:
+        disc   0 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL  35.4607 mm3
+        disc   3 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL  50.4874 mm3
+        disc   6 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL  79.5471 mm3
+        disc   9 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 108.2056 mm3
+        disc  12 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 135.3019 mm3
+        disc  15 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 159.9948 mm3
+        disc  18 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 181.2857 mm3
+        disc  21 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 197.6265 mm3
+        disc  24 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 197.6265 mm3
+        disc  27 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 181.2857 mm3
+        disc  30 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 159.9948 mm3
+        disc  33 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 135.3019 mm3
+        disc  36 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL 108.2056 mm3
+        disc  39 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL  79.5471 mm3
+        disc  42 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL  50.4874 mm3
+        disc  45 deg: flat head   0.0000 mm3   Dia5.5x3.0 CAP HEAD CONTROL  35.4607 mm3
+     -> flat head worst over the pitch 0.0000 mm3 (must be 0.0000); cap-head control worst 197.6265 mm3, static 35.4607 mm3 (assembly critic: 49.4066 / 8.8652). Vertical air between the plate top at the bolt circle (-351.250) and the disc underside (-350.750) = 0.500 mm; a cap head stands 1.950 mm proud of it
+
+R5-3 PLUG TETHER LUG + PLUG FLANGE (r10: lug inboard face 1.000 mm INSIDE the r11.000 bore -> r_min 10.000 over z -398.00..-404.00; plate ^ plug 206.0993 mm3 logged as 'the designed 0.3 mm press fit' when only 83.504 mm3 of it was):
+     radial ray sweep from the chute axis, 1 deg x 13 heights:
+        z= -396.00: r_min  10.993 mm   <- BORE WALL, nothing proud
+        z= -396.75: r_min  10.993 mm   <- BORE WALL, nothing proud
+        z= -397.50: r_min  10.993 mm   <- BORE WALL, nothing proud
+        z= -398.25: r_min  10.993 mm   <- BORE WALL, nothing proud
+        z= -399.00: r_min  10.993 mm   <- BORE WALL, nothing proud
+        z= -399.75: r_min  10.994 mm   <- BORE WALL, nothing proud
+        z= -400.50: r_min  10.994 mm   <- BORE WALL, nothing proud
+        z= -401.25: r_min  10.994 mm   <- BORE WALL, nothing proud
+        z= -402.00: r_min  10.995 mm   <- BORE WALL, nothing proud
+        z= -402.75: r_min  10.995 mm   <- BORE WALL, nothing proud
+        z= -403.50: r_min  10.996 mm   <- BORE WALL, nothing proud
+        z= -404.25: r_min  10.996 mm   <- BORE WALL, nothing proud
+        z= -405.00: r_min  10.997 mm   <- BORE WALL, nothing proud
+     retaining_plate_chute ^ chute_plug (fitted pose) = 83.5035 mm3 in 1 bodies, decomposed:
+          83.5035 mm3  x[  20.85,  43.15] y[ -11.15,  11.15] z[ -389.000, -381.000]
+     the DESIGNED press fit is the Dia22.3 land in the Dia22.0 bore over 8.0 mm = 2*pi*11.075*0.150*8.0 = 83.504 mm3. Anything else in the list above is NOT designed.
+
+R5-4 REVERSE-STROKE BOUND AT r=24.5 (the critic: 'a stacked Dia13 granule spans r 25.5..38.5, it is not a point at the PCD'; publish 2.25 deg, not the PCD-only 2.75):
+     r= 24.5: guaranteed reverse free travel for an 11.5 mm stack = 2.50 deg
+     r= 32.0: guaranteed reverse free travel for an 11.5 mm stack = 2.75 deg
+     r= 39.5: guaranteed reverse free travel for an 11.5 mm stack = 2.75 deg
+
+R5-5 N10 SUMP OUTLET, re-measured on meter_housing_r12.stl (recorded PLATEAU, not a pass):
+     window edges bisected to 1e-4 deg at the PCD: theta 130.000 -> 250.000 = 120.000 deg; radial span at theta=190: r 20.000 -> 46.993 = 26.993 mm
+     area 1893.7 mm2 -> equivalent circular orifice D 49.10 mm; min opening / D_max = 2.076 (a slot wants >= 3, a hopper outlet 4-6) -> the no-arch criterion is met ONLY through the active agitation branch
+     agitator defence: 3 fingers at theta 0/120/240, so exactly one is in the 120.0 deg window at a time; each 22.5 deg index sweeps 18.75 % of the window = one full sweep per 5.33 INDEXES = 2.67 dispensed granules (the cycle is TWO 22.5 deg indexes per granule)
+
+R5-7 ASSEMBLY ORDER RE-PRINTED FROM THE TOOLS (assembly critic item 3: 'not asserted'). Each row is a straight approach; primed rows are CONTROLS -- the same part on the opposite approach, printed so that 0.0000 cannot mean 'the probe missed'.
+     station-max       0.0000 | swept-union       0.0000 mm3  2  igus JFM-2023-07 into the roof bore
+     station-max     580.5963 | swept-union     957.9839 mm3  2' (same, from below) CONTROL
+     station-max       0.0000 | swept-union       0.0000 mm3  4  pocket_disc, hub up through the bearing
+     station-max   29264.7044 | swept-union   29407.8490 mm3  4' (same, from above) CONTROL
+     station-max       0.0000 | swept-union       0.0000 mm3  5  agitator onto the Dia15 hex
+     station-max       0.0000 | swept-union       0.0000 mm3  10 electronics_bay onto the housing ribs
+     station-max       0.0000 | swept-union       0.0000 mm3  12 hopper down over the bay riser
+     station-max       0.0000 | swept-union       0.0000 mm3  13 top_plate onto the hopper flange
+     station-max       0.0000 | swept-union       0.0000 mm3  14 clip plate + blind-mate PCB
+  TORQUE PATH, flat-on-flat engagement re-measured (assembly critic: 12.000 mm):
+     disc D-bore: r at the flat azimuth = 2.550 mm, round azimuth = 3.050 mm; the flat STARTS at z = -349.2500 (bisected 1e-4)
+     shaft flat starts at z = -349.1000, shaft top -337.250; FLAT-ON-FLAT ENGAGEMENT = 11.850 mm (vendor D-cut is 12 mm)
+     F1b (plate+motor+washer SUB-ASSEMBLY on the bench, i.e. the pose the screws are actually driven in; the disc is NOT part of it): Dia6.0 -> 0.0000, Dia8.0 -> 0.0000, Dia10.0 -> 8.5215, Dia12.0 -> 26.1626 -> largest clear driver = Dia8.0 (F1 in situ is Dia0.0, printed above)
+
+R5-6 PROP CLEARANCE, MEASURED (r10 restated the r2 figures verbatim; the critic asked for a measurement or an admission):
+     propulsion assembly: 1574970 faces at 1.0 mm tolerance, bbox Z [-18.50, 63.54], plan radius 940.6 mm
+     payload assembly:    bbox Z [-418.450, -171.050], plan radius 97.94 mm
+     VERTICAL gap, lowest propulsion material to payload top = 152.55 mm  (r2 carried: 152.5)
+     IN-PLAN gap, payload max radius to the nearest propulsion material radius = 232.63 mm  (r2 carried: 239.3)
+     VERTEX-TO-VERTEX minimum separation (KD-tree, 4724910 propulsion vertices x 71028 payload vertices) = 374.90 mm  [method: vertex-level, so it over-reports by at most one 1.0 mm chord]
+
+================ MASS LEDGER ================
+  (printed parts priced at 100% INFILL from the measured solid volume -- stated explicitly per the r4 mass critic; the slicer-realistic bracket is measured below and is LIGHTER, so the ceiling case here is the conservative one.)
+  clip_plate                  31.1 g   COTS 2112; [D] STEP vol 11.5 cm3 x 2.70 (alu ASSUMPTION)
+  top_plate                  121.4 g   [D] solid volume, CF-PETG; integral 42 mm stand-off NECK (B6) carrying the M2 inserts at the MAPPED clip pattern, the blind-mate PCB well and the covered harness conduit to the -Y rim
+  fill_cap                     9.6 g   [D] volume; r3 INVERTED bayonet (slotted spigot + circumferential groove over the plate's inward lugs); face O-ring on an unbroken 360 deg gland; N5 detent scallop; pure-axial extraction
+  hopper                     139.0 g   [D] shell volume, 2.5 mm wall CF-PETG, 68 deg funnel + flange/skirt tabs + raised max/baseline fill-line ribs
+  meter_housing              131.9 g   [D] volume, CF-PETG; latch ring merged via band; ramp; brush wall window + inner closed slot; radial skirt-screw pilots
+  pocket_disc                 92.3 g   [D] volume w/ pockets+lightening, CF-PETG; -Z rotation arrow engraved
+  thrust_washer                0.7 g   PTFE Dia38/Dia34x1.4 in plate recess (McMaster PTFE washer class, part TBD); disc rides it (0.05 modeled gap); OUTBOARD of the Dia26 motor bolt circle (B3)
+  sleeve_bearing               1.7 g   COTS igus iglidur J JFM-2023-07 (ID20/OD23/L7; flange Dia30x2 ASSUMPTION) -- length confirmed catalogued at distributors
+  agitator                     5.1 g   [D] volume, TPU; hex-driven free rotor on the bushing flange; fingers sweep to r46.7; unswept ring measured against the real cone foot, not the chamber wall (r5 pellet-path MINOR)
+  brush_holder                 4.5 g   [D] volume, CF-PETG; LEADING bristle channel + 45 deg deflector nose; slides out radially; M3 retention screw through the end tab
+  brush_bristles               3.0 g   COTS nylon strip brush, 1.6 mm backing, short trim (Sealeze/Gordon class, PN ASSUMPTION); 3.0 g [J] -- r4 charged 10 g to a solid printed fin, which is what the pellet-path critic flagged
+  retaining_plate_chute       81.2 g   [D] volume; integral vertical chute + ECO-3/4/5/9 count-sensor bosses + latch lugs + cartridge harness duct (B5) + plug tether anchor (r4)
+  stepper                    350.0 g   StepperOnline 14HS13-0804S-PG5 (NEMA 14 + 5.18:1 planetary, 0.14 N*m x 5.18 x 0.90 = 0.65 N*m out, 35x35x34 + 29.2 gearbox, Dia6x18 D-cut shaft); 310 g NET ASSUMPTION (vendor 0.38 kg gross)
+  electronics_bay             26.9 g   [D] 2 mm shell + screwed conformal ribs + gasketed lid flange + 4x M2.5 board standoffs (ECO-7) + 3 grommeted entries (ECO-6)
+  bay_lid                     10.9 g   [D] volume; 4x M3 self-tap OUTSIDE the gasket line, register lip, Dia6 rib-driver access
+  blindmate_pcb               15.0 g   ICD 5 board + Molex J1 mock; POSITION IS NOW DERIVED from the clip-plate map (shaft centre, tabs at +/-4/+/-10), not assumed
+  count_windows                0.1 g   ECO-4: 4x sacrificial Dia6 x 1.0 PMMA disc, bonded in a seat cut against the bore cylinder (no lip); inner face tangent to the Dia22 bore; swabbable from the chute exit, replaceable
+  sensor_cover                 4.1 g   ECO-12 / N3: 2x printed cover, 2x M2 self-tap into the boss ears; 4 posts clamp the 18x12x2 board (36 mm2 bearing area, vs r1's ZERO retention); Dia5 grommeted cable port
+  sensor_boards                6.0 g   ELECTRONICS 7: 2x 18x12x2 sensor PCB; +Y 2x TSAL6200 at the 9.0 mm max-material height, -Y 2x VBPW34FAS SMD. Envelopes are the two Vishay package drawings (81010 rev 2.4 / 81127 rev 1.3)
+  electronics: STM32G431KBT6+TCAN332, TMC2209, D36V6F5 buck, 2x VBPW34FAS + OPA2320 + 2x TSAL6200 analog count chain, 2x DRV5032, wiring   65.0 g  [J] PNs listed below, ASSUMPTION
+  fasteners: M3/M2.5 screws/nuts, 6x heat-set inserts, 3x plastite, 4x lid screws, 4x M2 mount screws + M2 inserts, M5 spring plunger, thread-locker   57.0 g  [J]
+  O-ring + gaskets + 9x Dia3x2 magnets (S-03-02-N)                8.0 g  [J]
+  EMPTY TOTAL (measured+estimates)       1164.5 g
+  contingency 10% (CAD stage)             116.5 g
+  EMPTY, carried                         1281.0 g
+  + 250 pellets                           295.0 g
+  LOADED @250                            1576.0 g  (ceiling 1500 g -> margin -76 g)
+  sensitivity: stepper at 200 g -> LOADED @250 =  1411.0 g; steel clip plate (+59 g) ->  1640.9 g; CF-PETG at 1.31 g/cm3 ->  1585.4 g (all pass)
+  + 421 pellets (MAX fill rib)          496.8 g
+  LOADED @421 (max fill line)           1777.8 g  (OVER the 1500 g ceiling on the strict no-exemption reading; worst-case ledger 1820.2 g)
+  + full hopper (421 worst-case)       496.8 g
+  LOADED @421 (brim, max)             1777.8 g  (pellet mass >250 exempt per CONTEXT; sane vs 5-8 kg platform)
+
+  ESTIMATE EXPOSURE: 150.4 g of the 1164.5 g empty subtotal (12.9%) is NOT measured from modeled geometry (blind-mate PCB, bristle strip, bushing, washer, electronics, fasteners, seals+magnets; the stepper's 190 g is a vendor catalogue figure, counted separately). The 10% contingency (116.5 g) does NOT bound it -- r4 claimed ~117 g and the true figure was 155 g. Nothing here is ceiling-critical (margin -76 g), but the number is now printed, not asserted.
+
+  INFILL BRACKET (voxel erosion, 4 perimeters @0.4 + 25% infill):
+    top_plate              solid  121.3 g   core  19.37 cm3   at 25% infill  102.9 g
+    fill_cap               solid    9.6 g   core   0.21 cm3   at 25% infill    9.4 g
+    hopper                 solid  139.0 g   core   9.70 cm3   at 25% infill  129.7 g
+    meter_housing          solid  131.9 g   core  52.38 cm3   at 25% infill   82.0 g
+    pocket_disc            solid   92.3 g   core  42.39 cm3   at 25% infill   51.9 g
+    agitator               solid    5.1 g   core   0.61 cm3   at 25% infill    4.6 g
+    brush_holder           solid    4.5 g   core   0.41 cm3   at 25% infill    4.1 g
+    retaining_plate_chute  solid   81.2 g   core  11.36 cm3   at 25% infill   70.4 g
+    electronics_bay        solid   26.9 g   core   0.55 cm3   at 25% infill   26.4 g
+    bay_lid                solid   10.9 g   core   0.00 cm3   at 25% infill   10.9 g
+    N13 CONTROL (bay_lid, a 3.2 mm flat plate: 4x0.4 walls = 1.6 mm/side leaves ~0 core): hollow core = 0.0 % of volume (requirement <= 10 %; the unpadded r7 code read 68.6 %)
+    printed-parts total: solid 622.7 g -> sliced 492.3 g (130.4 g of the ledger is a 100%-infill modelling artifact). LOADED @250 would be 1432.5 g.
+
+  B11.2 SHIPPED HEADLINE BASIS = the SLICER-REALISTIC ledger (4 perimeters at 0.4 mm + 25 % infill, padded EDT): LOADED @250 = 1432.5 g vs the 1500 g ceiling -> margin +68 g. This is the basis chosen because it is what actually gets printed; the 100 %-INFILL figure (1576.0 g, margin -76 g) is carried as the PESSIMISTIC BOUND and is stated, not hidden. rev-0 shipped the 100 %-infill basis at 1387.4 g; the delta since then is almost entirely B11.3 (stepper 310 -> 350 g) plus the B4/B5/B6 geometry the punch list required.
+  B11.4 PER-OPEN-ITEM MASS RESERVE (each is a known-open item that will add mass when it closes; none is in the ledger above):
+     12.0 g  count-sensor boards + 2 cable looms (ELECTRONICS 7)
+      3.0 g  4 x PMMA windows + bonding, 8 x M2 cover screws
+     18.0 g  wiring harness itself (9 x 26 AWG, ~250 mm) [A]
+      6.0 g  grommets x5 + bay gasket cord
+     10.0 g  delivered gearbox flange pilot may force a plate rework (B3.4)
+     12.0 g  fill-cap detent / N5 and tether lug / N9, both still open
+     61.0 g  TOTAL RESERVE -> headline basis with reserve = 1493.5 g (margin +7 g)
+
+  OVER-1.0 kg ATTRIBUTION (CONTEXT: every 100 g above 1.0 kg must be justified). LOADED @250 = 1576.0 g -> 576.0 g over.
+     350.0 g of 350.0 g  geared stepper 14HS13-0804S-PG5: the gearbox is what makes CONTEXT requirement 2 (shear a fragment) achievable at all -- 20.4 N recovery at the pocket lip vs 5.6 N in r5 -- while the driver current limit keeps normal metering at 12.2 N, 3.4x under the pellet crush load
+      46.9 g of  46.9 g  capacity oversizing: the straight cylinder above the 250-pellet line, 36 mm of 2.5 mm wall = 37 cm3 (CONTEXT: more capacity is an explicit design goal)
+      28.4 g of  28.4 g  quarter-turn latch ring + retaining plate lugs: carries the ~500 g cartridge + pellet column and makes the jam-clear path tool-free
+      65.0 g of  65.0 g  modeled fastening at every joint (inserts, plastites, nut bosses, skirt tabs) + phase/safe-state hardware (9 magnets, 2 Hall pockets, detent plunger boss)
+      80.0 g of  80.0 g  electronics + blind-mate PCB (CAN node, driver, buck, count chain)
+       5.7 g of  31.1 g  clip plate (COTS, not ours to trade)
+       0.0 g  unattributed
+    (the justified blocks total 601.4 g, i.e. 25.4 g MORE than the overage: every gram above 1.0 kg is spoken for by hardware that cannot be deleted without deleting a requirement. Deleting the capacity oversizing alone would put the 250-load at 1515 g.)
+
+============ REV-1 r6: ROUND-5 BLOCKING / MAJOR FINDINGS ============
+
+A-11 DETENT-PLUNGER BORE SECTION (assembly BLOCKING; r11 measured 'Dia5.199 over r 47.00..52.90 and Dia6.399 over r 53.00..63.00, unthreaded' -> an M5x0.8 plunger drops straight through).
+    r (mm)   void half-width (mm)   -> section
+    r= 44.00   half-width 4.000   -> Dia8.000
+    r= 46.90   half-width 2.950   -> Dia5.900
+    r= 47.00   half-width 2.550   -> Dia5.100
+    r= 49.60   half-width 2.200   -> Dia4.400
+    r= 63.10   half-width 4.000   -> Dia8.000
+    REQUIRED (B9c): a thread-forming pilot Dia4.2-4.6 +/- 0.1 over >= 6 mm. MODELLED: Dia4.5 over r 49.5..63.0 = 13.5 mm, with a Dia5.2 ball clearance r 47.0..49.5
+    insertion sweep, Dia4.5 body pulled out to +40 mm radially, vs EVERY other flight solid: 0.0000 mm3
+    designed thread-forming interference (Dia5.0 major in the Dia4.5 pilot over 13.5 mm): measured 50.3637 mm3 vs closed form 50.3637 mm3
+
+A-12 BAY-RIB SCREW PILOT (assembly MAJOR; r11: the flat-bottomed pilot at y = -45.000 was OPEN 1.2492 mm2 of 4.5124 mm2 = 27.7 % into the metering chamber, 0.144 mm of floor where it was closed at all, and the BOM'd M3x20 tip landed 0.850 mm PAST the bore wall, 0.187 mm from the rotating disc).
+    pilot x=+14.0, floor y=-46.500 (r6 as built               ): OPEN  0.0000 mm2 of 4.9024 mm2 =   0.0 %
+    pilot x=+14.0, floor y=-45.000 (r11 CONTROL, must be OPEN ): OPEN  1.6616 mm2 of 4.9024 mm2 =  33.9 %
+    pilot x=-14.0, floor y=-46.500 (r6 as built               ): OPEN  0.0000 mm2 of 4.9024 mm2 =   0.0 %
+    pilot x=-14.0, floor y=-45.000 (r11 CONTROL, must be OPEN ): OPEN  1.7388 mm2 of 4.9024 mm2 =  35.5 %
+    material under the pilot floor across the whole bore section: min 1.262 mm (r11: 0.144), at the chamber wall r=47.0
+    M3x18 tip lands at y = -46.000 vs pilot floor -46.500 -> +0.500 mm of clear pilot ahead of the tip (r11's M3x20 tip was at -44.000, i.e. 1.000 mm PAST the floor and 0.850 mm past the bore wall); the tip is 1.134 mm of material short of the chamber bore on its own axis (r11: -0.850)
+    RESIDUAL, stated: the thinnest material under the pilot floor is 1.262 mm, at the point of the bore section NEAREST the chamber axis. That is 8.8 x r11's 0.144 mm and the raster above says 0.0 % open, but it is still below the 1.95 mm the punch list uses for insert bosses -- carried as an open issue, not claimed closed.
+
+B4.2 COUNT-BEAM CLEARANCE ON THE ECO-3 AXES (count-sensor critic: r11 read 1.1932 mm3 at x = 29.0/35.0 because the labyrinth stepped +0.800 on BOTH sides, walking the clear lens to x = 29.400/35.400):
+    beam x=29.000 z=-392.250  Dia2.0x60 ^ plate   0.0000 | ^ cover  0.1576 | ^ PMMA windows (transparent)  5.9690 mm3
+       optical span |y| <= 26.5 (emitter seating plane to detector seating plane): ^ plate 0.0000 | ^ cover 0.0000 mm3
+    beam x=35.000 z=-398.250  Dia2.0x60 ^ plate   0.0000 | ^ cover  0.0000 | ^ PMMA windows (transparent)  5.9690 mm3
+       optical span |y| <= 26.5 (emitter seating plane to detector seating plane): ^ plate 0.0000 | ^ cover 0.0000 mm3
+    CONTROL, solid boss between the apertures x=34.5: 39.5854 mm3 (a probe that reads 0.0000 here is broken)
+
+COTS PART NUMBERS (r6; ASSUMPTION until ordered/verified except stepper):
+  geared stepper   StepperOnline 14HS13-0804S-PG5 (5.18:1 planetary)              VERIFIED vendor page: 0.14 N*m, 1.0 A/ph, backlash <=3 deg, max 3 N*m, Dia6x18 D-cut, gross 0.38 kg; 310 g NET is an ASSUMPTION
+  sleeve bearing   igus iglidur J JFM-2023-07 (ID20/OD23/L7)                      length VERIFIED catalogued (TME/RS list JFM-2023-07/11/16/21); flange Dia30x2 ASSUMPTION
+  mount screws     4x M2x10 ISO 4762 A2 + 4x Ruthex RX-M2x4 heat-set inserts      head Dia3.8 vs the mapped Dia3.90 pocket -- 0.05 mm/side, tolerance item
+  PCB screws       4x M2x5 into the clip plate's own tabs                         vendor feature
+  driver           BIGTREETECH TMC2209 V1.3 module (or TMC2209-LA-T)              ASSUMPTION
+  count PD x2      Vishay VBPW34FAS (940 nm filtered PIN, 7.5 mm2)                ELECTRONICS 4.4 ASSUMPTION -- replaces the REJECTED TSSP4038
+  count amp        TI OPA2320AIDR (dual, rail-to-rail, transimpedance)            ELECTRONICS 4.4 ASSUMPTION
+  count emitter x2 Vishay TSAL6200 (940 nm, 34 deg)                               ASSUMPTION
+  count windows x4 Dia6 x 1.0 cast PMMA disc, sacrificial, bonded (UV-acrylic or CA) ECO-4; laser-cut, PN ASSUMPTION
+  sensor-cover screws 4x M2x6 self-tap into the boss ears                            ECO-12 retention (r7 ordered 2x M3 grubs for a hole that did not exist)
+  Hall x2          TI DRV5032FBDBZR                                               ASSUMPTION
+  MCU + CAN        ST STM32G431KBT6 + TI TCAN332DR                                ASSUMPTION
+  5 V buck         Pololu D36V6F5 (12->5 V, 600 mA)                               ASSUMPTION
+  magnets x9       supermagnete S-03-02-N (Dia3x2, N45)                           ASSUMPTION
+  inserts x6       Ruthex RX-M3x5.7 heat-set                                      ASSUMPTION
+  spring plunger   M5x0.8 ball-nose, LIGHT spring, 2.5 N end force, 16 mm body (WDS 605 series class) PN ASSUMPTION -- end force is a specification; r6 A-11: threads into a modelled Dia4.5 x 13.5 mm thread-forming pilot, NOT an insert (no M5 insert is ordered)
+  grommets x5      Dia6.0 cable grommet for a 2.0 mm panel                        ECO-6 / N-i4 PN ASSUMPTION -- r1-r5 modelled the seats and ordered nothing
+  bay gasket       2.0 mm silicone cord, 200 mm (182.00 mm loop)                  N-i4 PN ASSUMPTION
+  sensor pads x2   18 x 12 x 0.5 mm silicone pad                                  PN ASSUMPTION
+  plastite x3      Delta PT-class K30x8 thread-forming                            PN ASSUMPTION
+  PTFE washer      Dia30/Dia24x1.5 virgin PTFE (Essentra class)                   PN ASSUMPTION
+  strip brush      nylon mini strip brush, 1.6 mm backing, ~4 mm trim (Sealeze/Gordon Brush class) PN ASSUMPTION
+  set screw        M3x4 hex socket cup-point grub (disc->shaft)                   M3 thread-forming into the modelled Dia2.6 pilot
+  O-ring           1.5 mm cord, Dia43.6 ID nitrile (fill cap gland)               class
+B2.4 GRUB-SIZE STRING EQUALITY: BOM.md mentions 'M3x4' as the disc grub 2 times; occurrences of any OTHER grub size (M2.5/M4/M2): 0; modelled pilot Dia2.6, clearance channel Dia3.4, key A/F 1.5
+BOM ->  /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/BOM.md
+render -> /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/renders/v1r6_iso.png
+render -> /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/renders/v1r6_section.png
+render -> /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/renders/v1r6_detail.png
+render -> /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/renders/v1r6_bottom.png
+render -> /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/renders/v1r6_fill_station.png
+render -> /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/renders/v1r6_cartridge_out.png
+render -> /Users/hex/projects/payload-systems/payloads/capsule-dispenser/cad/renders/v1r6_bay_lid.png
+
+done.

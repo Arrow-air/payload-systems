@@ -52,7 +52,7 @@ The three ports are **not identical**. Design against the port you target:
 ### 12VSW (bottom port only)
 - 12 V switched through mechanical relay **K1** (SPST-NO, controlled by
   **FMU_CH2**), fused at **2 A** (F1). Intended for FC-commanded on/off loads
-  (originally the brush-bullet dispenser motor). Max ~24 W.
+  (originally the capsule dispenser motor). Max ~24 W.
 
 ### Other voltages
 - **No 5 V or 3.3 V is provided.** Payloads needing logic rails bring their own
