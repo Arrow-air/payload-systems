@@ -28,7 +28,7 @@ Origin: DAO bounty 156, folded into an in-house meetup build charged to QGB-05. 
 # Methodology
 
 1. Parts: MAPIR Survey3 RGN (Thomas's unit), MAPIR HDMI PWM trigger cable, MAPIR USB Power+FPV cable, Zovfam LM2596 buck (Amazon B08BFKKDGD), silicone damper balls from workshop stock, Molex 204523-1201 housing with 79758-1149 leads, JMRRC male clip plate, Attach Interface PCB V1.4 payload side.
-2. Printed body, damper plates, and camera saddle in PA6-CF. CAD in `CAD/`.
+2. Printed body, damper plates, and camera saddle in PA6-CF. CAD in `CAD/MAPIR-Survey3N-RGN-adapter.step`.
 3. Lens swapped from the wide lens to the narrow lens: unscrew the lens retaining ring, exchange the lens body, refocus by test shots on a distant target.
 4. Buck trimmed to 5.3 V at its output, unloaded, before the camera was connected.
 5. Flight controller output freed from the GPIO mask, PWM verified on the bench with Mission Planner DO_SET_SERVO at 1000 and 2000 µs.
@@ -37,6 +37,8 @@ Origin: DAO bounty 156, folded into an in-house meetup build charged to QGB-05. 
 # Results and Deliverables
 
 ## Camera
+
+![Front: Survey3 RGN with the narrow lens, damper balls at the corners](Images/IMG_3885.jpg)
 
 - MAPIR Survey3, classic body, RGN filter, narrow lens (41° HFOV) after the swap.
 - Capture mode single photo, RAW on (RAW plus JPG). MAPIR manual v3: RAW is only available in single capture mode.
@@ -51,6 +53,8 @@ Origin: DAO bounty 156, folded into an in-house meetup build charged to QGB-05. 
 - No enclosure, gasket, or SD door. No outboard arm (not needed on the bottom port). Single load path through the clip plate.
 - Zip ties for lead strain relief.
 
+![Side: damper stack between the plates, saddle clamp bolt, zip tied leads](Images/IMG_3888.jpg)
+
 ## Electrical
 
 Power chain: 12V_PL (J1 pin 10) → LM2596 buck IN+ → 5.3 V OUT → MAPIR USB Power+FPV cable spliced to the buck output.
@@ -58,6 +62,8 @@ Power chain: 12V_PL (J1 pin 10) → LM2596 buck IN+ → 5.3 V OUT → MAPIR USB 
 Buck listing specs (2026-09-17): input 3 to 40 V, output 1.3 to 35 V, 2 A continuous, 3 A peak with heatsink, 92% peak efficiency, 65 kHz, 30 mV ripple, thermal shutdown and current limit.
 
 The MAPIR manual v3 states "wall chargers marked output 5V 1A." It does not mention 5.3 V. The 5.3 V setting was measured at the buck output unloaded and worked. The camera end under load was not measured. USB device limit is 5.25 V, so measure the camera end and trim down if needed.
+
+![Buck on the body top, damper stack, camera below](Images/IMG_3886.jpg)
 
 Harness on Attach Interface PCB J1:
 
@@ -68,6 +74,10 @@ Harness on Attach Interface PCB J1:
 | 12 | FMU_CH1 | MAPIR trigger cable signal lead |
 
 No inrush limiter, no fuse, no filtering.
+
+![Rear: clip plate pogo window, camera HDMI and USB ports with the trigger and power leads](Images/IMG_3887.jpg)
+
+![Rear, harness dressed: clip plate slot at top, buck trimmer and capacitor at right, damper stack, camera body](Images/IMG_3889.jpg)
 
 ## Trigger
 
@@ -115,11 +125,11 @@ Not used: ArduPilot camera driver (CAM1 is already the SIYI at type 4). Mission 
 | Mass (350 g budget) | Not weighed |
 | IP5X (bounty Dust Protection) | Not built |
 
-Photos and video: Arrow Discord and Twitter, meetup week of 2026-08-10.
+Photos in `Images/` (IMG_3885 to IMG_3889). Video: Arrow Discord and Twitter, meetup week of 2026-08-10.
 
 ## Deliverables
 
-- `CAD/` STEP and STL (CERN OHL-S v2)
+- `CAD/MAPIR-Survey3N-RGN-adapter.step`, `.stl` (CERN OHL-S v2)
 - This README (CC BY 4.0)
 - Flight controller configuration section 11.6 in project-quiver
 

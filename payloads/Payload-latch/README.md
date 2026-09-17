@@ -38,17 +38,25 @@ Origin: DAO bounty 155 ($500 USDC, unclaimed), folded into an in-house meetup bu
 
 ## Mechanism
 
+![Assembly overview: buck on the bracket top, powerday block and MG995 below](Images/IMG_3884.jpg)
+
 - powerday 995 aluminum pin block with its servo frame. MG995 with a blue 25T aluminum horn. M3 bolt and nyloc nut as the linkage pivot.
 - **No return spring.** The servo drives and holds the pin in both positions. With power removed the pin is retained by gear friction only.
 - One L shaped PA6-CF bracket. Four M3 socket heads into heat set inserts hold the servo frame. The buck sits exposed on the bracket top face. The bracket bolts to the JMRRC male clip plate, which carries the Attach Interface PCB V1.4 payload side (10 pads) on 4× M2.
 - Printed zip tie saddle on the bracket side for lead strain relief.
 - Single structural path through the clip plate. No secondary strap.
 
+![Side view: servo on the aluminum frame, 25T horn, linkage to the pin carrier, zip tie saddle](Images/IMG_3882.jpg)
+
+![Underside: pin extended through the block, linkage pivot bolt](Images/IMG_3883.jpg)
+
 ## Electrical
 
 Power chain: 12V_PL (J1 pin 10) → LM2596 buck IN+ → 6 V OUT → servo. Servo power leads soldered to the buck output pads.
 
 Buck listing specs (2026-09-17): input 3 to 40 V, output 1.3 to 35 V, 2 A continuous, 3 A peak with heatsink recommended above 2 A or 15 W, 92% peak efficiency, 65 kHz, thermal shutdown and current limit, 43 × 21 × 14 mm.
+
+![Top view: LM2596 buck with trimmer and capacitors exposed, Molex housing to the right](Images/IMG_3880.jpg)
 
 Harness on Attach Interface PCB J1:
 
@@ -59,6 +67,8 @@ Harness on Attach Interface PCB J1:
 | 12 | FMU_CH1 | Servo signal lead, solder heat shrink joint |
 
 No inrush limiter, no fuse, no series resistor, no pulldown, no bulk capacitor beyond the buck's own output cap.
+
+![Clip plate face: Attach Interface PCB V1.4 payload side in the recess, zip tie saddle and signal joint at right](Images/IMG_3881.jpg)
 
 ## Flight controller configuration
 
@@ -102,7 +112,7 @@ Ground procedure: Relay 6 on, confirm the pin is home, load the ring or loop ont
 | RC failsafe behavior | Not run |
 | Mass, current, buck under load | Not measured |
 
-Photos and drop videos: Arrow Discord and the Arrow Twitter account, meetup week of 2026-08-10.
+Photos in `Images/` (IMG_3880 to IMG_3884). Drop videos: Arrow Discord and the Arrow Twitter account, meetup week of 2026-08-10.
 
 ## Deliverables
 
